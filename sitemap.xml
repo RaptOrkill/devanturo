@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url><loc>https://devanturo.fr/</loc><lastmod>2026-09-13</lastmod><priority>1.0</priority></url>
-  <url><loc>https://devanturo.fr/cgv.html</loc><lastmod>2026-09-13</lastmod><priority>0.3</priority></url>
-  <url><loc>https://devanturo.fr/mentions-legales.html</loc><lastmod>2026-09-13</lastmod><priority>0.3</priority></url>
+  <url><loc>https://devanturo.fr/site-internet-restaurant-roubaix.html</loc><lastmod>2026-09-13</lastmod><priority>0.8</priority></url>
+  <url><loc>https://devanturo.fr/site-internet-restaurant-lille.html</loc><lastmod>2026-09-13</lastmod><priority>0.8</priority></url>
+  <url><loc>https://devanturo.fr/site-internet-restaurant-tourcoing.html</loc><lastmod>2026-09-13</lastmod><priority>0.8</priority></url>
 </urlset>
