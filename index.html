@@ -1,0 +1,298 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'sha256-z41my02q7zbiTBISarC+HPylqtyAS556SLgdKdhzSsU=' 'sha256-Y7oEjKaSsx+QsWXPYn4isOW8Uxi5x0t+kKu3H1NJLsQ=' 'wasm-unsafe-eval' https://cdnjs.cloudflare.com https://cdn.jsdelivr.net; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; img-src 'self' data: blob:; connect-src 'self' blob: data: https://cdn.jsdelivr.net; frame-src https://raptorkill.github.io; worker-src 'self' blob:; object-src 'none'; base-uri 'self'; form-action 'none'; upgrade-insecure-requests">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Site internet pour restaurant à Roubaix, Lille, Tourcoing — Devanturo</title>
+<meta name="description" content="Le site de votre restaurant : une visite de 30 minutes, le site en ligne 7 jours après. 549 € tout compris, payé à la livraison, seulement s'il vous plaît. Lille, Roubaix, Tourcoing.">
+<meta name="theme-color" content="#F6F4EF">
+<link rel="icon" href="favicon.svg" type="image/svg+xml">
+<link rel="canonical" href="https://devanturo.fr/">
+<meta name="referrer" content="strict-origin-when-cross-origin">
+<meta property="og:type" content="website">
+<meta property="og:locale" content="fr_FR">
+<meta property="og:site_name" content="Devanturo">
+<meta property="og:url" content="https://devanturo.fr/">
+<meta property="og:title" content="Le site de votre restaurant, en ligne 7 jours après ma visite">
+<meta property="og:description" content="549 € tout compris, payé à la livraison, seulement si le site vous plaît. Roubaix, Lille, Tourcoing.">
+<meta property="og:image" content="https://devanturo.fr/assets/img/partage.jpg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"ProfessionalService","name":"Devanturo","description":"Création de sites internet pour restaurants et bars : une visite de 30 minutes, le site en ligne 7 jours après, 549 € tout compris, payé à la livraison.","url":"https://devanturo.fr/","image":"https://devanturo.fr/assets/img/partage.jpg","telephone":"+33614979604","email":"contact@devanturo.fr","priceRange":"549 €","address":{"@type":"PostalAddress","streetAddress":"2 rue Vauban","postalCode":"59100","addressLocality":"Roubaix","addressCountry":"FR"},"areaServed":["Roubaix","Lille","Tourcoing","Métropole européenne de Lille"],"founder":{"@type":"Person","name":"Baptiste Ruin"},"makesOffer":{"@type":"Offer","name":"Site internet pour restaurant","price":"549","priceCurrency":"EUR"}}</script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="dns-prefetch" href="https://cdnjs.cloudflare.com">
+<link rel="dns-prefetch" href="https://cdn.jsdelivr.net">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,300;9..144,400;9..144,500&family=DM+Sans:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+<link rel="stylesheet" href="demos.css">
+<script>if(!matchMedia('(prefers-reduced-motion: reduce)').matches)document.documentElement.classList.add('anim')</script>
+<script type="importmap">{"imports":{"three":"https://cdn.jsdelivr.net/npm/three@0.186.0/build/three.module.min.js","three/addons/":"https://cdn.jsdelivr.net/npm/three@0.186.0/examples/jsm/","https://cdn.jsdelivr.net/npm/three@0.186.0/build/three.core.js":"https://cdn.jsdelivr.net/npm/three@0.186.0/build/three.core.min.js"}}</script>
+</head>
+<body>
+<header class="entete">
+  <a class="entete-marque" href="#recit">Devanturo — Roubaix</a>
+  <p class="promesse">Le site de votre restaurant, en ligne 7 jours après ma visite · <b>549 €</b> · <b>payé à la livraison</b></p>
+  <!-- Les trois liens visent des chapitres du récit (data-frise = unité de leur tenue, réécrite par recit.js depuis ses constantes) :
+       page.js y descend par la frise, en respectant le plancher. Un lien sans cible serait masqué (jamais de lien mort). -->
+  <nav class="nav" aria-label="Sections du site">
+    <a href="#demos">Démos</a>
+    <a href="#offre">L'offre</a>
+    <a href="#questions">Questions</a>
+  </nav>
+  <!-- Le CTA de l'en-tête : bouton rouge carré « Prendre rendez-vous » (≥ 1024) ou « Rendez-vous » compact à gauche de « Menu » (< 1024).
+       Caché (visibility, sans décaler l'en-tête) quand un autre « Prendre rendez-vous » est à l'écran (html.cta-ecran, recit.js),
+       pendant l'introduction sur mobile et quand le menu est ouvert : jamais deux boutons identiques. -->
+  <a class="entete-lien" href="https://wa.me/33614979604" data-track="whatsapp_tap" data-source="entete"><span class="entete-long">Prendre rendez-vous</span><span class="entete-court">Rendez-vous</span></a>
+  <button class="menu-bouton" type="button" aria-expanded="false" aria-controls="menu">Menu</button>
+</header>
+
+<!-- Menu mobile (< 1024 px) : ouvert par page.js, Escape ferme, focus piégé, focus rendu au bouton. -->
+<div class="menu" id="menu">
+  <nav aria-label="Menu">
+    <ul class="menu-liens">
+      <li><a href="#demos">Démos</a></li>
+      <li><a href="#offre">L'offre</a></li>
+      <li><a href="#questions">Questions</a></li>
+    </ul>
+  </nav>
+  <div class="menu-pied">
+    <a class="menu-cta" href="https://wa.me/33614979604" data-track="whatsapp_tap" data-source="menu">Prendre rendez-vous</a>
+    <a class="menu-tel" href="tel:+33614979604"><span>06 14 97 96 04</span></a>
+    <a class="menu-tel" href="mailto:contact@devanturo.fr"><span>contact@devanturo.fr</span></a>
+  </div>
+</div>
+
+<main>
+<h1 class="visually-hidden">Devanturo, le site de votre restaurant à Roubaix, Lille et Tourcoing : 549 € tout compris, en ligne 7 jours après ma visite</h1>
+<section class="recit" id="recit" aria-label="L'histoire">
+  <div class="scene">
+    <div class="lumiere" aria-hidden="true"></div>
+
+    <div class="chapitre" data-chapitre="1">
+      <p class="titre mots">19 h 12.</p>
+      <p class="phrase mots">Quelqu'un a faim à 600 mètres de chez vous.</p>
+      <a class="raccourci" href="#offre" data-track="raccourci"><span>Passer l'histoire, voir l'offre →</span></a>
+    </div>
+    <div class="chapitre" data-chapitre="2">
+      <p class="phrase mots">Il tape «&nbsp;restaurant Roubaix&nbsp;». Il voit ceux qui ont une vitrine.</p>
+      <p class="titre mots">Il ne vous voit pas.</p>
+    </div>
+    <div class="chapitre" data-chapitre="3">
+      <p class="titre mots">Pourtant,</p>
+      <p class="phrase mots">votre salle est pleine de gens qui vous adorent.</p>
+    </div>
+    <div class="chapitre" data-chapitre="4">
+      <p class="phrase mots">Il manque juste la vitrine.</p>
+      <p class="titre mots">En sept jours.</p>
+    </div>
+
+    <div class="cartes" aria-hidden="true">
+      <figure class="carte carte-1"><img src="assets/img/carte-bistrot.webp" alt="" width="480" height="637" loading="lazy" decoding="async"></figure>
+      <figure class="carte carte-2"><img src="assets/img/carte-moderne.webp" alt="" width="480" height="637" loading="lazy" decoding="async"></figure>
+      <figure class="carte carte-3"><img src="assets/img/carte-bar.webp" alt="" width="480" height="637" loading="lazy" decoding="async"></figure>
+    </div>
+
+    <div class="tel" aria-hidden="true">
+      <div class="tel-corps">
+        <div class="tel-encoche"></div>
+        <div class="ecran">
+          <div class="ecran-noir"></div>
+          <div class="ecran-recherche">
+            <!-- La recherche se tape lettre par lettre au fil de la frise (recit.js, CAP §4.4) ; sans .anim, le texte complet reste affiché.
+                 Vignettes en background-image sur les MÊMES fichiers que les cartes ci-dessus : un seul téléchargement par image (CAP §14, perf-001) ;
+                 le téléphone 3D dessine son écran avec les <img> des cartes (scene3d.js). -->
+            <div class="recherche-barre"><span class="recherche-texte">restaurant roubaix</span><span class="recherche-curseur"></span></div>
+            <ul class="recherche-liste">
+              <li><span class="recherche-vignette vignette-bistrot"></span><div><b>Le Bistrot d'à côté</b><small>4,6 ★★★★★ (342) · Bistrot · Roubaix</small></div></li>
+              <li><span class="recherche-vignette vignette-moderne"></span><div><b>Café Lumière</b><small>4,4 ★★★★☆ (287) · Café · Roubaix</small></div></li>
+              <li><span class="recherche-vignette vignette-bar"></span><div><b>Cave &amp; Comptoir</b><small>4,7 ★★★★★ (199) · Bar à vin · Roubaix</small></div></li>
+            </ul>
+          </div>
+          <!-- Chapitre 4 et démo (76 → 112) : l'écran s'allume directement sur LE BRAISÉ.
+               Image différée : display:none tant que html.demo-prete n'est pas posé (frise ≥ 47, entrée du chapitre 3). -->
+          <div class="ecran-braise"><img src="assets/img/braise-mobile.webp" alt="" width="780" height="1688" loading="lazy" decoding="async"></div>
+          <!-- Comment ça se passe (113 → 134) : les trois étapes dessinées dans l'écran, une frise verticale. -->
+          <div class="ecran-etapes">
+            <p class="et-haut">Devanturo</p>
+            <ol class="et-frise">
+              <li><b>Vous m'écrivez</b><small>sur WhatsApp</small></li>
+              <li><b>Visite · 30 min</b><small>les photos de votre salle</small></li>
+              <li class="et-fin"><b>En ligne · 7 jours</b><small>549 € à la livraison</small></li>
+            </ol>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- La carte « ? » passe devant le téléphone (calque au-dessus de lui) : elle reste entière à l'arrivée de l'introduction. -->
+    <div class="cartes cartes-avant" aria-hidden="true">
+      <figure class="carte carte-vide"><span>?</span></figure>
+    </div>
+
+    <!-- La démo — LE BRAISÉ (82 → 112, dans la suite du chapitre 4) : une démo en ligne, jamais présentée comme un client.
+         Sans .anim, la version statique se lit dans l'ordre : l'exemple, ses deux écrans, les deux actions, puis la suite du récit. -->
+    <div class="chapitre" data-chapitre="5" id="demos" data-frise="102">
+      <p class="etiquette mots">Un exemple en ligne</p>
+      <p class="titre mots">LE BRAISÉ.</p>
+      <p class="phrase mots">Le même site, sur téléphone et sur ordinateur.</p>
+    </div>
+    <!-- Le portable : en 3D (scene3d.js, portable.opt.glb) quand html.portable-3d est posé ; sinon ce petit portable CSS,
+         placé par les MÊMES tweens. .demo-tel n'existe que dans la version statique (le téléphone animé est .tel).
+         .demo-duo est en display: contents pendant la mise en scène : ses enfants se placent dans .scene. -->
+    <div class="demo-duo">
+      <div class="portable" aria-hidden="true">
+        <div class="portable-ecran">
+          <span class="portable-encoche"></span>
+          <div class="portable-vitre"><img src="assets/img/braise-ordi.webp" alt="" width="1280" height="800" loading="lazy" decoding="async"></div>
+        </div>
+        <div class="portable-base"><span class="portable-cran"></span></div>
+      </div>
+      <div class="demo-tel" aria-hidden="true"><div class="demo-tel-ecran"><img src="assets/img/braise-mobile.webp" alt="" width="780" height="1688" loading="lazy" decoding="async"></div></div>
+      <!-- Bouton transparent posé sur l'écran du portable (rectangle projeté en 3D, écran CSS sinon), actif de 94 à 112 seulement. -->
+      <button class="portable-clic" type="button" aria-label="Explorer le site LE BRAISÉ"><span aria-hidden="true">Cliquer pour explorer</span></button>
+    </div>
+
+    <!-- Les deux actions de la démo (tenue 94 → 112), côte à côte sous le texte : explorer (secondaire, contour, ouvre la modale)
+         et prendre rendez-vous (principal, rouge, WhatsApp avec le message du rendez-vous, le même partout : recit.js).
+         Invisibles au clavier tant qu'elles ne sont pas .actif (comme le formulaire). -->
+    <div class="rdv" id="rdv">
+      <div class="rdv-actions">
+        <a class="explorer" href="https://raptorkill.github.io/vitrine48h/demo-burger/" target="_blank" rel="noopener">Explorer le site →</a>
+        <a class="bouton-rdv" href="https://wa.me/33614979604" data-track="whatsapp_tap" data-source="demo">Prendre rendez-vous</a>
+      </div>
+      <a class="rdv-tel" href="tel:+33614979604"><span>ou appelez le 06 14 97 96 04</span></a>
+      <p class="ligne-prix">549 € tout compris · En ligne 7 jours après ma visite · Payé à la livraison</p>
+    </div>
+
+    <!-- Tout le reste de la page vit dans la même scène (décision du 13/09 : « tout dans le récit »).
+         Chaque chapitre ci-dessous est invisible (autoAlpha 0) tant que la frise ne l'a pas fait entrer : rien de tabulable dans le vide.
+         Les éléments .ent (numéros, listes, boutons, questions) entrent en cascade avec les mots (recit.js, entree()).
+         Sans .anim, la version statique se lit dans le même ordre. -->
+
+    <!-- Comment ça se passe (113 → 134) : trois étapes à gauche ; le téléphone, à droite (dessous sur mobile), montre la frise des étapes. -->
+    <div class="chapitre chapitre-plein" data-chapitre="6" id="comment">
+      <h2 class="etiquette mots">Comment ça se passe</h2>
+      <ol class="etapes">
+        <li class="ent"><span class="num">1</span><p><b>Vous m'écrivez sur WhatsApp.</b> On fixe une visite quand ça vous arrange.</p></li>
+        <li class="ent"><span class="num">2</span><p><b>Je passe trente minutes dans votre salle.</b> Je prends les photos, vous continuez votre service.</p></li>
+        <li class="ent"><span class="num">3</span><p><b>Votre site est en ligne sept jours après ma visite.</b> Vous payez 549 € à la livraison, seulement s'il vous plaît.</p></li>
+      </ol>
+    </div>
+
+    <!-- L'offre (137 → 160) : le téléphone est sorti par le bas ; l'image est la grande typographie du prix (≥ 1024, .geant, décorative). -->
+    <div class="chapitre chapitre-plein" data-chapitre="7" id="offre" data-frise="152">
+      <h2 class="etiquette mots">L'offre</h2>
+      <p class="phrase mots">Un prix, tout compris.</p>
+      <p class="offre-prix ent">549&nbsp;€</p>
+      <p class="offre-condition ent">Payé à la livraison, seulement si le site vous plaît. Pas d'acompte.</p>
+      <ul class="offre-liste">
+        <li class="ent">Un site d'une page, dessiné pour votre restaurant</li>
+        <li class="ent">La visite de trente minutes et les photos</li>
+        <li class="ent">Le nom de domaine et l'hébergement la première année</li>
+        <li class="ent">La mise en ligne et la fiche Google</li>
+        <li class="ent">Les corrections après la livraison</li>
+      </ul>
+      <p class="offre-ensuite ent">Ensuite, environ 15 € par an pour le nom de domaine et l'hébergement, à votre nom.</p>
+      <div class="offre-actions ent">
+        <a class="bouton-rdv" href="https://wa.me/33614979604" data-track="whatsapp_tap" data-source="offre">Prendre rendez-vous</a>
+        <a class="rdv-tel" href="tel:+33614979604"><span>ou appelez le 06 14 97 96 04</span></a>
+      </div>
+    </div>
+    <p class="geant geant-prix" aria-hidden="true"><span>549&nbsp;€</span><small>tout compris</small></p>
+
+    <!-- Qui vous parle + les questions, sur UN seul écran (163 → 201, décision du 13/09) : ≥ 1024, deux colonnes (qui vous parle à gauche,
+         questions à droite) ; < 1024, une bande « qui vous parle » en haut, les questions dessous. Le téléphone est hors cadre.
+         Portrait : la vraie photo de Baptiste (LinkedIn, fond bleu remplacé par le fond chaud du site, 13/09), jamais une photo générée.
+         Questions : six accordéons, une seule réponse ouverte à la fois (name + recit.js), la page ne défile jamais à l'ouverture. -->
+    <div class="chapitre chapitre-plein chapitre-duo" data-chapitre="8" id="questions" data-frise="185">
+      <div class="qui">
+        <span class="portrait ent"><img src="assets/img/baptiste.webp" alt="" width="480" height="480" loading="lazy" decoding="async"></span>
+        <div class="qui-corps">
+          <h2 class="etiquette mots">Qui vous parle</h2>
+          <p class="phrase qui-phrase mots">Je m'appelle Baptiste Ruin. Je dessine, je code et je mets en ligne moi-même.</p>
+          <p class="qui-texte ent">Design, développement, mise en ligne et visibilité sur Google : une seule personne en face de vous, joignable sur WhatsApp. Des sites pensés pour le téléphone d'abord, rapides à ouvrir. Étudiant à l'EDHEC, à Roubaix.</p>
+          <!-- Version courte du texte ci-dessus, affichée seulement dans la mise en scène sous 1024 (la longue n'y tient pas) : même réassurance sur téléphone. -->
+          <p class="qui-court ent">Design, code, mise en ligne et Google&nbsp;: une seule personne, joignable sur WhatsApp. Étudiant à l'EDHEC, à Roubaix.</p>
+          <p class="qui-accent ent">À dix minutes de chez vous.</p>
+        </div>
+      </div>
+      <div class="faq">
+      <h2 class="etiquette mots">Les questions</h2>
+      <div class="questions">
+        <details class="ent" name="questions"><summary>Qu'est-ce que je paie exactement&nbsp;?</summary><p>549 €, une fois&nbsp;: le site, les photos, le nom de domaine et l'hébergement la première année.</p></details>
+        <details class="ent" name="questions"><summary>Combien de temps ça prend&nbsp;?</summary><p>Trente minutes avec vous, dans votre salle. Le site est en ligne sept jours après.</p></details>
+        <details class="ent" name="questions"><summary>Et si le site ne me plaît pas&nbsp;?</summary><p>Vous ne me devez rien. Pas d'acompte.</p></details>
+        <details class="ent" name="questions"><summary>Je peux changer la carte moi-même&nbsp;?</summary><p>Envoyez-moi la nouvelle carte sur WhatsApp, elle est en ligne le jour même.</p></details>
+        <details class="ent q-secondaire" name="questions"><summary>Et le nom de domaine, l'hébergement&nbsp;?</summary><p>Compris la première année, à votre nom. Ensuite, environ 15 € par an.</p></details>
+        <details class="ent" name="questions"><summary>J'ai déjà une page Facebook.</summary><p>Facebook parle à vos abonnés. Le site répond à qui cherche «&nbsp;restaurant Roubaix&nbsp;».</p></details>
+      </div>
+      </div>
+    </div>
+
+    <!-- Le final — prendre rendez-vous (202 → 218) : l'écran le plus simple du site. Aucun objet, aucun champ : le titre
+         (« le site de <nom>. » avec ?nom=, écrit par recit.js avant la découpe en mots : lisible sans rien avant, on y arrive directement),
+         la phrase, le risque zéro, un bouton, le téléphone. La barre du bas est cachée ici (jamais deux boutons identiques à l'écran). -->
+    <div class="chapitre chapitre-final" data-chapitre="9" id="final">
+      <p class="phrase mots">Et maintenant,</p>
+      <p class="titre final-titre avec-nom mots">le site de votre restaurant.</p>
+      <p class="final-phrase ent">Trente minutes dans votre salle. Votre site en ligne sept jours après.</p>
+      <ul class="final-points">
+        <li class="ent">549&nbsp;€ tout compris</li>
+        <li class="ent">Payé à la livraison</li>
+        <li class="ent">Seulement si le site vous plaît</li>
+      </ul>
+      <div class="final-actions ent">
+        <a class="bouton-rdv bouton-final" href="https://wa.me/33614979604" data-track="whatsapp_tap" data-source="final">Prendre rendez-vous</a>
+        <a class="rdv-tel" href="tel:+33614979604"><span>ou appelez le 06 14 97 96 04</span></a>
+        <a class="rdv-tel rdv-mail" href="mailto:contact@devanturo.fr?subject=Rendez-vous%20pour%20le%20site%20de%20mon%20restaurant"><span>ou écrivez à contact@devanturo.fr</span></a>
+      </div>
+    </div>
+  </div>
+</section>
+</main>
+
+<!-- Barre du bas : visible seulement sur les écrans sans leur propre « Prendre rendez-vous » — comment ça se passe, qui vous parle + questions
+     (recit.js, d'après l'unité de la frise) ; cachée pendant la démo, l'offre, le final, la modale et le menu.
+     Placée AVANT le pied dans le DOM (elle est fixe, rien ne bouge à l'écran) : au clavier, Tab passe des questions à « Prendre rendez-vous »
+     avant les liens du pied, qui feraient descendre la page au-delà du final. Cachée, elle n'est pas tabulable (visibility, style.css). -->
+<div class="barre" id="barre">
+  <a href="https://wa.me/33614979604" data-track="whatsapp_tap" data-source="barre">Prendre rendez-vous</a>
+</div>
+
+<!-- Seule chose sous le récit : le pied de page. Il déclenche html.apres (en-tête opaque) quand il entre à l'écran (page.js).
+     CGV : cgv.html (page autonome, même identité, version du 13/09/2026). -->
+<footer class="pied">
+  <p>Devanturo · Entreprise individuelle · 2 rue Vauban, 59100 Roubaix · SIRET 108 488 131 00013 · <a href="tel:+33614979604">06 14 97 96 04</a> · <a href="mailto:contact@devanturo.fr">contact@devanturo.fr</a> · <a href="mentions-legales.html">Mentions légales</a> · <a href="cgv.html">CGV</a></p>
+</footer>
+
+<!-- La démo en grand (demos.js) : ouverte depuis « Explorer le site → », l'écran du portable ou l'écran du téléphone (chapitre 5).
+     L'iframe n'a jamais de src dans le HTML : posé à l'ouverture, iframe remplacée par une vierge à la fermeture.
+     Les deux gardes (tabindex="0") bouclent le focus quand il sort de l'iframe. Le lien WhatsApp porte le message du rendez-vous, avec le nom de ?nom= s'il y en a un (recit.js, majLiens). -->
+<div class="modale" id="modale-demo" role="dialog" aria-modal="true" aria-labelledby="modale-titre" hidden>
+  <div class="modale-fond" aria-hidden="true"></div>
+  <span class="modale-garde" tabindex="0"></span>
+  <div class="modale-panneau">
+    <div class="modale-barre">
+      <p class="modale-titre" id="modale-titre"><b>LE BRAISÉ</b><span class="modale-sous">Smash burger · démo en ligne</span></p>
+      <a class="modale-onglet" href="https://raptorkill.github.io/vitrine48h/demo-burger/" target="_blank" rel="noopener" aria-label="Ouvrir LE BRAISÉ dans un nouvel onglet"><span><span class="modale-long">Ouvrir dans un </span>nouvel onglet</span></a>
+      <a class="modale-cta" href="https://wa.me/33614979604" data-track="whatsapp_tap" data-source="modale">Prendre rendez-vous</a>
+      <button class="modale-fermer" type="button" aria-label="Fermer la démo"></button>
+    </div>
+    <div class="modale-cadre">
+      <iframe class="modale-iframe" title="Démo en ligne : le site LE BRAISÉ" referrerpolicy="no-referrer"></iframe>
+      <p class="modale-chargement">Chargement…</p>
+    </div>
+  </div>
+  <span class="modale-garde" tabindex="0"></span>
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.13.0/gsap.min.js" integrity="sha384-HOvlOYPIs/zjoIkWUGXkVmXsjr8GuZLV+Q+rcPwmJOVZVpvTSXQChiN4t9Euv9Vc" crossorigin="anonymous" defer></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.13.0/ScrollTrigger.min.js" integrity="sha384-P8VzCVnT9NBUkMrpcIZrJbA7EBjJvh/fJS6PmP+4nLIM284DtsImIv8D0fFjIkeh" crossorigin="anonymous" defer></script>
+<script src="recit.js" defer></script>
+<script src="page.js" defer></script>
+<script src="demos.js" defer></script>
+</body>
+</html>
