@@ -84,7 +84,8 @@
     chargement.textContent = TEXTE_CHARGEMENT;
   }
 
-  const touche = e => { if (e.key === 'Escape' || e.key === 'Esc') { e.preventDefault(); fermer(); } };
+  // Le choix « Prendre rendez-vous » ouvert par-dessus la démo : Escape ferme d'abord le choix (son <dialog>), pas la démo.
+  const touche = e => { if ((e.key === 'Escape' || e.key === 'Esc') && !document.documentElement.classList.contains('choix-ouvert')) { e.preventDefault(); fermer(); } };
 
   function ouvrir(d) {
     if (etat !== 'ferme') return;

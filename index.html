@@ -290,6 +290,23 @@
   <span class="modale-garde" tabindex="0"></span>
 </div>
 
+<!-- Prendre rendez-vous (décision du 13/09) : chaque bouton « Prendre rendez-vous » ouvre ce choix — WhatsApp, appel ou e-mail, avec le numéro
+     et l'adresse écrits en clair et un bouton Copier (utile sur ordinateur). <dialog> natif : focus piégé, Escape, fond inerte (recit.js).
+     Sans JS, les boutons restent des liens WhatsApp directs. -->
+<dialog class="choix" id="choix-rdv" aria-labelledby="choix-titre">
+  <div class="choix-panneau">
+    <button class="choix-fermer" type="button" aria-label="Fermer"></button>
+    <p class="choix-etiquette">Prendre rendez-vous</p>
+    <p class="choix-titre" id="choix-titre">Comment <span class="insecable">préférez-vous</span> me joindre&nbsp;?</p>
+    <p class="choix-sous">Pour fixer la visite, ou la visio si vous êtes loin.</p>
+    <ul class="choix-liste">
+      <li><a class="choix-option choix-principal" href="https://wa.me/33614979604" target="_blank" rel="noopener" data-canal="whatsapp"><span class="choix-nom">WhatsApp</span><span class="choix-detail">Un message tout prêt s'ouvre</span></a></li>
+      <li class="choix-ligne"><a class="choix-option" href="tel:+33614979604" data-canal="telephone"><span class="choix-nom">Appeler</span><span class="choix-detail">06 14 97 96 04</span></a><button class="choix-copier" type="button" data-copier="06 14 97 96 04" aria-label="Copier le numéro">Copier</button></li>
+      <li class="choix-ligne"><a class="choix-option" href="mailto:contact@devanturo.fr" data-canal="email"><span class="choix-nom">E-mail</span><span class="choix-detail">contact@devanturo.fr</span></a><button class="choix-copier" type="button" data-copier="contact@devanturo.fr" aria-label="Copier l'adresse e-mail">Copier</button></li>
+    </ul>
+  </div>
+</dialog>
+
 <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.13.0/gsap.min.js" integrity="sha384-HOvlOYPIs/zjoIkWUGXkVmXsjr8GuZLV+Q+rcPwmJOVZVpvTSXQChiN4t9Euv9Vc" crossorigin="anonymous" defer></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.13.0/ScrollTrigger.min.js" integrity="sha384-P8VzCVnT9NBUkMrpcIZrJbA7EBjJvh/fJS6PmP+4nLIM284DtsImIv8D0fFjIkeh" crossorigin="anonymous" defer></script>
 <script src="recit.js" defer></script>

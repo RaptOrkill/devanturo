@@ -36,6 +36,64 @@
 
   $$('a[data-track]').forEach(a => a.addEventListener('click', () => track(a.dataset.track, { source: a.dataset.source })));
 
+  /* ---------- Prendre rendez-vous : chaque bouton ouvre le choix WhatsApp / appel / e-mail (#choix-rdv, <dialog> natif) ---------- */
+  // Sans <dialog> (très vieux navigateur) ou clic modifié (Ctrl, Maj, molette) : le lien WhatsApp direct, comme avant.
+  const choix = $('#choix-rdv');
+  if (choix && typeof choix.showModal === 'function') {
+    const SUJET = 'Rendez-vous pour le site de mon restaurant';
+    const lienMail = () => `mailto:contact@devanturo.fr?subject=${encodeURIComponent(nom ? `${SUJET} (${nom})` : SUJET)}`
+      + `&body=${encodeURIComponent(`Bonjour Baptiste,\n\nJe voudrais prendre rendez-vous pour le site de mon restaurant.\n\nNom du restaurant : ${nom}\nVille : \nMon numéro : \n\nMerci`)}`;
+    let sourceChoix = '';
+    $$('a[data-track="whatsapp_tap"]').forEach(a => a.addEventListener('click', e => {
+      if (e.button !== 0 || e.metaKey || e.ctrlKey || e.shiftKey || e.altKey) return;
+      e.preventDefault();
+      const menuBouton = $('.menu-bouton');
+      if (html.classList.contains('menu-ouvert') && menuBouton) menuBouton.click();
+      sourceChoix = a.dataset.source || '';
+      $('[data-canal="whatsapp"]', choix).href = lienWhatsApp();
+      $('[data-canal="email"]', choix).href = lienMail();
+      html.classList.add('choix-ouvert');
+      choix.showModal();
+    }));
+    // La classe est retirée à chaque fermeture sans attendre l'événement « close » (asynchrone) : le verrou de défilement ne reste jamais posé.
+    const fermerChoix = () => { if (choix.open) choix.close(); html.classList.remove('choix-ouvert'); };
+    choix.addEventListener('close', () => html.classList.remove('choix-ouvert'));
+    // Escape ferme le choix seulement (stopPropagation : la démo ouverte dessous reste ouverte, demos.js écoute sur document).
+    choix.addEventListener('keydown', e => { if (e.key === 'Escape' || e.key === 'Esc') { e.preventDefault(); e.stopPropagation(); fermerChoix(); } });
+    $('.choix-fermer', choix).addEventListener('click', fermerChoix);
+    // Clic sur le fond (le <dialog> lui-même, hors du panneau) : fermer.
+    choix.addEventListener('click', e => { if (e.target === choix) fermerChoix(); });
+    $$('[data-canal]', choix).forEach(o => o.addEventListener('click', () => {
+      track('rdv_choix', { canal: o.dataset.canal, source: sourceChoix });
+      setTimeout(fermerChoix, 400);
+    }));
+    // Copier : presse-papiers moderne, sinon l'ancienne commande copy ; si les deux échouent, le texte est sélectionné (Ctrl+C reste possible).
+    const copierAncien = texte => {
+      const t = document.createElement('textarea');
+      t.value = texte; t.setAttribute('readonly', ''); t.style.cssText = 'position:fixed;opacity:0;pointer-events:none';
+      choix.appendChild(t); t.select();
+      let ok = false;
+      try { ok = document.execCommand('copy'); } catch (_) { ok = false; }
+      t.remove();
+      return ok;
+    };
+    $$('[data-copier]', choix).forEach(b => b.addEventListener('click', () => {
+      const texte = b.dataset.copier;
+      const reussi = () => {
+        b.textContent = 'Copié';
+        track('rdv_copie', { valeur: texte.includes('@') ? 'email' : 'telephone', source: sourceChoix });
+        setTimeout(() => { b.textContent = 'Copier'; }, 2000);
+      };
+      const echec = () => {
+        if (copierAncien(texte)) { reussi(); return; }
+        const detail = $('.choix-detail', b.previousElementSibling);
+        if (detail) { const s = getSelection(), plage = document.createRange(); plage.selectNodeContents(detail); s.removeAllRanges(); s.addRange(plage); }
+      };
+      if (navigator.clipboard && window.isSecureContext) navigator.clipboard.writeText(texte).then(reussi, echec);
+      else echec();
+    }));
+  }
+
   /* ---------- LE BRAISÉ (la démo, 82 → 112) : le bouton, l'écran du portable et l'écran du téléphone ouvrent la démo ---------- */
   // Une seule démo, réelle. La modale (demos.js) écoute « demos:ouvrir » sur document et appelle preventDefault() ;
   // si elle n'est pas là (script en échec), la démo s'ouvre dans un nouvel onglet (noopener).
@@ -679,7 +737,7 @@
   function tenterPassage() {
     minuteurPassage = 0;
     if (!descend || appuye || passageEnCours || verrouille || stopGlisse || document.hidden || !html.classList.contains('intro-finie')) return;
-    if (html.classList.contains('modale-ouverte') || html.classList.contains('menu-ouvert')) return;
+    if (html.classList.contains('modale-ouverte') || html.classList.contains('menu-ouvert') || html.classList.contains('choix-ouvert')) return;
     const y = window.scrollY, u = uniteDe(y);
     const p = PASSAGES.find(q => u >= q.de && u < q.a);
     if (!p || annules.has(p)) return;

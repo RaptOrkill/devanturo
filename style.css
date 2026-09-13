@@ -338,6 +338,40 @@ details p { max-width: 46ch; padding: 0 0 14px; color: #3a3833; }
 .pied { padding: 28px 24px calc(40px + env(safe-area-inset-bottom)); text-align: center; font-size: 13px; line-height: 1.5; color: var(--gris-texte); }
 .pied a { display: inline-flex; align-items: center; justify-content: center; min-width: 44px; min-height: 44px; margin-block: -12px; } /* « CGV » faisait 28 px de large */
 
+/* Prendre rendez-vous : le choix WhatsApp / appel / e-mail (<dialog> #choix-rdv, recit.js). Même identité : fond du site, rouge, angles droits.
+   Téléphone : panneau posé en bas de l'écran, sous le pouce ; à partir de 640 px : centré. Verrou sur <body> comme le menu (la scène collante ne saute pas). */
+.choix-ouvert body { overflow: hidden; }
+.choix { position: fixed; inset: auto 0 0; width: 100%; max-width: none; max-height: 100dvh; margin: 0; padding: 0; overflow-y: auto; overscroll-behavior: contain;
+  border: 0; background: var(--fond); color: var(--encre); box-shadow: 0 -12px 40px rgba(20, 19, 17, .18); }
+.choix::backdrop { background: rgba(20, 19, 17, .45); }
+.choix[open] { animation: choix-entree 320ms var(--courbe); }
+@keyframes choix-entree { from { opacity: 0; transform: translateY(24px); } to { opacity: 1; transform: none; } }
+.choix-panneau { position: relative; padding: 24px 20px calc(20px + env(safe-area-inset-bottom)); }
+.choix-fermer { position: absolute; top: 8px; right: 8px; width: 44px; height: 44px; border: 0; background: none; cursor: pointer; -webkit-tap-highlight-color: transparent; }
+.choix-fermer::before, .choix-fermer::after { content: ''; position: absolute; left: 13px; top: 21px; width: 18px; height: 1.5px; background: var(--encre); transform: rotate(45deg); }
+.choix-fermer::after { transform: rotate(-45deg); }
+.choix-etiquette { font-size: 11px; letter-spacing: .18em; text-transform: uppercase; color: var(--rouge); margin-bottom: 10px; }
+.choix-titre { padding-right: 36px; font: 300 clamp(26px, 7vw, 34px)/1.08 var(--serif); letter-spacing: -.012em; text-wrap: balance; }
+.choix-titre .insecable { white-space: nowrap; }
+.choix-sous { margin-top: 8px; font-size: 15px; line-height: 1.4; color: var(--gris-texte); }
+.choix-liste { display: grid; gap: 10px; margin-top: 18px; }
+.choix-ligne { display: grid; grid-template-columns: minmax(0, 1fr) auto; }
+.choix-option { display: flex; flex-direction: column; justify-content: center; min-height: 64px; padding: 10px 16px; border: 1px solid var(--encre); color: var(--encre);
+  text-decoration: none; -webkit-tap-highlight-color: transparent; transition: background-color var(--duree) var(--courbe), color var(--duree) var(--courbe); }
+.choix-option:hover { background: var(--encre); color: var(--fond); }
+.choix-principal, .choix-principal:hover { border-color: var(--rouge); background: var(--rouge); color: #fff; }
+.choix-principal:hover { border-color: #a82816; background: #a82816; }
+.choix-nom { font: 500 16px/1.2 var(--sans); }
+.choix-detail { margin-top: 3px; font-size: 14px; line-height: 1.3; opacity: .85; overflow-wrap: anywhere; }
+.choix-copier { min-width: 84px; padding: 0 12px; border: 1px solid var(--encre); border-left: 0; background: none; font-size: 14px; cursor: pointer;
+  transition: background-color var(--duree) var(--courbe), color var(--duree) var(--courbe); }
+.choix-copier:hover { background: var(--encre); color: var(--fond); }
+@media (min-width: 640px) {
+  .choix { inset: 0; width: min(460px, calc(100% - 40px)); height: fit-content; margin: auto; box-shadow: 0 24px 80px rgba(20, 19, 17, .25); }
+  .choix-panneau { padding: 32px 32px 28px; }
+}
+@media (prefers-reduced-motion: reduce) { .choix[open] { animation: none; } }
+
 /* Barre WhatsApp collée en bas : comment ça se passe, qui vous parle + questions (recit.js) ; jamais pendant la démo, l'offre, le final, la modale ou le menu. */
 .barre { position: fixed; left: 0; right: 0; bottom: 0; z-index: 30; padding: 10px 16px calc(10px + env(safe-area-inset-bottom));
   background: rgba(246, 244, 239, .9); -webkit-backdrop-filter: blur(10px); backdrop-filter: blur(10px); border-top: 1px solid var(--ligne);
