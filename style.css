@@ -155,7 +155,7 @@ h2.etiquette { font-weight: 400; }
 .recherche-barre { background: #fff; border: 1px solid #e2e2df; border-radius: 20px; padding: 8px 12px; padding: 3.85cqw 5.8cqw; font-size: 11px; font-size: 5.3cqw; color: #333; }
 .recherche-barre::before { content: '⌕  '; color: #888; }
 /* La frappe (CAP §4.4) : le texte garde son espace final pendant qu'il se tape ; le curseur n'existe qu'en mise en scène,
-   clignote tant que la frappe est en cours (.frappe, posé par recit.js) et s'éteint une fois « restaurant roubaix » écrit en entier. */
+   clignote tant que la frappe est en cours (.frappe, posé par recit.js) et s'éteint une fois « restaurant ce soir » écrit en entier. */
 .recherche-texte { white-space: pre; }
 .recherche-curseur { display: none; }
 .anim .recherche-curseur { display: inline-block; width: 1px; height: 1.1em; margin-left: 1px; vertical-align: -.18em; background: #333; opacity: 0; }

@@ -201,7 +201,7 @@ function arrondi(ctx, x, y, w, h, r) {
   if (ctx.roundRect) ctx.roundRect(x, y, w, h, r);
   else { ctx.moveTo(x + r, y); ctx.arcTo(x + w, y, x + w, y + h, r); ctx.arcTo(x + w, y + h, x, y + h, r); ctx.arcTo(x, y + h, x, y, r); ctx.arcTo(x, y, x + w, y, r); ctx.closePath(); }
 }
-const texteRecherche = () => recit.texteRecherche || 'restaurant roubaix';
+const texteRecherche = () => recit.texteRecherche || 'restaurant ce soir';
 // Palier de la cascade des résultats : 0 (rien) → PALIERS_RESULTATS (les trois lignes pleines).
 const palierResultats = resultats => Math.round(Math.min(1, Math.max(0, resultats)) * PALIERS_RESULTATS);
 // Préparation, une seule fois : polices, images, canvas et texture ; puis un premier dessin à l'état courant de la frise (?nom= compris).

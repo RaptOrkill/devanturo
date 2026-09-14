@@ -174,7 +174,7 @@
   let demoPrete = false, clicActif = false, tenue = false, dernierClic = ''; // état de la démo (majDemo, plus bas)
   // Écrans vivants (CAP §4.4) : la recherche se tape lettre par lettre, les résultats arrivent en cascade.
   const rechercheTexte = $('.recherche-texte'), rechercheLignes = $$('.recherche-liste li');
-  const TEXTE_RECHERCHE = rechercheTexte ? rechercheTexte.textContent : 'restaurant roubaix';
+  const TEXTE_RECHERCHE = rechercheTexte ? rechercheTexte.textContent : 'restaurant ce soir';
 
   /* Repères de la frise, en unités (0 → 218). Toute position écrite ailleurs (page.js, scene3d.js, README) vient d'ici.
      .anim .recit (style.css) fait 100vh + 218 × 5,2vh = 1233,6vh : allonger la frise = allonger cette hauteur dans la même proportion. */
