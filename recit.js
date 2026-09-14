@@ -32,6 +32,10 @@
     // Le titre du final, écrit AVANT la découpe en mots (textContent seulement, jamais de HTML).
     const titreFinal = $('.final-titre');
     if (titreFinal) { titreFinal.textContent = `le site de ${nom}.`; titreFinal.classList.add('avec-nom'); }
+    // Première page : « Vous cherchez un site premium pour <nom> ? » et l'étiquette « Préparé pour <nom> » (textContent seulement).
+    const nomAccueil = $('.accueil-nom'), etiquette = $('.accueil-etiquette');
+    if (nomAccueil) nomAccueil.textContent = nom;
+    if (etiquette) etiquette.textContent = `Préparé pour ${nom}`;
   }
 
   $$('a[data-track]').forEach(a => a.addEventListener('click', () => track(a.dataset.track, { source: a.dataset.source })));
@@ -810,17 +814,10 @@
     minuteurPassage = setTimeout(tenterPassage, ATTENTE_PASSAGE);
   }, { passive: true });
 
-  if (param) {
-    // Lien personnalisé : on arrive directement sur le final, avec son nom dans le titre et le message, même plancher.
-    const allerAuBout = () => {
-      ScrollTrigger.refresh();
-      window.scrollTo(0, marche(VITRINE));
-      ScrollTrigger.update();
-      poserPlancher();
-    };
-    if (document.readyState === 'complete') allerAuBout();
-    else window.addEventListener('load', allerAuBout, { once: true });
-  } else {
+  // Lien personnalisé (?nom=) : depuis le 14/09, on arrive EN HAUT comme tout le monde (le nom est dans le grand titre) ;
+  // avant, la page sautait au final et le restaurateur ne voyait ni la première page, ni le prix, ni l'exemple.
+  void VITRINE;
+  {
     introEnCours = true;
     let attendu = false, chargee = document.readyState === 'complete';
     // 2,5 s au moins ; si la 3D est en route, on attend son signal puis on laisse la fourchette tourner TENUE_3D,
