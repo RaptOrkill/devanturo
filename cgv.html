@@ -10,6 +10,7 @@
 <meta name="robots" content="noindex">
 <meta name="theme-color" content="#F6F4EF">
 <link rel="icon" href="favicon.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="apple-touch-icon.png">
 <link rel="canonical" href="https://devanturo.fr/cgv.html">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -25,6 +26,7 @@
   :where(a, button):focus-visible { outline: 2px solid var(--rouge); outline-offset: 3px; }
   .entete { display: flex; justify-content: space-between; align-items: center; gap: 16px; padding: 14px 24px; border-bottom: 1px solid var(--ligne); }
   .entete a { display: inline-flex; align-items: center; min-height: 44px; font-size: 12px; letter-spacing: .16em; text-transform: uppercase; text-decoration: none; }
+  .entete a img { width: 20px; height: 20px; margin-right: 10px; }
   .entete .retour { letter-spacing: .01em; text-transform: none; font-size: 15px; text-decoration: underline; text-underline-offset: 4px; text-decoration-thickness: 1px; }
   main { max-width: 760px; margin: 0 auto; padding: 56px 24px 72px; }
   .etiquette { font-size: 11px; letter-spacing: .18em; text-transform: uppercase; color: var(--rouge); margin-bottom: 14px; }
@@ -54,7 +56,7 @@
 </head>
 <body>
 <header class="entete">
-  <a href="index.html">Devanturo</a>
+  <a href="index.html"><img class="marque-icone" src="assets/img/logo-d.svg" alt="" width="20" height="20">Devanturo</a>
   <a class="retour" href="index.html">← Retour au site</a>
 </header>
 

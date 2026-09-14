@@ -39,6 +39,8 @@ button { font: inherit; color: inherit; }
 /* Version statique (sans .anim) : la page défile sous l'en-tête dès le début, il est donc opaque tout de suite. */
 .apres .entete, :root:not(.anim) .entete { background: rgba(246, 244, 239, .92); -webkit-backdrop-filter: blur(8px); backdrop-filter: blur(8px); box-shadow: inset 0 -1px 0 var(--ligne); }
 .entete-marque, .entete-lien, .nav a { display: inline-flex; align-items: center; min-height: 44px; text-decoration: none; }
+/* Logo Devanturo (D + fourchette, choisi le 14/09/2026) devant le nom. */
+.marque-icone { width: 20px; height: 20px; margin-right: 10px; flex: none; }
 .nav { display: none; } /* sous 1024 : dans le menu */
 /* Le CTA de l'en-tête : bouton rouge carré, le même geste que partout (constat C04). Sous 1024, « Rendez-vous » compact collé à « Menu ».
    Caché sans décaler l'en-tête (visibility + opacity) quand un autre « Prendre rendez-vous » est à l'écran (html.cta-ecran, posé par recit.js),

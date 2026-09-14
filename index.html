@@ -5,9 +5,10 @@
 <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'sha256-RVP26x8T5m8PU+KUwFAOWVQediVWW/gm+D0RLTqKWKg=' 'sha256-Y7oEjKaSsx+QsWXPYn4isOW8Uxi5x0t+kKu3H1NJLsQ=' 'wasm-unsafe-eval' https://cdnjs.cloudflare.com https://cdn.jsdelivr.net; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; img-src 'self' data: blob:; connect-src 'self' blob: data: https://cdn.jsdelivr.net; frame-src https://raptorkill.github.io; worker-src 'self' blob:; object-src 'none'; base-uri 'self'; form-action 'none'; upgrade-insecure-requests">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>Devanturo — le site internet de votre restaurant</title>
-<meta name="description" content="Le site internet de votre restaurant, en ligne 7 jours après notre rendez-vous : sur place dans la métropole lilloise, en visio partout en France. 549 € tout compris, payé seulement s'il vous plaît.">
+<meta name="description" content="Le site internet de votre restaurant, en ligne 7 jours après notre rendez-vous : sur place dans la métropole lilloise, en visio partout en France. 549 € tout compris, paiement à la livraison.">
 <meta name="theme-color" content="#F6F4EF">
 <link rel="icon" href="favicon.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="apple-touch-icon.png">
 <link rel="canonical" href="https://devanturo.fr/">
 <meta name="referrer" content="strict-origin-when-cross-origin">
 <meta property="og:type" content="website">
@@ -15,12 +16,12 @@
 <meta property="og:site_name" content="Devanturo">
 <meta property="og:url" content="https://devanturo.fr/">
 <meta property="og:title" content="Le site de votre restaurant, en ligne 7 jours après ma visite">
-<meta property="og:description" content="549 € tout compris, payé à la livraison, seulement si le site vous plaît. Sur place près de Lille, en visio partout en France.">
+<meta property="og:description" content="549 € tout compris, paiement à la livraison. Sur place près de Lille, en visio partout en France.">
 <meta property="og:image" content="https://devanturo.fr/assets/img/partage.jpg">
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
 <meta name="twitter:card" content="summary_large_image">
-<script type="application/ld+json">{"@context":"https://schema.org","@type":"ProfessionalService","@id":"https://devanturo.fr/#entreprise","name":"Devanturo","description":"Création de sites internet pour restaurants et bars : une visite de 30 minutes (en visio hors de la métropole lilloise), le site en ligne 7 jours après, 549 € tout compris, payé à la livraison.","url":"https://devanturo.fr/","image":"https://devanturo.fr/assets/img/partage.jpg","telephone":"+33614979604","email":"contact@devanturo.fr","priceRange":"549 €","address":{"@type":"PostalAddress","streetAddress":"2 rue Vauban","postalCode":"59100","addressLocality":"Roubaix","addressCountry":"FR"},"areaServed":["Roubaix","Lille","Tourcoing","Métropole européenne de Lille","France"],"founder":{"@type":"Person","name":"Baptiste Ruin"},"makesOffer":{"@type":"Offer","name":"Site internet pour restaurant","price":"549","priceCurrency":"EUR"}}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"ProfessionalService","@id":"https://devanturo.fr/#entreprise","name":"Devanturo","description":"Création de sites internet pour restaurants et bars : une visite de 30 minutes (en visio hors de la métropole lilloise), le site en ligne 7 jours après, 549 € tout compris, payé à la livraison.","url":"https://devanturo.fr/","image":"https://devanturo.fr/assets/img/partage.jpg","logo":"https://devanturo.fr/assets/img/logo-devanturo.png","telephone":"+33614979604","email":"contact@devanturo.fr","priceRange":"549 €","address":{"@type":"PostalAddress","streetAddress":"2 rue Vauban","postalCode":"59100","addressLocality":"Roubaix","addressCountry":"FR"},"areaServed":["Roubaix","Lille","Tourcoing","Métropole européenne de Lille","France"],"founder":{"@type":"Person","name":"Baptiste Ruin"},"makesOffer":{"@type":"Offer","name":"Site internet pour restaurant","price":"549","priceCurrency":"EUR"}}</script>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="dns-prefetch" href="https://cdnjs.cloudflare.com">
@@ -33,7 +34,7 @@
 </head>
 <body>
 <header class="entete">
-  <a class="entete-marque" href="#accueil">Devanturo</a>
+  <a class="entete-marque" href="#accueil"><img class="marque-icone" src="assets/img/logo-d.svg" alt="" width="20" height="20">Devanturo</a>
   <p class="promesse">Le site de votre restaurant, en ligne 7 jours après ma visite · <b>549 €</b> · <b>payé à la livraison</b></p>
   <!-- Les trois liens visent des chapitres du récit (data-frise = unité de leur tenue, réécrite par recit.js depuis ses constantes) :
        page.js y descend par la frise, en respectant le plancher. Un lien sans cible serait masqué (jamais de lien mort). -->
@@ -74,7 +75,7 @@
   <div class="accueil-texte">
     <p class="accueil-etiquette">Restaurants, bars et cafés</p>
     <h1 class="accueil-titre" id="accueil-titre">Vous cherchez un site premium pour votre restaurant&nbsp;? <span class="accueil-prix">À&nbsp;seulement 549&nbsp;€.</span></h1>
-    <p class="accueil-sous">Tout compris · en ligne 7 jours après ma visite · payé seulement s'il vous plaît</p>
+    <p class="accueil-sous">Tout compris · en ligne 7 jours après ma visite · paiement à la livraison</p>
     <div class="accueil-actions">
       <a class="bouton-rdv accueil-rdv" href="https://wa.me/33614979604" data-track="whatsapp_tap" data-source="accueil">Prendre rendez-vous</a>
       <a class="accueil-demo" href="https://raptorkill.github.io/vitrine48h/demo-burger/" target="_blank" rel="noopener">Voir un exemple de site</a>
@@ -212,7 +213,7 @@
       <ol class="etapes">
         <li class="ent"><span class="num">1</span><p><b>Vous m'écrivez sur WhatsApp.</b> On fixe une visite, ou une visio si vous êtes loin.</p></li>
         <li class="ent"><span class="num">2</span><p><b>Je passe trente minutes dans votre salle.</b> Je prends les photos, vous continuez votre service.</p></li>
-        <li class="ent"><span class="num">3</span><p><b>Votre site est en ligne sept jours après ma visite.</b> Vous payez 549 € à la livraison, seulement s'il vous plaît.</p></li>
+        <li class="ent"><span class="num">3</span><p><b>Votre site est en ligne sept jours après ma visite.</b> Paiement de 549 € à la livraison.</p></li>
       </ol>
     </div>
 
@@ -221,7 +222,7 @@
       <h2 class="etiquette mots">Le prix</h2>
       <p class="phrase mots">Un prix, tout compris.</p>
       <p class="offre-prix ent">549&nbsp;€</p>
-      <p class="offre-condition ent">Payé à la livraison, seulement si le site vous plaît. Pas d'acompte.</p>
+      <p class="offre-condition ent">Paiement à la livraison. Pas d'acompte.</p>
       <!-- Offre de lancement (décision du 14/09) : réelle et limitée aux 3 premiers restaurants signés — à retirer à la 3e signature (CGV art. 6).
            Contrepartie = droit de montrer le site en exemple, JAMAIS un avis Google (incitation interdite par Google et encadrée par la loi). -->
       <p class="offre-lancement ent"><b>Lancement&nbsp;:</b> 390&nbsp;€ pour les 3 premiers restaurants, en échange du droit de montrer leur site en exemple.</p>
@@ -279,8 +280,8 @@
       <p class="final-phrase ent">Trente minutes dans votre salle. Votre site en ligne sept jours après.</p>
       <ul class="final-points">
         <li class="ent">549&nbsp;€ tout compris</li>
-        <li class="ent">Payé à la livraison</li>
-        <li class="ent">Seulement si le site vous plaît</li>
+        <li class="ent">Paiement à la livraison</li>
+        <li class="ent">Pas d'acompte</li>
       </ul>
       <div class="final-actions ent">
         <a class="bouton-rdv bouton-final" href="https://wa.me/33614979604" data-track="whatsapp_tap" data-source="final">Prendre rendez-vous</a>
