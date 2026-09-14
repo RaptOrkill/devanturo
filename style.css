@@ -561,3 +561,12 @@ details p { max-width: 46ch; padding: 0 0 14px; color: #3a3833; }
   .portable-clic > span { min-height: 44px; padding: 0 16px; font-size: 15px; }
   .anim .tel { height: min(66svh, 820px); }
 }
+
+/* Bandeau cookies (mesure.js) : affiché seulement quand la mesure Google Ads est active. Deux boutons de même poids (CNIL). */
+.cookies { position: fixed; left: 16px; right: 16px; bottom: calc(16px + env(safe-area-inset-bottom)); z-index: 55; max-width: 520px; padding: 16px;
+  background: var(--fond); color: var(--encre); border: 1px solid var(--encre); box-shadow: 0 8px 24px rgba(20, 19, 17, .18); font-size: 14px; line-height: 1.45; }
+.cookies p { margin: 0; }
+.cookies a { color: inherit; text-underline-offset: 3px; }
+.cookies-actions { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-top: 12px; }
+.cookies-actions button { min-height: 44px; border: 1px solid var(--encre); border-radius: 0; background: transparent; color: var(--encre); font: 500 15px/1.2 var(--sans); cursor: pointer; }
+.cookies-actions button:hover { background: var(--encre); color: var(--fond); }
