@@ -101,6 +101,9 @@ h2.etiquette { font-weight: 400; }
 .accueil-demo:hover { background: var(--encre); color: var(--fond); }
 .accueil-lancement { margin-top: 12px; font-size: 14px; color: var(--rouge); }
 .accueil-lancement b { font-weight: 600; }
+.accueil-etapes { margin-top: 16px; display: flex; flex-wrap: wrap; justify-content: center; gap: 6px 12px; font-size: 13px; color: var(--encre); }
+.accueil-etapes li { display: inline-flex; align-items: center; gap: 8px; }
+.accueil-etapes b { display: inline-grid; place-items: center; width: 22px; height: 22px; border-radius: 50%; background: var(--rouge); color: #fff; font: 600 12px/1 var(--sans); }
 /* Les écrans de la démo : un seul lien (clic = modale), captures fixes, aucune animation lourde. */
 .accueil-ecrans { position: relative; display: block; width: 100%; max-width: 520px; aspect-ratio: 16 / 11.5; color: var(--encre); text-decoration: none; -webkit-tap-highlight-color: transparent; }
 .accueil-ordi { position: absolute; right: 0; top: 0; width: 86%; aspect-ratio: 16 / 10; background: #111; border-radius: 10px; padding: 1.5%;
@@ -128,6 +131,7 @@ html:not(.accueil-quitte) .entete-lien { opacity: 0; visibility: hidden; pointer
   .accueil { min-height: 100svh; grid-template-columns: minmax(0, 1fr) minmax(0, .92fr); grid-template-rows: 1fr auto; column-gap: 5vw; row-gap: 2vh;
     align-items: center; justify-items: stretch; text-align: left; padding: calc(var(--entete-h) + 3vh) 6vw 2vh; }
   .accueil-texte { align-items: flex-start; }
+  .accueil-etapes { justify-content: flex-start; margin-top: 3.2vh; font-size: clamp(14px, .95vw, 17px); }
   .accueil-titre { margin-top: 2.4vh; font-size: clamp(46px, 4.9vw, 92px); }
   .accueil-sous { margin-top: 2.8vh; max-width: 40ch; font-size: clamp(17px, 1.2vw, 22px); }
   .accueil-actions { margin-top: 4vh; max-width: none; width: auto; display: flex; gap: 14px; }

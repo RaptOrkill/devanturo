@@ -38,8 +38,8 @@
   <!-- Les trois liens visent des chapitres du récit (data-frise = unité de leur tenue, réécrite par recit.js depuis ses constantes) :
        page.js y descend par la frise, en respectant le plancher. Un lien sans cible serait masqué (jamais de lien mort). -->
   <nav class="nav" aria-label="Sections du site">
-    <a href="#demos">Démos</a>
-    <a href="#offre">L'offre</a>
+    <a href="#demos">Exemple</a>
+    <a href="#offre">Prix</a>
     <a href="#questions">Questions</a>
   </nav>
   <!-- Le CTA de l'en-tête : bouton rouge carré « Prendre rendez-vous » (≥ 1024) ou « Rendez-vous » compact à gauche de « Menu » (< 1024).
@@ -53,8 +53,8 @@
 <div class="menu" id="menu">
   <nav aria-label="Menu">
     <ul class="menu-liens">
-      <li><a href="#demos">Démos</a></li>
-      <li><a href="#offre">L'offre</a></li>
+      <li><a href="#demos">Exemple</a></li>
+      <li><a href="#offre">Prix</a></li>
       <li><a href="#questions">Questions</a></li>
     </ul>
   </nav>
@@ -75,19 +75,25 @@
     <p class="accueil-sous">Tout compris · en ligne 7 jours après ma visite · payé seulement s'il vous plaît</p>
     <div class="accueil-actions">
       <a class="bouton-rdv accueil-rdv" href="https://wa.me/33614979604" data-track="whatsapp_tap" data-source="accueil">Prendre rendez-vous</a>
-      <a class="accueil-demo" href="https://raptorkill.github.io/vitrine48h/demo-burger/" target="_blank" rel="noopener">Voir la démo</a>
+      <a class="accueil-demo" href="https://raptorkill.github.io/vitrine48h/demo-burger/" target="_blank" rel="noopener">Voir un exemple de site</a>
     </div>
     <p class="accueil-lancement"><b>Lancement&nbsp;:</b> 390&nbsp;€ pour les 3 premiers restaurants</p>
+    <ol class="accueil-etapes" aria-label="Comment ça se passe">
+      <li><b>1</b> RDV de 30 min</li>
+      <li><b>2</b> Photos chez vous</li>
+      <li><b>3</b> En ligne en 7 jours</li>
+    </ol>
   </div>
-  <!-- La démo, visible dès l'arrivée : deux vraies vidéos de LE BRAISÉ (vidéo de fond en flammes, défilement de tout le site ; 25 s en boucle, ralenti sur le burger qui s'ouvre, 0,85 Mo et 0,57 Mo),
+  <!-- La démo, visible dès l'arrivée : l'accueil de LE BRAISÉ avec son fond en flammes, en boucle de 10 s (0,47 Mo et 0,22 Mo), sans défilement :
+       pour voir tout le site, on clique (demande du 14/09).
        chargées après la page (recit.js) avec une image en attendant ; un clic ouvre le vrai site en grand (même modale que plus bas). -->
-  <a class="accueil-ecrans" href="https://raptorkill.github.io/vitrine48h/demo-burger/" target="_blank" rel="noopener" aria-label="Tester la démo : le site LE BRAISÉ">
-    <span class="accueil-ordi"><span class="accueil-defile"><video class="accueil-video" muted loop playsinline preload="none" poster="assets/video/demo-ordi.jpg" data-src="assets/video/demo-ordi.mp4?v=2" width="960" height="600"></video></span></span>
-    <span class="accueil-tel"><span class="accueil-defile"><video class="accueil-video" muted loop playsinline preload="none" poster="assets/video/demo-mobile.jpg" data-src="assets/video/demo-mobile.mp4?v=2" width="390" height="844"></video></span></span>
-    <span class="accueil-jouer">▶&nbsp; Tester la démo</span>
-    <span class="accueil-legende">LE BRAISÉ · site de démonstration</span>
+  <a class="accueil-ecrans" href="https://raptorkill.github.io/vitrine48h/demo-burger/" target="_blank" rel="noopener" aria-label="Visiter l'exemple de site : LE BRAISÉ">
+    <span class="accueil-ordi"><span class="accueil-defile"><video class="accueil-video" muted loop playsinline preload="none" poster="assets/video/demo-ordi.jpg" data-src="assets/video/demo-ordi.mp4?v=3" width="960" height="600"></video></span></span>
+    <span class="accueil-tel"><span class="accueil-defile"><video class="accueil-video" muted loop playsinline preload="none" poster="assets/video/demo-mobile.jpg" data-src="assets/video/demo-mobile.mp4?v=3" width="390" height="844"></video></span></span>
+    <span class="accueil-jouer">▶&nbsp; Cliquez pour visiter le site</span>
+    <span class="accueil-legende">Exemple de site : LE BRAISÉ (démonstration)</span>
   </a>
-  <a class="accueil-suite" href="#recit" data-track="decouvrir"><span>Découvrir l'histoire</span> ↓</a>
+  <a class="accueil-suite" href="#recit" data-track="decouvrir"><span>Pourquoi un site pour votre restaurant ? (1 min)</span> ↓</a>
 </section>
 <section class="recit" id="recit" aria-label="L'histoire">
   <div class="scene">
