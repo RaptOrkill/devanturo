@@ -39,6 +39,8 @@
   /* ---------- Prendre rendez-vous : chaque bouton ouvre le choix WhatsApp / appel / e-mail (#choix-rdv, <dialog> natif) ---------- */
   // Sans <dialog> (très vieux navigateur) ou clic modifié (Ctrl, Maj, molette) : le lien WhatsApp direct, comme avant.
   const choix = $('#choix-rdv');
+  // Lien de prise de rendez-vous en ligne (Cal.com ou Calendly). Vide = option cachée.
+  const AGENDA = '';
   if (choix && typeof choix.showModal === 'function') {
     const SUJET = 'Rendez-vous pour le site de mon restaurant';
     const lienMail = () => `mailto:contact@devanturo.fr?subject=${encodeURIComponent(nom ? `${SUJET} (${nom})` : SUJET)}`
@@ -51,6 +53,8 @@
       if (html.classList.contains('menu-ouvert') && menuBouton) menuBouton.click();
       sourceChoix = a.dataset.source || '';
       $('[data-canal="whatsapp"]', choix).href = lienWhatsApp();
+      const agenda = $('[data-canal="agenda"]', choix);
+      if (AGENDA && agenda) { agenda.href = AGENDA; agenda.parentElement.hidden = false; }
       $('[data-canal="email"]', choix).href = lienMail();
       html.classList.add('choix-ouvert');
       choix.showModal();

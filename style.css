@@ -262,6 +262,8 @@ h2.etiquette { font-weight: 400; }
 .offre-liste { margin-top: 10px; }
 .offre-liste li { position: relative; padding: 4px 0 4px 22px; line-height: 1.3; }
 .offre-liste li::before { content: ''; position: absolute; left: 0; top: calc(4px + .6em); width: 12px; height: 2px; background: var(--rouge); } /* 2 px : à 1,5 px les tirets s'arrondissaient à 1 ou 2 px selon la ligne */
+.offre-lancement { margin-top: 6px; font-size: 14px; line-height: 1.35; color: var(--rouge); }
+.offre-lancement b { font-weight: 600; }
 .offre-ensuite { margin-top: 10px; font-size: 13px; line-height: 1.4; color: var(--gris-texte); }
 .offre-actions { margin-top: 16px; }
 .offre-actions .bouton-rdv { width: 100%; }
