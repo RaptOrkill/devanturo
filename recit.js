@@ -148,9 +148,16 @@
   };
 
   /* ---------- Le récit animé ---------- */
-  const reduit = matchMedia('(prefers-reduced-motion: reduce)').matches;
+  // Choix explicite du visiteur (lien « Voir la version animée », ?anim=1, mémorisé) : prime sur le réglage « réduire les animations ».
+  const animForcee = html.getAttribute('data-anim-forcee') === '1';
+  const reduit = matchMedia('(prefers-reduced-motion: reduce)').matches && !animForcee;
   const tropBas = window.innerHeight < 520; // téléphone à l'horizontale : la mise en scène ne tient pas, on reste statique
-  if (reduit || tropBas || !window.gsap || !window.ScrollTrigger) { html.classList.remove('anim'); barreStatique(); return; }
+  if (reduit || tropBas || !window.gsap || !window.ScrollTrigger) {
+    html.classList.remove('anim'); barreStatique();
+    const voirAnime = $('.voir-anime');
+    if (voirAnime && reduit && !tropBas && window.gsap && window.ScrollTrigger) voirAnime.hidden = false;
+    return;
+  }
   gsap.registerPlugin(ScrollTrigger);
   ScrollTrigger.config({ ignoreMobileResize: true });
   html.classList.add('anim');
