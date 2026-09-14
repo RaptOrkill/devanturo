@@ -33,7 +33,7 @@
 </head>
 <body>
 <header class="entete">
-  <a class="entete-marque" href="#recit">Devanturo</a>
+  <a class="entete-marque" href="#accueil">Devanturo</a>
   <p class="promesse">Le site de votre restaurant, en ligne 7 jours après ma visite · <b>549 €</b> · <b>payé à la livraison</b></p>
   <!-- Les trois liens visent des chapitres du récit (data-frise = unité de leur tenue, réécrite par recit.js depuis ses constantes) :
        page.js y descend par la frise, en respectant le plancher. Un lien sans cible serait masqué (jamais de lien mort). -->
@@ -69,14 +69,23 @@
 <!-- Première page (décision du 14/09, retour de son père : « on ne comprend pas tout de suite ce qu'on vend ») : le produit, le prix, le rendez-vous et la démo
      dès l'arrivée ; l'histoire animée commence dessous, au défilement ou avec « Découvrir l'histoire » (recit.js : plus d'introduction automatique). -->
 <section class="accueil" id="accueil" aria-labelledby="accueil-titre">
-  <p class="accueil-etiquette">Restaurants, bars et cafés</p>
-  <h1 class="accueil-titre" id="accueil-titre">Vous cherchez un site premium pour votre restaurant&nbsp;? <span class="accueil-prix">À&nbsp;seulement 549&nbsp;€.</span></h1>
-  <p class="accueil-sous">Tout compris · en ligne 7 jours après ma visite · payé seulement s'il vous plaît</p>
-  <div class="accueil-actions">
-    <a class="bouton-rdv accueil-rdv" href="https://wa.me/33614979604" data-track="whatsapp_tap" data-source="accueil">Prendre rendez-vous</a>
-    <a class="accueil-demo" href="https://raptorkill.github.io/vitrine48h/demo-burger/" target="_blank" rel="noopener">Voir la démo</a>
+  <div class="accueil-texte">
+    <p class="accueil-etiquette">Restaurants, bars et cafés</p>
+    <h1 class="accueil-titre" id="accueil-titre">Vous cherchez un site premium pour votre restaurant&nbsp;? <span class="accueil-prix">À&nbsp;seulement 549&nbsp;€.</span></h1>
+    <p class="accueil-sous">Tout compris · en ligne 7 jours après ma visite · payé seulement s'il vous plaît</p>
+    <div class="accueil-actions">
+      <a class="bouton-rdv accueil-rdv" href="https://wa.me/33614979604" data-track="whatsapp_tap" data-source="accueil">Prendre rendez-vous</a>
+      <a class="accueil-demo" href="https://raptorkill.github.io/vitrine48h/demo-burger/" target="_blank" rel="noopener">Voir la démo</a>
+    </div>
+    <p class="accueil-lancement"><b>Lancement&nbsp;:</b> 390&nbsp;€ pour les 3 premiers restaurants</p>
   </div>
-  <p class="accueil-lancement"><b>Lancement&nbsp;:</b> 390&nbsp;€ pour les 3 premiers restaurants</p>
+  <!-- La démo, visible dès l'arrivée et qui défile toute seule : deux captures pleine page de LE BRAISÉ (≈ 100 Ko chacune, zones vides retirées) ; un clic ouvre le vrai site en grand (même modale que plus bas). -->
+  <a class="accueil-ecrans" href="https://raptorkill.github.io/vitrine48h/demo-burger/" target="_blank" rel="noopener" aria-label="Tester la démo : le site LE BRAISÉ">
+    <span class="accueil-ordi"><span class="accueil-defile"><img src="assets/img/braise-long-ordi.webp" alt="" width="961" height="2261" decoding="async"></span></span>
+    <span class="accueil-tel"><span class="accueil-defile"><img src="assets/img/braise-long-mobile.webp" alt="" width="508" height="3851" decoding="async"></span></span>
+    <span class="accueil-jouer">▶&nbsp; Tester la démo</span>
+    <span class="accueil-legende">LE BRAISÉ · site de démonstration</span>
+  </a>
   <a class="accueil-suite" href="#recit" data-track="decouvrir"><span>Découvrir l'histoire</span> ↓</a>
 </section>
 <section class="recit" id="recit" aria-label="L'histoire">

@@ -117,13 +117,14 @@
   if (portableClic) portableClic.addEventListener('click', () => { if (ouvrirDemo('portable', portableClic)) window.open(DEMO_URL, '_blank', 'noopener'); });
 
   /* ---------- La première page : « Voir la démo » ouvre la même modale ; la promesse de l'en-tête s'efface tant qu'elle est à l'écran ---------- */
-  const accueilDemo = $('.accueil-demo'), accueil = $('#accueil');
-  if (accueilDemo) accueilDemo.addEventListener('click', e => {
+  const accueil = $('#accueil');
+  $$('.accueil-demo, .accueil-ecrans').forEach(el => el.addEventListener('click', e => {
     if (e.button !== 0 || e.metaKey || e.ctrlKey || e.shiftKey || e.altKey) return;
-    if (!ouvrirDemo('accueil', accueilDemo)) e.preventDefault();
-  });
+    if (!ouvrirDemo('accueil', el, $('.accueil-ordi') || el)) e.preventDefault();
+  }));
   if (accueil && 'IntersectionObserver' in window) {
-    new IntersectionObserver(([entree]) => html.classList.toggle('accueil-vu', entree.isIntersecting), { rootMargin: '-40% 0px 0px 0px' }).observe(accueil);
+    // Classe inversée (accueil-quitte) : sans signal de l'observateur, la première page est considérée à l'écran (animations actives, pas de doublon).
+    new IntersectionObserver(([entree]) => html.classList.toggle('accueil-quitte', !entree.isIntersecting), { rootMargin: '-40% 0px 0px 0px' }).observe(accueil);
   }
 
   /* ---------- Les questions : une seule réponse ouverte à la fois ---------- */
@@ -585,7 +586,7 @@
   window.recit = Object.freeze({ frise: tl, etat: etat3d, scene, tel, telCorps: $('.tel-corps'), recherche: ecran.recherche, texteRecherche: TEXTE_RECHERCHE, W, H, local, depart: () => ({ x: FX[1](), y: FY[1]() }),
     unites: Object.freeze(Object.assign({}, U)), passage: () => (passageEnCours ? passageEnCours.nom : ''),
     portable: () => pose5().portable, placerClic, clicActif: () => clicActif, position: u => marche(u),
-    plancher: () => (plancherPose ? plancher : 0), finirIntro: () => { arreterIntro(); poserPlancher(); } });
+    plancher: () => 0, finirIntro: () => { arreterIntro(); poserPlancher(); } });
   const peutFaireLa3d = () => {
     if (/[?&]sans3d/.test(location.search)) return false;
     if (!(HTMLScriptElement.supports && HTMLScriptElement.supports('importmap'))) return false;
@@ -624,23 +625,19 @@
   // En unités de frise (U), converties par la durée réelle de la frise : changer sa longueur ne déplace ni le plancher ni la vitrine.
   // ?nom= arrive au final : « Et maintenant, le site de votre restaurant. » (ou « le site de <nom>. »), le bouton « Prendre rendez-vous ».
   // Le raccourci du chapitre 1 arrive sur l'offre (U.OFFRE_CIBLE) : « Passer l'histoire, voir l'offre → ».
-  const CH2 = U.PLANCHER, VITRINE = U.VITRINE, GLISSE_INTRO = 4000;
+  const CH2 = U.PLANCHER, VITRINE = U.VITRINE, GLISSE_INTRO = 3000;
   const marche = u => { const st = tl.scrollTrigger; return Math.round(st.start + (st.end - st.start) * u / tl.duration()); };
 
   // Le plancher : un écouteur passif qui ramène instantanément toute remontée, sans à-coup.
   let plancher = 0, plancherPose = false;
   const tenirPlancher = () => { if (window.scrollY < plancher) window.scrollTo(0, plancher); };
+  // Depuis le 14/09 (première page #accueil) : on doit pouvoir remonter jusqu'à elle. Le « plancher » ne bloque plus rien,
+  // il marque seulement la fin de l'introduction (html.intro-finie : passages automatiques, bouton de l'en-tête sur mobile).
   function poserPlancher() {
-    plancher = marche(CH2);
-    if (!plancherPose) {
-      plancherPose = true;
-      window.addEventListener('scroll', tenirPlancher, { passive: true });
-      // Redimensionnement : la frise change de longueur, le plancher suit.
-      ScrollTrigger.addEventListener('refresh', () => { plancher = marche(CH2); tenirPlancher(); });
-    }
+    plancherPose = true;
     html.classList.add('intro-finie');
-    tenirPlancher();
   }
+  void tenirPlancher;
 
   // Le glissement, écrit image par image (easeInOutCubic) : aucune dépendance nouvelle.
   // ecritGlisse : la dernière position écrite, pour reconnaître un mouvement qui n'est pas le nôtre (passages automatiques).
@@ -781,7 +778,13 @@
     if (y !== dernierY) descend = y > dernierY;
     dernierY = y;
     const u = uniteDe(y);
-    if (!plancherPose && !verrouille && u >= CH2) poserPlancher(); // arrivé au chapitre 2 par soi-même : ni le chapitre 1 ni la première page ne reviennent
+    if (!plancherPose && !verrouille && u >= CH2) poserPlancher(); // arrivé au chapitre 2 par soi-même : fin de l'introduction (on peut toujours remonter)
+    // « 19 h 12 » ne fait pas perdre de temps (demande du 14/09) : dès qu'on descend de la première page vers le chapitre 1,
+    // la page glisse d'elle-même jusqu'au chapitre 2 complet. En remontant, rien ne se déclenche.
+    if (descend && !verrouille && !stopGlisse && y > tl.scrollTrigger.start - window.innerHeight * 0.55 && u < CH2 - 1
+        && !html.classList.contains('modale-ouverte') && !html.classList.contains('menu-ouvert') && !html.classList.contains('choix-ouvert')) {
+      introEnCours = true; lancerIntro(); return;
+    }
     annules.forEach(p => { if (u < p.de || u >= p.a) annules.delete(p); });
     if (minuteurPassage) clearTimeout(minuteurPassage);
     minuteurPassage = setTimeout(tenterPassage, ATTENTE_PASSAGE);
