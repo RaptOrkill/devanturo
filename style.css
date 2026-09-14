@@ -590,3 +590,47 @@ details p { max-width: 46ch; padding: 0 0 14px; color: #3a3833; }
 .court .apparait { opacity: 0; transform: translate3d(0, 22px, 0); transition: opacity .7s cubic-bezier(.2, .7, .2, 1) var(--retard, 0ms), transform .7s cubic-bezier(.2, .7, .2, 1) var(--retard, 0ms); will-change: opacity, transform; }
 .court .apparait.vu { opacity: 1; transform: none; will-change: auto; }
 @media (prefers-reduced-motion: reduce) { .court .apparait { opacity: 1; transform: none; transition: none; } }
+
+/* ---------- Version courte, téléphone : le beau rendu (14/09, « rends-la plus belle ») ----------
+   Même charte (papier, encre, rouge, Fraunces, angles droits) ; des bandes de papier plus chaud rythment les parties,
+   les photos de restaurants et la carte « ? » reviennent sous « Le problème », étapes et prix deviennent des cartes. */
+.court { --entete-h: 60px; --papier-chaud: #EFE9DE; --carte-fond: #FFFDF9; }
+.court .promesse { display: none; }
+.court .scene { display: flex; flex-direction: column; padding-left: 20px; padding-right: 20px; }
+.court .chapitre[data-chapitre="1"] { order: 1; } .court .chapitre[data-chapitre="2"] { order: 2; }
+.court .scene > .cartes { order: 3; } .court .scene > .cartes-avant { order: 4; }
+.court .chapitre[data-chapitre="3"] { order: 5; } .court .chapitre[data-chapitre="4"] { order: 6; }
+.court #demos { order: 7; } .court .demo-duo { order: 8; } .court .rdv { order: 9; }
+.court #comment { order: 10; } .court #offre { order: 11; } .court .geant-prix { order: 12; }
+.court #questions { order: 13; } .court #final { order: 14; }
+
+/* 19 h 12 : un filet rouge pour ouvrir l'histoire */
+.court .chapitre[data-chapitre="1"]::before { content: ''; display: block; width: 36px; height: 2px; margin-bottom: 20px; background: var(--rouge); }
+/* Le problème : trois restaurants qui ont un site… et le vôtre, qui manque */
+.court .scene > .cartes { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 10px; margin: 2px 0 0; }
+.court .carte { position: relative; left: auto; right: auto; top: auto; width: auto; max-width: none; border-radius: 8px; box-shadow: 0 16px 30px -18px rgba(20, 19, 17, .5); }
+.court .carte-1 { transform: rotate(-3deg); } .court .carte-2 { transform: translateY(-10px); } .court .carte-3 { transform: rotate(3deg); }
+.court .scene > .cartes-avant { display: flex; justify-content: center; position: relative; z-index: 1; margin: -38px 0 6px; }
+.court .carte-vide { width: 36%; aspect-ratio: 3 / 4; font-size: 54px; background: var(--carte-fond); border: 1.5px dashed var(--rouge); box-shadow: 0 20px 36px -20px rgba(20, 19, 17, .45); }
+/* Pourtant : une bande chaude, comme la lumière d'une salle */
+.court .chapitre[data-chapitre="3"] { margin: 20px -20px 0; padding: 40px 20px; background: radial-gradient(110% 80% at 88% 0%, rgba(236, 162, 92, .30), transparent 62%), var(--papier-chaud); }
+/* La solution : « En 7 jours. » en rouge */
+.court .chapitre[data-chapitre="4"] .titre { color: var(--rouge); }
+/* Comment ça marche : trois cartes numérotées sur une bande chaude */
+.court #comment { margin: 16px -20px 0; padding: 40px 20px 34px; background: var(--papier-chaud); }
+.court .etapes { border-top: 0; display: grid; gap: 10px; margin-top: 4px; }
+.court .etapes li { grid-template-columns: 30px minmax(0, 1fr); gap: 12px; padding: 16px 16px 16px 14px; background: var(--carte-fond); border: 1px solid var(--ligne); }
+.court .etapes .num { display: grid; place-items: center; width: 28px; height: 28px; margin-top: 2px; border-radius: 50%; background: var(--rouge); color: #fff; font: 600 13px/1 var(--sans); }
+/* Le prix : une carte, filet rouge en haut */
+.court #offre { position: relative; margin-top: 34px; padding: 32px 20px 24px; background: var(--carte-fond); border: 1px solid var(--ligne); box-shadow: 0 34px 60px -42px rgba(20, 19, 17, .4); }
+.court #offre::before { content: ''; position: absolute; left: -1px; right: -1px; top: -1px; height: 4px; background: var(--rouge); }
+.court .offre-prix { font-size: clamp(84px, 27vw, 120px); }
+.court .offre-lancement { margin-top: 14px; padding: 10px 12px; background: #FBEDEA; }
+/* Qui vous parle + questions : bande chaude, portrait plus grand */
+.court #questions { margin: 36px -20px 0; padding: 40px 20px 30px; background: var(--papier-chaud); }
+.court .qui { grid-template-columns: 76px minmax(0, 1fr); gap: 16px; }
+.court .portrait { width: 76px; height: 76px; box-shadow: 0 0 0 3px var(--fond), 0 0 0 4px var(--ligne); }
+.court .faq { margin-top: 30px; padding-top: 26px; border-top: 1px solid rgba(20, 19, 17, .12); }
+/* Le final : grand bouton */
+.court #final { padding: 46px 0 30px; }
+.court .bouton-final { width: 100%; min-height: 60px; font-size: 17px; }
