@@ -1,0 +1,180 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; img-src 'self' data:; script-src 'none'; object-src 'none'; base-uri 'self'; form-action 'none'; upgrade-insecure-requests">
+<meta name="referrer" content="strict-origin-when-cross-origin">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Fiche Google restaurant : 12 points à vérifier | Devanturo</title>
+<meta name="description" content="Horaires, photos, carte, avis, doublons : 12 réglages de la fiche Google de votre restaurant à vérifier en 15 minutes, gratuitement, sur votre téléphone.">
+<meta name="theme-color" content="#F6F4EF">
+<link rel="icon" href="favicon.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="apple-touch-icon.png">
+<link rel="canonical" href="https://devanturo.fr/fiche-google-restaurant.html">
+<meta property="og:type" content="article">
+<meta property="og:locale" content="fr_FR">
+<meta property="og:site_name" content="Devanturo">
+<meta property="og:url" content="https://devanturo.fr/fiche-google-restaurant.html">
+<meta property="og:title" content="Fiche Google restaurant : 12 points à vérifier | Devanturo">
+<meta property="og:description" content="Horaires, photos, carte, avis, doublons : 12 réglages de la fiche Google de votre restaurant à vérifier en 15 minutes, gratuitement, sur votre téléphone.">
+<meta property="og:image" content="https://devanturo.fr/assets/img/partage.jpg">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,300;9..144,400&family=DM+Sans:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  /* Page locale autonome : mêmes couleurs et polices que le site, aucun script. */
+  :root { --fond: #F6F4EF; --encre: #141311; --rouge: #C8321F; --gris-texte: #66625b; --ligne: #e3dfd6;
+    --serif: 'Fraunces', Georgia, 'Times New Roman', serif; --sans: 'DM Sans', system-ui, -apple-system, 'Segoe UI', sans-serif; }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html { background: var(--fond); color: var(--encre); -webkit-text-size-adjust: 100%; }
+  body { font: 17px/1.6 var(--sans); -webkit-font-smoothing: antialiased; }
+  img { max-width: 100%; height: auto; display: block; }
+  a { color: inherit; }
+  :where(a, summary):focus-visible { outline: 2px solid var(--rouge); outline-offset: 3px; }
+  .entete { display: flex; justify-content: space-between; align-items: center; gap: 16px; padding: 14px 24px; border-bottom: 1px solid var(--ligne); }
+  .entete a { display: inline-flex; align-items: center; min-height: 44px; font-size: 12px; letter-spacing: .16em; text-transform: uppercase; text-decoration: none; }
+  .entete a img { width: 20px; height: 20px; margin-right: 10px; }
+  .entete .retour { letter-spacing: .01em; text-transform: none; font-size: 15px; text-decoration: underline; text-underline-offset: 4px; text-decoration-thickness: 1px; }
+  main { max-width: 760px; margin: 0 auto; padding: 56px 24px 72px; }
+  .etiquette { font-size: 11px; letter-spacing: .18em; text-transform: uppercase; color: var(--rouge); margin-bottom: 14px; }
+  h1 { font: 300 clamp(36px, 6.4vw, 60px)/1.02 var(--serif); letter-spacing: -.02em; text-wrap: balance; }
+  .chapo { margin-top: 22px; font-size: 19px; line-height: 1.55; }
+  .actions { display: grid; gap: 10px; margin-top: 30px; max-width: 460px; }
+  .actions a { display: flex; align-items: center; justify-content: center; min-height: 56px; padding: 8px 16px; border: 1px solid var(--encre); text-align: center; text-decoration: none; font-weight: 500; font-size: 16px; }
+  .actions a:hover { background: var(--encre); color: var(--fond); }
+  .actions .principal { background: var(--rouge); border-color: var(--rouge); color: #fff; }
+  .actions .principal:hover { background: #a82816; border-color: #a82816; color: #fff; }
+  .rassure { margin-top: 12px; font-size: 14px; color: var(--gris-texte); }
+  section { margin-top: 52px; padding-top: 30px; border-top: 1px solid var(--ligne); }
+  section.intro { margin-top: 28px; padding-top: 0; border-top: 0; }
+  main p a, main li a { text-underline-offset: 3px; text-decoration-thickness: 1px; }
+  h2 { font: 300 clamp(26px, 3.8vw, 34px)/1.15 var(--serif); letter-spacing: -.01em; margin-bottom: 14px; text-wrap: balance; }
+  p + p, p + ul, ul + p, ol + p { margin-top: 12px; }
+  ul, ol { list-style: none; }
+  ul li { position: relative; padding-left: 22px; }
+  ul li + li, ol li + li { margin-top: 8px; }
+  ul li::before { content: ''; position: absolute; left: 0; top: .8em; width: 12px; height: 1px; background: var(--rouge); }
+  ol { counter-reset: etape; }
+  ol li { counter-increment: etape; display: grid; grid-template-columns: 34px minmax(0, 1fr); padding: 12px 0; border-bottom: 1px solid var(--ligne); }
+  ol li::before { content: counter(etape); color: var(--rouge); font: 300 24px/1.2 var(--serif); }
+  b { font-weight: 500; }
+  figure { margin-top: 22px; }
+  figure img { border: 1px solid var(--ligne); }
+  figcaption { margin-top: 10px; font-size: 14px; color: var(--gris-texte); }
+  .qui { display: grid; grid-template-columns: 72px minmax(0, 1fr); gap: 18px; align-items: start; }
+  .qui img { width: 72px; height: 72px; border-radius: 50%; }
+  details { border-bottom: 1px solid var(--ligne); }
+  details:first-of-type { border-top: 1px solid var(--ligne); }
+  summary { display: flex; justify-content: space-between; gap: 16px; padding: 14px 0; cursor: pointer; list-style: none; font: 300 21px/1.3 var(--serif); }
+  summary::-webkit-details-marker { display: none; }
+  summary::after { content: '+'; color: var(--rouge); font: 400 22px/1.2 var(--sans); }
+  details[open] summary::after { content: '−'; }
+  details p { padding: 0 0 16px; color: #3a3833; }
+  .villes { display: flex; flex-wrap: wrap; gap: 8px 22px; }
+  .villes a { display: inline-flex; align-items: center; min-height: 44px; text-decoration: none; border-bottom: 1px solid currentColor; }
+  .pied { padding: 28px 24px 40px; border-top: 1px solid var(--ligne); text-align: center; font-size: 13px; line-height: 1.5; color: var(--gris-texte); }
+  .pied a { display: inline-flex; align-items: center; min-height: 44px; margin-block: -12px; }
+</style>
+<script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@type":"Article","headline":"Fiche Google de votre restaurant : 12 points à vérifier en 15 minutes","description":"Horaires, photos, carte, avis, doublons : 12 réglages de la fiche Google de votre restaurant à vérifier en 15 minutes, gratuitement, sur votre téléphone.","url":"https://devanturo.fr/fiche-google-restaurant.html","mainEntityOfPage":"https://devanturo.fr/fiche-google-restaurant.html","datePublished":"2026-09-14","dateModified":"2026-09-14","inLanguage":"fr-FR","image":"https://devanturo.fr/assets/img/partage.jpg","author":{"@type":"Person","name":"Baptiste Ruin","url":"https://devanturo.fr/"},"publisher":{"@id":"https://devanturo.fr/#entreprise"}},{"@type":"ProfessionalService","@id":"https://devanturo.fr/#entreprise","name":"Devanturo","url":"https://devanturo.fr/","telephone":"+33614979604","email":"contact@devanturo.fr","image":"https://devanturo.fr/assets/img/partage.jpg","logo":"https://devanturo.fr/assets/img/logo-devanturo.png","priceRange":"549 €","address":{"@type":"PostalAddress","streetAddress":"2 rue Vauban","postalCode":"59100","addressLocality":"Roubaix","addressCountry":"FR"},"areaServed":[{"@type":"City","name":"Roubaix"},{"@type":"City","name":"Lille"},{"@type":"City","name":"Tourcoing"},{"@type":"City","name":"Villeneuve-d'Ascq"},{"@type":"City","name":"Marcq-en-Barœul"},{"@type":"City","name":"Wasquehal"},{"@type":"City","name":"Croix"},{"@type":"City","name":"Wattrelos"},{"@type":"City","name":"Mouvaux"},{"@type":"Country","name":"France"}],"sameAs":["https://www.facebook.com/devanturo.fr"]},{"@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Devanturo","item":"https://devanturo.fr/"},{"@type":"ListItem","position":2,"name":"Fiche Google de votre restaurant","item":"https://devanturo.fr/fiche-google-restaurant.html"}]}]}</script>
+</head>
+<body>
+<header class="entete">
+  <a href="./"><img class="marque-icone" src="assets/img/logo-d.svg" alt="" width="20" height="20">Devanturo</a>
+  <a class="retour" href="./">Voir le site →</a>
+</header>
+
+<main>
+  <p class="etiquette">Conseils pour restaurateurs</p>
+  <h1>Fiche Google de votre restaurant : 12 points à vérifier en 15 minutes</h1>
+  <p class="chapo">Avant de pousser la porte d&#x27;un restaurant, beaucoup de gens regardent sa fiche Google. Horaires, photos, carte, avis : tout est là, en quelques secondes. Voici 12 points à vérifier depuis votre téléphone, sans rien payer.</p>
+  <p class="rassure">Par Baptiste Ruin, Devanturo · publié le 14 septembre 2026</p>
+
+  <section>
+    <h2>Pourquoi la fiche Google compte autant</h2>
+    <p>Quand quelqu&#x27;un tape le nom de votre restaurant, ou « restaurant » suivi du nom de votre ville, Google affiche des fiches avec une carte, des photos et des horaires. Pour beaucoup de clients, c&#x27;est la première impression, avant même votre site ou votre page Facebook.</p>
+    <p>Une fiche fausse ou vide coûte des clients : quelqu&#x27;un qui trouve porte close à cause d&#x27;horaires erronés ne reviendra peut-être pas.</p>
+    <p>La bonne nouvelle : la fiche est <b>gratuite</b>, et la plupart des réglages prennent quelques minutes.</p>
+  </section>
+
+  <section>
+    <h2>Avant de commencer : avoir accès à sa fiche</h2>
+    <p>La fiche de votre établissement existe peut-être déjà, même si vous ne l&#x27;avez jamais créée : des clients ou Google lui-même ont pu l&#x27;ajouter.</p>
+    <ol>
+      <li><p>Allez sur business.google.com avec un compte Google (idéalement une adresse e-mail du restaurant, pas une adresse personnelle).</p></li>
+      <li><p>Cherchez votre établissement. S&#x27;il existe, demandez à le <b>revendiquer</b>. Sinon, créez-le.</p></li>
+      <li><p>Google vous demande de <b>valider</b> que vous êtes bien le gérant (code, appel, vidéo de l&#x27;établissement selon les cas).</p></li>
+    </ol>
+    <p>Une fois validé, vous pouvez tout modifier depuis l&#x27;application Google Maps ou directement dans la recherche Google.</p>
+  </section>
+
+  <section>
+    <h2>Les informations de base (points 1 à 5)</h2>
+    <p><b>1. Le nom exact.</b> Mettez le nom de votre établissement tel qu&#x27;il apparaît sur votre devanture, rien de plus. Google interdit d&#x27;ajouter des mots-clés dans le nom (« Chez Paul – meilleur burger Roubaix ») : la fiche peut être suspendue.</p>
+    <p><b>2. La catégorie principale.</b> Choisissez la plus précise possible : « Restaurant italien » plutôt que « Restaurant », « Bar à bières » plutôt que « Bar ». Vous pouvez ajouter des catégories secondaires.</p>
+    <p><b>3. L&#x27;adresse et l&#x27;emplacement du repère.</b> Vérifiez l&#x27;adresse et, sur la carte, que le repère est bien sur votre entrée et pas au milieu du pâté de maisons.</p>
+    <p><b>4. Les horaires habituels.</b> Jour par jour, y compris les coupures entre le midi et le soir et les jours de fermeture.</p>
+    <p><b>5. Les horaires exceptionnels.</b> C&#x27;est le point le plus oublié. Jours fériés, congés annuels, fêtes de fin d&#x27;année : Google permet de les ajouter à l&#x27;avance, sans toucher aux horaires habituels. Faites-le dès que vous connaissez vos dates.</p>
+  </section>
+
+  <section>
+    <h2>Les photos (points 6 et 7)</h2>
+    <p><b>6. Vos propres photos.</b> Si vous n&#x27;en ajoutez pas, Google affiche celles des clients, parfois sombres ou anciennes. Ajoutez au minimum : la façade (pour qu&#x27;on vous reconnaisse), la salle, et vos plats phares. Prenez-les à la lumière du jour, sans flash, objectif du téléphone nettoyé.</p>
+    <p><b>7. La photo de couverture et le logo.</b> Choisissez une photo de couverture qui donne envie, et ajoutez votre logo si vous en avez un. Google ne garantit pas toujours la photo affichée en premier, mais il vaut mieux lui proposer de bonnes images.</p>
+  </section>
+
+  <section>
+    <h2>La carte et les liens (points 8 et 9)</h2>
+    <p><b>8. La carte et les prix.</b> Les fiches de restaurants permettent d&#x27;ajouter un lien vers la carte, et parfois les plats directement. Un lien vers une carte lisible sur téléphone vaut mieux qu&#x27;une photo floue du menu posé sur la table.</p>
+    <p><b>9. Le site internet et le téléphone.</b> Vérifiez le numéro (un appel manqué, c&#x27;est une réservation perdue) et ajoutez le lien vers votre site. Si vous n&#x27;avez pas de site, le lien vers votre page Facebook ou Instagram est mieux que rien. Selon votre activité, vous pouvez aussi ajouter des liens de réservation ou de commande.</p>
+  </section>
+
+  <section>
+    <h2>Les avis et les actualités (points 10 et 11)</h2>
+    <p><b>10. Répondre aux avis.</b> Répondez aux avis, positifs comme négatifs, avec calme et courtoisie. Une réponse polie à une critique rassure souvent plus les futurs clients que la critique ne les inquiète. Ne demandez jamais d&#x27;avis en échange d&#x27;une réduction, et n&#x27;écrivez jamais de faux avis : c&#x27;est interdit par Google et puni en France comme une pratique commerciale trompeuse.</p>
+    <p><b>11. Les actualités.</b> Vous pouvez publier des « actualités » : nouveau plat, soirée spéciale, fermeture pour congés. Deux règles de Google à connaître : 1 500 caractères maximum, et <b>pas de numéro de téléphone dans le texte</b> (le post serait refusé). Utilisez plutôt le bouton « Appeler » proposé par Google.</p>
+  </section>
+
+  <section>
+    <h2>Le piège des doublons (point 12)</h2>
+    <p><b>12. Vérifier qu&#x27;il n&#x27;existe qu&#x27;une seule fiche.</b> Cherchez votre restaurant sur Google Maps avec plusieurs orthographes, et avec l&#x27;ancien nom si l&#x27;établissement a été repris. Deux fiches pour la même adresse, c&#x27;est des avis partagés et des informations contradictoires. Si vous trouvez un doublon, signalez-le depuis Google Maps (« Suggérer une modification », puis l&#x27;option qui permet de signaler un doublon), ou depuis votre espace Google Business Profile.</p>
+    <p>Si vous avez repris un fonds de commerce, vérifiez aussi que l&#x27;ancienne fiche n&#x27;affiche pas l&#x27;ancien nom avec vos horaires.</p>
+  </section>
+
+  <section>
+    <h2>Ce qu&#x27;il ne faut surtout pas faire</h2>
+    <ul>
+      <li><p><b>Ajouter des mots-clés dans le nom</b> de la fiche.</p></li>
+      <li><p><b>Créer une deuxième fiche</b> pour « être plus visible ».</p></li>
+      <li><p><b>Acheter ou écrire de faux avis</b>, ou proposer une remise contre un avis.</p></li>
+      <li><p><b>Mettre un numéro de téléphone dans les actualités.</b></p></li>
+      <li><p><b>Laisser les horaires d&#x27;été</b> tout l&#x27;hiver.</p></li>
+    </ul>
+  </section>
+
+  <section>
+    <h2>Et le site internet dans tout ça ?</h2>
+    <p>La fiche Google et le site se complètent. La fiche donne les informations en un coup d&#x27;œil ; le site permet d&#x27;aller plus loin : toutes les photos, la carte complète, l&#x27;ambiance, l&#x27;histoire du lieu. Et le lien « Site Web » de la fiche a besoin d&#x27;une destination claire.</p>
+    <p>Si vous préférez déléguer, la création ou la mise à jour de la fiche Google fait partie de chaque site Devanturo. Dans la métropole lilloise, on s&#x27;en occupe pendant un rendez-vous de 30 minutes dans votre établissement. Tous les détails sont sur <a href="./">devanturo.fr</a>.</p>
+    <p><i>Sources : Google Business Profile, <a href="https://support.google.com/business/answer/3038177" rel="noopener">« Règles pour représenter votre entreprise sur Google »</a> et <a href="https://support.google.com/business/answer/7213077" rel="noopener">« Règles relatives au contenu des posts »</a>.</i></p>
+  </section>
+
+  <section>
+    <h2>Un site pour votre restaurant, en 7 jours ?</h2>
+    <p>Devanturo crée le site de votre restaurant, de votre bar ou de votre café : une visite de trente minutes dans la métropole lilloise (en visio ailleurs en France), les photos, la carte, la fiche Google, et le site en ligne sept jours après.</p>
+  <div class="actions">
+    <a class="principal" href="https://wa.me/33614979604?text=Bonjour%20Baptiste%2C%20je%20voudrais%20prendre%20rendez-vous%20pour%20le%20site%20de%20mon%20restaurant.">Prendre rendez-vous sur WhatsApp</a>
+    <a href="tel:+33614979604">Appeler le 06 14 97 96 04</a>
+  </div>
+  <p class="rassure">549 € tout compris · paiement à la livraison · pas d'acompte</p>
+    <p class="villes" style="margin-top:28px"><a href="prix-site-internet-restaurant.html">Prix d’un site internet pour restaurant</a> <a href="./">Voir le site Devanturo</a></p>
+  </section>
+</main>
+
+<footer class="pied">
+  <p>Devanturo · Entreprise individuelle · 2 rue Vauban, 59100 Roubaix · SIRET 108 488 131 00013 · <a href="tel:+33614979604">06 14 97 96 04</a> · <a href="mailto:contact@devanturo.fr">contact@devanturo.fr</a> · <a href="mentions-legales.html">Mentions légales</a> · <a href="cgv.html">CGV</a></p>
+  <p>Création de site internet pour restaurant : <a href="site-internet-restaurant-roubaix.html">Roubaix</a> · <a href="site-internet-restaurant-lille.html">Lille</a> · <a href="site-internet-restaurant-tourcoing.html">Tourcoing</a> · <a href="site-internet-restaurant-villeneuve-d-ascq.html">Villeneuve-d&#x27;Ascq</a> · <a href="site-internet-restaurant-marcq-en-baroeul.html">Marcq-en-Barœul</a> · <a href="site-internet-restaurant-wasquehal.html">Wasquehal</a> · <a href="site-internet-restaurant-croix.html">Croix</a> · <a href="site-internet-restaurant-wattrelos.html">Wattrelos</a></p>
+  <p>Conseils : <a href="prix-site-internet-restaurant.html">Prix d&#x27;un site de restaurant</a> · <a href="fiche-google-restaurant.html">Fiche Google restaurant</a></p>
+</footer>
+</body>
+</html>
