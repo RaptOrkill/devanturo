@@ -124,8 +124,23 @@
   }));
   if (accueil && 'IntersectionObserver' in window) {
     // Classe inversée (accueil-quitte) : sans signal de l'observateur, la première page est considérée à l'écran (animations actives, pas de doublon).
-    new IntersectionObserver(([entree]) => html.classList.toggle('accueil-quitte', !entree.isIntersecting), { rootMargin: '-40% 0px 0px 0px' }).observe(accueil);
+    new IntersectionObserver(([entree]) => {
+      html.classList.toggle('accueil-quitte', !entree.isIntersecting);
+      $$('.accueil-video', accueil).forEach(v => { if (!v.src) return; if (entree.isIntersecting) v.play().catch(() => {}); else v.pause(); });
+    }, { rootMargin: '-40% 0px 0px 0px' }).observe(accueil);
   }
+  // Les vidéos de la démo (≈ 1,6 Mo à deux) arrivent après la page : l'image d'attente s'affiche tout de suite, rien ne ralentit le premier écran.
+  const lancerVideos = () => $$('.accueil-video').forEach(v => {
+    v.src = v.dataset.src; v.muted = true; v.autoplay = true;
+    v.play().catch(() => {}); // lecture refusée (mode économie d'énergie) : l'image reste, le clic ouvre la démo
+  });
+  // Onglet revenu au premier plan : les navigateurs suspendent les vidéos cachées, on relance si la première page est à l'écran.
+  document.addEventListener('visibilitychange', () => {
+    if (document.hidden || html.classList.contains('accueil-quitte')) return;
+    $$('.accueil-video').forEach(v => { if (v.src && v.paused) v.play().catch(() => {}); });
+  });
+  if (document.readyState === 'complete') setTimeout(lancerVideos, 300);
+  else window.addEventListener('load', () => setTimeout(lancerVideos, 300), { once: true });
 
   /* ---------- Les questions : une seule réponse ouverte à la fois ---------- */
   // name="questions" le fait déjà dans les navigateurs récents ; ce filet couvre les autres. L'ouverture ne touche jamais au défilement.

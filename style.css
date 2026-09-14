@@ -107,14 +107,11 @@ h2.etiquette { font-weight: 400; }
   box-shadow: 0 22px 56px rgba(20, 19, 17, .22); transition: transform var(--duree) var(--courbe); }
 .accueil-tel { position: absolute; left: 0; bottom: 6%; width: 28%; aspect-ratio: 9 / 19.2; background: #111; border-radius: 16px; padding: 2.2%;
   box-shadow: 0 22px 46px rgba(20, 19, 17, .3); transition: transform var(--duree) var(--courbe); }
-/* Chaque écran défile tout seul dans sa capture pleine page (transform seulement : léger), pause au survol et hors écran, fixe si « réduire les animations ». */
+/* Chaque écran joue une vraie vidéo de la démo (fond en flammes + défilement), mise en pause quand la première page quitte l'écran (recit.js). */
 .accueil-defile { position: relative; display: block; width: 100%; height: 100%; overflow: hidden; container-type: size; background: #0d0c0b; }
 .accueil-ordi .accueil-defile { border-radius: 6px; }
 .accueil-tel .accueil-defile { border-radius: 12px; }
-.accueil-defile img { width: 100%; height: auto; will-change: transform; animation: accueil-defile 22s ease-in-out 1.2s infinite alternate; }
-.accueil-tel .accueil-defile img { animation-duration: 26s; animation-delay: 2.4s; }
-@keyframes accueil-defile { 0%, 6% { transform: translateY(0); } 94%, 100% { transform: translateY(calc(-100% + 100cqh)); } }
-.accueil-ecrans:hover .accueil-defile img, .accueil-quitte .accueil-defile img { animation-play-state: paused; }
+.accueil-video { display: block; width: 100%; height: 100%; object-fit: cover; object-position: top; }
 .accueil-jouer { position: absolute; left: 57%; top: 66%; transform: translate(-50%, -50%); display: inline-flex; align-items: center; min-height: 44px; padding: 0 18px;
   background: var(--fond); color: var(--encre); font: 500 14px/1 var(--sans); box-shadow: 0 8px 24px rgba(20, 19, 17, .25); white-space: nowrap;
   transition: background-color var(--duree) var(--courbe), color var(--duree) var(--courbe); }
