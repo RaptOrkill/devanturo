@@ -85,45 +85,32 @@ h2.etiquette { font-weight: 400; }
 .phrase + .titre, .titre + .phrase { margin-top: 14px; }
 .mot { display: inline-block; }
 
-/* Première page : le produit, le prix, le rendez-vous et la démo dès l'arrivée (statique comme en mise en scène). */
-.accueil { position: relative; z-index: 1; display: grid; gap: 26px; max-width: 1480px; margin: 0 auto; padding: calc(var(--entete-h) + 14px + env(safe-area-inset-top)) 22px 34px; }
-.accueil-etiquette { font-size: 11px; letter-spacing: .18em; text-transform: uppercase; color: var(--rouge); }
-.accueil-titre { margin-top: 10px; font: 300 clamp(34px, 9.4vw, 48px)/1.02 var(--serif); letter-spacing: -.025em; font-variation-settings: 'opsz' 144; text-wrap: balance; }
-.accueil-prix { margin-top: 14px; font-size: 18px; line-height: 1.35; }
-.accueil-prix b { font-weight: 500; }
-.accueil-points { margin-top: 14px; display: grid; gap: 6px; font-size: 15px; line-height: 1.35; }
-.accueil-points li { position: relative; padding-left: 24px; }
-.accueil-points li::before { content: ''; position: absolute; left: 0; top: .66em; width: 13px; height: 2px; background: var(--rouge); }
-.accueil-actions { margin-top: 20px; display: grid; gap: 10px; }
-.accueil-demo { display: flex; align-items: center; justify-content: center; min-height: 54px; border: 1px solid var(--encre); color: var(--encre); text-decoration: none; font: 500 15px/1.2 var(--sans);
+/* Première page (version du 14/09 demandée par Baptiste) : une phrase en gros, le prix, deux boutons ; l'histoire commence en descendant. */
+.accueil { position: relative; z-index: 1; min-height: 100svh; display: flex; flex-direction: column; justify-content: center; align-items: center; text-align: center;
+  max-width: 1200px; margin: 0 auto; padding: calc(var(--entete-h) + 10px + env(safe-area-inset-top)) 22px 22px; }
+.accueil-etiquette { margin-top: auto; font-size: 11px; letter-spacing: .18em; text-transform: uppercase; color: var(--rouge); }
+.accueil-titre { margin-top: 16px; font: 300 clamp(38px, 10.5vw, 104px)/1 var(--serif); letter-spacing: -.028em; font-variation-settings: 'opsz' 144; text-wrap: balance; }
+.accueil-prix { display: block; margin-top: .18em; color: var(--rouge); font-weight: 400; }
+.accueil-sous { margin-top: 20px; max-width: 34ch; font-size: 16px; line-height: 1.4; color: var(--gris-texte); text-wrap: balance; }
+.accueil-actions { margin-top: 26px; width: 100%; max-width: 420px; display: grid; gap: 10px; }
+.accueil-demo { display: flex; align-items: center; justify-content: center; min-height: 56px; border: 1px solid var(--encre); color: var(--encre); text-decoration: none; font: 500 15px/1.2 var(--sans);
   transition: background-color var(--duree) var(--courbe), color var(--duree) var(--courbe); }
 .accueil-demo:hover { background: var(--encre); color: var(--fond); }
-.accueil-lancement { margin-top: 12px; font-size: 14px; color: var(--rouge); }
+.accueil-lancement { margin-top: 14px; font-size: 14px; color: var(--rouge); }
 .accueil-lancement b { font-weight: 600; }
-.accueil-visuel { position: relative; aspect-ratio: 16 / 11; }
-.accueil-ordi { position: absolute; right: 0; top: 0; width: 88%; aspect-ratio: 16 / 10; background: #111; border-radius: 10px; padding: 1.4%; box-shadow: 0 24px 60px rgba(20, 19, 17, .22); }
-.accueil-tel { position: absolute; left: 0; bottom: 0; width: 30%; aspect-ratio: 9 / 19.2; background: #111; border-radius: 18px; padding: 2.2%; box-shadow: 0 24px 50px rgba(20, 19, 17, .3); }
-.accueil-ordi img, .accueil-tel img { width: 100%; height: 100%; object-fit: cover; object-position: top; }
-.accueil-ordi img { border-radius: 6px; }
-.accueil-tel img { border-radius: 14px; }
-.accueil-legende { position: absolute; right: 0; bottom: -2px; font-size: 11px; color: var(--gris-texte); }
-.accueil-suite { justify-self: center; display: inline-flex; align-items: center; gap: 6px; min-height: 44px; font-size: 14px; color: var(--encre); text-decoration: none; }
+.accueil-suite { margin-top: auto; padding-top: 18px; display: inline-flex; align-items: center; gap: 6px; min-height: 44px; font-size: 14px; color: var(--encre); text-decoration: none; }
 .accueil-suite span { border-bottom: 1px solid currentColor; padding-bottom: 2px; }
-/* Tant que la première page est à l'écran, la promesse de l'en-tête (redondante) s'efface sans décaler l'en-tête. */
+/* Tant que la première page est à l'écran : la promesse de l'en-tête (redondante) et son bouton s'effacent sans décaler l'en-tête. */
 .accueil-vu .promesse { visibility: hidden; }
 .accueil-vu .entete-lien { opacity: 0; visibility: hidden; pointer-events: none; } /* jamais deux « Prendre rendez-vous » à l'écran */
 @media (min-width: 1024px) {
-  .accueil { min-height: 100svh; grid-template-columns: minmax(0, 1.05fr) minmax(0, .95fr); column-gap: 4vw; row-gap: 0; align-items: center; padding: calc(var(--entete-h) + 3vh) 6vw 3vh; }
-  .accueil-titre { font-size: clamp(44px, 4.3vw, 78px); }
-  .accueil-prix { margin-top: 2.4vh; font-size: clamp(19px, 1.35vw, 26px); }
-  .accueil-points { margin-top: 2vh; font-size: clamp(16px, 1.05vw, 20px); gap: 1vh; }
-  .accueil-actions { margin-top: 3.4vh; display: flex; gap: 12px; }
-  .accueil-actions a { min-height: 58px; padding: 0 28px; }
-  .accueil-visuel { aspect-ratio: auto; height: min(66svh, 640px); }
-  .accueil-tel { width: 32%; border-radius: 26px; }
-  .accueil-tel img { border-radius: 20px; }
-  .accueil-suite { grid-column: 1 / -1; align-self: end; }
+  .accueil { padding: calc(var(--entete-h) + 4vh) 6vw 3vh; }
+  .accueil-titre { margin-top: 3vh; }
+  .accueil-sous { margin-top: 3.2vh; max-width: none; font-size: clamp(17px, 1.2vw, 22px); }
+  .accueil-actions { margin-top: 4.4vh; max-width: none; width: auto; display: flex; gap: 14px; }
+  .accueil-actions a { min-height: 62px; padding: 0 34px; font-size: 17px; }
 }
+.accueil-actions .bouton-rdv { min-height: 56px; }
 
 /* Récit : mise en page de base */
 .recit { position: relative; }
