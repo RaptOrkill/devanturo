@@ -1,0 +1,31 @@
+# Devanturo
+
+> Devanturo crée le site internet des restaurants, bars et cafés : un site d'une page avec les photos, la carte, les horaires et les boutons pour appeler ou venir. 549 € tout compris, paiement à la livraison, sans acompte. Rendez-vous de 30 minutes sur place dans la métropole lilloise (Lille, Roubaix, Tourcoing, Villeneuve-d'Ascq, Marcq-en-Barœul, Wasquehal, Croix, Wattrelos, Mouvaux), en visio partout ailleurs en France. Le site est en ligne 7 jours après.
+
+Entreprise individuelle de Baptiste Ruin, 2 rue Vauban, 59100 Roubaix. Téléphone et WhatsApp : 06 14 97 96 04. E-mail : contact@devanturo.fr.
+
+Ce que comprend l'offre à 549 € : le site d'une page, la visite de 30 minutes et les photos, le nom de domaine et l'hébergement la première année (à votre nom), la mise en ligne, la création ou la mise à jour de la fiche Google, les mises à jour de carte, de prix et d'horaires pendant la première année. Ensuite, environ 15 € par an. Offre de lancement : 390 € pour les 3 premiers restaurants.
+
+## Pages principales
+
+- [Accueil et offre](https://devanturo.fr/): le produit, le prix, la démo, les questions fréquentes
+- [Conditions générales de vente](https://devanturo.fr/cgv.html)
+- [Mentions légales](https://devanturo.fr/mentions-legales.html)
+- [Démo LE BRAISÉ](https://raptorkill.github.io/vitrine48h/demo-burger/): exemple de site réalisé par Devanturo pour un restaurant imaginaire (ce n'est pas un client)
+
+## Création de site internet pour restaurant, par ville
+
+- [Roubaix](https://devanturo.fr/site-internet-restaurant-roubaix.html)
+- [Lille](https://devanturo.fr/site-internet-restaurant-lille.html)
+- [Tourcoing](https://devanturo.fr/site-internet-restaurant-tourcoing.html)
+- [Villeneuve-d'Ascq](https://devanturo.fr/site-internet-restaurant-villeneuve-d-ascq.html)
+- [Marcq-en-Barœul](https://devanturo.fr/site-internet-restaurant-marcq-en-baroeul.html)
+- [Wasquehal](https://devanturo.fr/site-internet-restaurant-wasquehal.html)
+- [Croix](https://devanturo.fr/site-internet-restaurant-croix.html)
+- [Wattrelos](https://devanturo.fr/site-internet-restaurant-wattrelos.html)
+
+## Conseils pour restaurateurs
+
+- [Tous les conseils](https://devanturo.fr/conseils.html)
+- [Combien coûte un site internet pour un restaurant en 2026 ?](https://devanturo.fr/prix-site-internet-restaurant.html)
+- [Fiche Google de votre restaurant : 12 points à vérifier](https://devanturo.fr/fiche-google-restaurant.html)
