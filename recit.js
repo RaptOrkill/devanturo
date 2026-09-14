@@ -116,6 +116,16 @@
   });
   if (portableClic) portableClic.addEventListener('click', () => { if (ouvrirDemo('portable', portableClic)) window.open(DEMO_URL, '_blank', 'noopener'); });
 
+  /* ---------- La première page : « Voir la démo » ouvre la même modale ; la promesse de l'en-tête s'efface tant qu'elle est à l'écran ---------- */
+  const accueilDemo = $('.accueil-demo'), accueil = $('#accueil');
+  if (accueilDemo) accueilDemo.addEventListener('click', e => {
+    if (e.button !== 0 || e.metaKey || e.ctrlKey || e.shiftKey || e.altKey) return;
+    if (!ouvrirDemo('accueil', accueilDemo)) e.preventDefault();
+  });
+  if (accueil && 'IntersectionObserver' in window) {
+    new IntersectionObserver(([entree]) => html.classList.toggle('accueil-vu', entree.isIntersecting), { rootMargin: '-40% 0px 0px 0px' }).observe(accueil);
+  }
+
   /* ---------- Les questions : une seule réponse ouverte à la fois ---------- */
   // name="questions" le fait déjà dans les navigateurs récents ; ce filet couvre les autres. L'ouverture ne touche jamais au défilement.
   const questions = $$('.questions details');
@@ -160,6 +170,8 @@
   }
   gsap.registerPlugin(ScrollTrigger);
   ScrollTrigger.config({ ignoreMobileResize: true });
+  // La première page change de hauteur quand les polices arrivent : la frise se recale sur la vraie position du récit.
+  if (document.fonts && document.fonts.ready) document.fonts.ready.then(() => ScrollTrigger.refresh());
   html.classList.add('anim');
 
   // Chaque mot devient un <span class="mot"> pour arriver l'un après l'autre.
@@ -769,6 +781,7 @@
     if (y !== dernierY) descend = y > dernierY;
     dernierY = y;
     const u = uniteDe(y);
+    if (!plancherPose && !verrouille && u >= CH2) poserPlancher(); // arrivé au chapitre 2 par soi-même : ni le chapitre 1 ni la première page ne reviennent
     annules.forEach(p => { if (u < p.de || u >= p.a) annules.delete(p); });
     if (minuteurPassage) clearTimeout(minuteurPassage);
     minuteurPassage = setTimeout(tenterPassage, ATTENTE_PASSAGE);
@@ -797,8 +810,11 @@
       if (reste > 0) { if (minuteur3d) clearTimeout(minuteur3d); minuteur3d = setTimeout(() => { minuteur3d = 0; tenter(); }, reste); return; }
       lancerIntro();
     };
-    relancerIntro = tenter;
-    minuteur = setTimeout(() => { minuteur = 0; attendu = true; tenter(); }, 2500);
-    if (!chargee) window.addEventListener('load', () => { chargee = true; tenter(); }, { once: true });
+    // Depuis le 14/09, la première page (#accueil) reste à l'écran : l'introduction ne part plus seule.
+    // « Découvrir l'histoire » la lance (même glissement de 4 s jusqu'au chapitre 2) ; en défilant soi-même, le plancher se pose au chapitre 2.
+    introEnCours = false;
+    void attendu; void chargee; void tenter;
+    const suite = $('.accueil-suite');
+    if (suite) suite.addEventListener('click', e => { e.preventDefault(); introEnCours = true; lancerIntro(); track('decouvrir', {}); });
   }
 })();

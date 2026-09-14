@@ -66,7 +66,31 @@
 </div>
 
 <main>
-<h1 class="visually-hidden">Devanturo, le site internet de votre restaurant, sur place dans la métropole lilloise ou en visio partout en France : 549 € tout compris, en ligne 7 jours après notre rendez-vous</h1>
+<!-- Première page (décision du 14/09, retour de son père : « on ne comprend pas tout de suite ce qu'on vend ») : le produit, le prix, le rendez-vous et la démo
+     dès l'arrivée ; l'histoire animée commence dessous, au défilement ou avec « Découvrir l'histoire » (recit.js : plus d'introduction automatique). -->
+<section class="accueil" id="accueil" aria-labelledby="accueil-titre">
+  <div class="accueil-texte">
+    <p class="accueil-etiquette">Restaurants, bars et cafés</p>
+    <h1 class="accueil-titre" id="accueil-titre">Vous cherchez un site internet pour votre restaurant&nbsp;?</h1>
+    <p class="accueil-prix">En ligne 7 jours après ma visite, pour <b>549&nbsp;€ tout compris</b>.</p>
+    <ul class="accueil-points">
+      <li>Vos photos, votre carte, vos horaires et votre fiche Google</li>
+      <li>Sans abonnement, nom de domaine à votre nom</li>
+      <li>Vous payez seulement si le site vous plaît</li>
+    </ul>
+    <div class="accueil-actions">
+      <a class="bouton-rdv accueil-rdv" href="https://wa.me/33614979604" data-track="whatsapp_tap" data-source="accueil">Prendre rendez-vous</a>
+      <a class="accueil-demo" href="https://raptorkill.github.io/vitrine48h/demo-burger/" target="_blank" rel="noopener">Voir la démo</a>
+    </div>
+    <p class="accueil-lancement"><b>Lancement&nbsp;:</b> 390&nbsp;€ pour les 3 premiers restaurants</p>
+  </div>
+  <div class="accueil-visuel" aria-hidden="true">
+    <div class="accueil-ordi"><img src="assets/img/braise-ordi.webp" alt="" width="1280" height="800" decoding="async" fetchpriority="high"></div>
+    <div class="accueil-tel"><img src="assets/img/braise-mobile.webp" alt="" width="780" height="1688" decoding="async"></div>
+    <p class="accueil-legende">Exemple&nbsp;: LE BRAISÉ, site de démonstration</p>
+  </div>
+  <a class="accueil-suite" href="#recit" data-track="decouvrir"><span>Découvrir l'histoire en 1 minute</span> ↓</a>
+</section>
 <section class="recit" id="recit" aria-label="L'histoire">
   <div class="scene">
     <div class="lumiere" aria-hidden="true"></div>
