@@ -65,6 +65,8 @@
   </div>
 </div>
 
+<!-- Barre de progression : avance avec le défilement (recit.js), pour savoir combien il reste avant le prix. -->
+<div class="progression" aria-hidden="true"><span></span></div>
 <main>
 <!-- Première page (décision du 14/09, retour de son père : « on ne comprend pas tout de suite ce qu'on vend ») : le produit, le prix, le rendez-vous et la démo
      dès l'arrivée ; l'histoire animée commence dessous, au défilement ou avec « Découvrir l'histoire » (recit.js : plus d'introduction automatique). -->
@@ -101,22 +103,24 @@
 
     <div class="chapitre" data-chapitre="1">
       <p class="titre mots">19 h 12.</p>
-      <p class="phrase mots">Quelqu'un a faim à 600 mètres de chez vous.</p>
-      <a class="raccourci" href="#offre" data-track="raccourci"><span>Passer l'histoire, voir l'offre →</span></a>
+      <p class="phrase mots">Quelqu'un cherche où manger, à 600 mètres de chez vous.</p>
+      <a class="raccourci" href="#offre" data-track="raccourci"><span>Passer l'histoire, voir le prix →</span></a>
       <!-- Réglage « réduire les animations » actif (Windows, iPhone, Android) : version fixe par respect du réglage, avec ce lien pour choisir la version animée (mémorisé, recit.js). -->
       <a class="raccourci voir-anime" href="?anim=1" data-track="voir_anime" hidden><span>Voir la version animée du site →</span></a>
     </div>
     <div class="chapitre" data-chapitre="2">
-      <p class="phrase mots">Il tape «&nbsp;restaurant ce soir&nbsp;». Il voit ceux qui ont une vitrine.</p>
-      <p class="titre mots">Il ne vous voit pas.</p>
+      <p class="etiquette mots">Le problème</p>
+      <p class="phrase mots">Sur Google, il choisit les restaurants qui ont un site.</p>
+      <p class="titre mots">Il ne vous trouve pas.</p>
     </div>
     <div class="chapitre" data-chapitre="3">
       <p class="titre mots">Pourtant,</p>
-      <p class="phrase mots">votre salle est pleine de gens qui vous adorent.</p>
+      <p class="phrase mots">chez vous, la cuisine est bonne et les clients reviennent.</p>
     </div>
     <div class="chapitre" data-chapitre="4">
-      <p class="phrase mots">Il manque juste la vitrine.</p>
-      <p class="titre mots">En sept jours.</p>
+      <p class="etiquette mots">La solution</p>
+      <p class="phrase mots">Il vous manque juste un site à votre nom.</p>
+      <p class="titre mots">En 7 jours.</p>
     </div>
 
     <div class="cartes" aria-hidden="true">
@@ -143,7 +147,7 @@
           </div>
           <!-- Chapitre 4 et démo (76 → 112) : l'écran s'allume directement sur LE BRAISÉ.
                Image différée : display:none tant que html.demo-prete n'est pas posé (frise ≥ 47, entrée du chapitre 3). -->
-          <div class="ecran-braise"><img src="assets/img/braise-mobile.webp" alt="" width="780" height="1688" loading="lazy" decoding="async"></div>
+          <div class="ecran-braise"><img src="assets/img/braise-mobile.webp" alt="" width="780" height="1688" loading="lazy" decoding="async"><span class="ecran-exemple">Exemple</span></div>
           <!-- Comment ça se passe (113 → 134) : les trois étapes dessinées dans l'écran, une frise verticale. -->
           <div class="ecran-etapes">
             <p class="et-haut">Devanturo</p>
@@ -159,15 +163,15 @@
 
     <!-- La carte « ? » passe devant le téléphone (calque au-dessus de lui) : elle reste entière à l'arrivée de l'introduction. -->
     <div class="cartes cartes-avant" aria-hidden="true">
-      <figure class="carte carte-vide"><span>?</span></figure>
+      <figure class="carte carte-vide"><span>?</span><small>Votre restaurant</small></figure>
     </div>
 
     <!-- La démo — LE BRAISÉ (82 → 112, dans la suite du chapitre 4) : une démo en ligne, jamais présentée comme un client.
          Sans .anim, la version statique se lit dans l'ordre : l'exemple, ses deux écrans, les deux actions, puis la suite du récit. -->
     <div class="chapitre" data-chapitre="5" id="demos" data-frise="102">
-      <p class="etiquette mots">Un exemple en ligne</p>
+      <p class="etiquette mots">Un exemple</p>
       <p class="titre mots">LE BRAISÉ.</p>
-      <p class="phrase mots">Le même site, sur téléphone et sur ordinateur.</p>
+      <p class="phrase mots">Touchez l'écran pour visiter le site.</p>
     </div>
     <!-- Le portable : en 3D (scene3d.js, portable.opt.glb) quand html.portable-3d est posé ; sinon ce petit portable CSS,
          placé par les MÊMES tweens. .demo-tel n'existe que dans la version statique (le téléphone animé est .tel).
@@ -190,7 +194,7 @@
          Invisibles au clavier tant qu'elles ne sont pas .actif (comme le formulaire). -->
     <div class="rdv" id="rdv">
       <div class="rdv-actions">
-        <a class="explorer" href="https://raptorkill.github.io/vitrine48h/demo-burger/" target="_blank" rel="noopener">Explorer le site →</a>
+        <a class="explorer" href="https://raptorkill.github.io/vitrine48h/demo-burger/" target="_blank" rel="noopener">Visiter l'exemple →</a>
         <a class="bouton-rdv" href="https://wa.me/33614979604" data-track="whatsapp_tap" data-source="demo">Prendre rendez-vous</a>
       </div>
       <a class="rdv-tel" href="tel:+33614979604"><span>ou appelez le 06 14 97 96 04</span></a>
@@ -204,7 +208,7 @@
 
     <!-- Comment ça se passe (113 → 134) : trois étapes à gauche ; le téléphone, à droite (dessous sur mobile), montre la frise des étapes. -->
     <div class="chapitre chapitre-plein" data-chapitre="6" id="comment">
-      <h2 class="etiquette mots">Comment ça se passe</h2>
+      <h2 class="etiquette mots">Comment ça marche</h2>
       <ol class="etapes">
         <li class="ent"><span class="num">1</span><p><b>Vous m'écrivez sur WhatsApp.</b> On fixe une visite, ou une visio si vous êtes loin.</p></li>
         <li class="ent"><span class="num">2</span><p><b>Je passe trente minutes dans votre salle.</b> Je prends les photos, vous continuez votre service.</p></li>
@@ -214,7 +218,7 @@
 
     <!-- L'offre (137 → 160) : le téléphone est sorti par le bas ; l'image est la grande typographie du prix (≥ 1024, .geant, décorative). -->
     <div class="chapitre chapitre-plein" data-chapitre="7" id="offre" data-frise="152">
-      <h2 class="etiquette mots">L'offre</h2>
+      <h2 class="etiquette mots">Le prix</h2>
       <p class="phrase mots">Un prix, tout compris.</p>
       <p class="offre-prix ent">549&nbsp;€</p>
       <p class="offre-condition ent">Payé à la livraison, seulement si le site vous plaît. Pas d'acompte.</p>

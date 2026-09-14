@@ -172,7 +172,17 @@ html:not(.accueil-quitte) .entete-lien { opacity: 0; visibility: hidden; pointer
 .carte-3 { left: 9%; top: 68%; }
 /* La carte « ? » vit dans un calque devant le téléphone (.cartes-avant) ; sur mobile, sous ses résultats : entièrement visible à l'arrivée de l'introduction (unité 42). */
 .anim .cartes-avant { z-index: 5; }
-.carte-vide { right: 4%; top: 71%; display: grid; place-items: center; font-family: var(--serif); font-size: 64px; color: var(--rouge); font-weight: 300; }
+.carte-vide { right: 4%; top: 71%; display: grid; place-items: center; align-content: center; gap: 6px; font-family: var(--serif); font-size: 64px; color: var(--rouge); font-weight: 300; }
+.carte-vide span { line-height: 1; }
+.carte-vide small { font: 500 11px/1.2 var(--sans); letter-spacing: .04em; color: var(--encre); text-align: center; padding: 0 6px; }
+/* Légende « Exemple » sur l'écran du téléphone quand il montre LE BRAISÉ (elle suit l'opacité de l'écran). */
+.ecran-braise { position: relative; }
+.ecran-exemple { position: absolute; left: 50%; bottom: 7%; transform: translateX(-50%); padding: 4px 10px; background: var(--fond); color: var(--encre);
+  font: 600 10px/1 var(--sans); letter-spacing: .14em; text-transform: uppercase; box-shadow: 0 4px 14px rgba(20, 19, 17, .3); white-space: nowrap; }
+/* Barre de progression en haut de l'écran, mise en scène seulement. */
+.progression { display: none; }
+.anim .progression { display: block; position: fixed; left: 0; right: 0; top: 0; z-index: 60; height: 3px; pointer-events: none; }
+.anim .progression span { display: block; height: 100%; background: var(--rouge); transform-origin: 0 50%; transform: scaleX(var(--progression, 0)); }
 /* Hauteur du téléphone — tableau unique (CAP §4.5), recopié à l'identique dans mesures() de scene3d.js (Hp).
    Toute modification doit être faite des DEUX côtés, sinon le téléphone WebGL et le téléphone HTML ne coïncident
    plus au fondu croisé (78–82 %) : vérifier ensuite window.__scene3d.ecartTel().

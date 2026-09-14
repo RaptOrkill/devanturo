@@ -786,8 +786,13 @@
   ['wheel', 'keydown'].forEach(t => window.addEventListener(t, geste, { passive: true, capture: true }));
   ['touchstart', 'mousedown'].forEach(t => window.addEventListener(t, () => { appuye = true; geste(); }, { passive: true, capture: true }));
   ['touchend', 'touchcancel', 'mouseup'].forEach(t => window.addEventListener(t, () => { appuye = false; }, { passive: true, capture: true }));
+  // Barre de progression : la part de la page déjà lue (une variable CSS, aucune mise en page recalculée).
+  const barreProgression = $('.progression');
+  const majProgression = () => { if (barreProgression) barreProgression.style.setProperty('--progression', Math.min(1, window.scrollY / Math.max(1, html.scrollHeight - window.innerHeight)).toFixed(4)); };
+  majProgression();
   window.addEventListener('scroll', () => {
     const y = window.scrollY;
+    majProgression();
     // Pendant un passage : une position qui n'est pas celle qu'on vient d'écrire (barre de défilement, clavier…) rend la main.
     if (passageEnCours) { if (Math.abs(y - ecritGlisse) > 4) annulerPassage(); dernierY = y; return; }
     if (y !== dernierY) descend = y > dernierY;
