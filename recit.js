@@ -177,15 +177,35 @@
     ['#comment', '#questions', '#rdv', '#offre', '#final'].forEach(s => { const el = $(s); if (el) io.observe(el); });
   };
 
+  /* ---------- Version courte (téléphone) : chaque bloc apparaît en douceur quand il arrive à l'écran ----------
+     Transform et opacité seulement (fluide même sur un vieux téléphone) ; sans JavaScript ou avec « réduire les animations », tout est visible d'emblée. */
+  function apparitions() {
+    if (!('IntersectionObserver' in window)) return;
+    const cibles = [];
+    $$('.recit .chapitre, .recit .rdv').forEach(bloc => {
+      [...bloc.children].filter(el => !el.hidden && getComputedStyle(el).display !== 'none').forEach((el, i) => {
+        el.classList.add('apparait'); el.style.setProperty('--retard', `${Math.min(i, 5) * 70}ms`); cibles.push(el);
+      });
+    });
+    const io = new IntersectionObserver(entrees => entrees.forEach(e => {
+      if (e.isIntersecting) { e.target.classList.add('vu'); io.unobserve(e.target); }
+    }), { rootMargin: '0px 0px -8% 0px', threshold: 0.08 });
+    cibles.forEach(el => io.observe(el));
+  }
+
   /* ---------- Le récit animé ---------- */
   // Choix explicite du visiteur (lien « Voir la version animée », ?anim=1, mémorisé) : prime sur le réglage « réduire les animations ».
   const animForcee = html.getAttribute('data-anim-forcee') === '1';
   const reduit = matchMedia('(prefers-reduced-motion: reduce)').matches && !animForcee;
   const tropBas = window.innerHeight < 520; // téléphone à l'horizontale : la mise en scène ne tient pas, on reste statique
-  if (reduit || tropBas || !window.gsap || !window.ScrollTrigger) {
+  // Téléphone (html.court, posé dans index.html) : version courte depuis le 14/09. Les restaurateurs regardent le site sur leur téléphone
+  // avant de répondre ; la mise en scène y faisait ~16 écrans avec un grand téléphone noir. Ici : ~9 écrans, fluides, sans 3D.
+  const court = html.classList.contains('court');
+  if (reduit || tropBas || court || !window.gsap || !window.ScrollTrigger) {
     html.classList.remove('anim'); barreStatique();
     const voirAnime = $('.voir-anime');
-    if (voirAnime && reduit && !tropBas && window.gsap && window.ScrollTrigger) voirAnime.hidden = false;
+    if (voirAnime && reduit && !court && !tropBas && window.gsap && window.ScrollTrigger) voirAnime.hidden = false;
+    if (court && !reduit) apparitions();
     return;
   }
   gsap.registerPlugin(ScrollTrigger);

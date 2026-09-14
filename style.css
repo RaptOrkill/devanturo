@@ -570,3 +570,23 @@ details p { max-width: 46ch; padding: 0 0 14px; color: #3a3833; }
 .cookies-actions { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-top: 12px; }
 .cookies-actions button { min-height: 44px; border: 1px solid var(--encre); border-radius: 0; background: transparent; color: var(--encre); font: 500 15px/1.2 var(--sans); cursor: pointer; }
 .cookies-actions button:hover { background: var(--encre); color: var(--fond); }
+
+/* ---------- Version courte, téléphone (html.court, 14/09) ----------
+   Première page : titre, prix, puis l'exemple LE BRAISÉ tout de suite, puis les boutons. Histoire resserrée, sans le téléphone en double, apparitions douces. */
+.court .accueil { display: flex; flex-direction: column; align-items: center; gap: 0; padding-bottom: 6px; }
+.court .accueil-texte { display: contents; }
+.court .accueil-etiquette { order: 1; }
+.court .accueil-titre { order: 2; font-size: clamp(34px, 9.6vw, 48px); }
+.court .accueil-sous { order: 3; margin-top: 12px; font-size: 15px; }
+.court .accueil-ecrans { order: 4; margin-top: 22px; }
+.court .accueil-actions { order: 5; margin-top: 24px; }
+.court .accueil-lancement { order: 6; }
+.court .accueil-etapes { order: 7; }
+.court .accueil-suite { order: 8; margin-top: 12px; }
+.court .scene { padding-top: 24px; padding-bottom: 12px; }
+.court .chapitre { padding: 28px 0; }
+.court .chapitre[data-chapitre="1"] { padding-top: 12px; }
+.court .scene > .tel, .court .voir-anime { display: none; }
+.court .apparait { opacity: 0; transform: translate3d(0, 22px, 0); transition: opacity .7s cubic-bezier(.2, .7, .2, 1) var(--retard, 0ms), transform .7s cubic-bezier(.2, .7, .2, 1) var(--retard, 0ms); will-change: opacity, transform; }
+.court .apparait.vu { opacity: 1; transform: none; will-change: auto; }
+@media (prefers-reduced-motion: reduce) { .court .apparait { opacity: 1; transform: none; transition: none; } }
