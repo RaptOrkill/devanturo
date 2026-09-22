@@ -1,0 +1,479 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Giulia — Trattoria, pâtes fraîches faites à la main à Lille</title>
+<meta name="description" content="Giulia, trattoria du Vieux-Lille : pâtes fraîches faites à la main chaque matin, burrata, tiramisù de Naples. Du mardi au dimanche, midi et soir.">
+<meta name="robots" content="noindex">
+<meta name="theme-color" content="#ef6a22">
+<meta property="og:title" content="Giulia — Trattoria à Lille">
+<meta property="og:description" content="Deux kilos de farine, vingt œufs et deux mains, tous les matins à sept heures.">
+<meta property="og:image" content="assets/tagliatelle.webp">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Ccircle cx='12' cy='13' r='10' fill='%23d9481c'/%3E%3Cpath d='M12 3v5M8 5l4 3 4-3' stroke='%231f4a2b' stroke-width='2' stroke-linecap='round' fill='none'/%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Gloock&family=Hanken+Grotesk:wght@300;400;500;600&display=swap">
+<script type="importmap">{"imports":{"three":"https://cdn.jsdelivr.net/npm/three@0.186.0/build/three.module.min.js"}}</script>
+<style>
+  :root { --arancio: #ef6a22; --tomate: #d9481c; --pomodoro: #c7361d; --basilico: #1f4a2b; --crema: #f5efe3; --crema-2: #ece3d2; --inchiostro: #1d1712; --gris: rgba(29,23,18,.6); --ligne: rgba(29,23,18,.16); --serif: "Gloock", Georgia, serif; --sans: "Hanken Grotesk", system-ui, sans-serif; }
+  * { box-sizing: border-box; margin: 0; }
+  html { scroll-behavior: smooth; }
+  html.lenis { scroll-behavior: auto; }
+  body { background: var(--crema); color: var(--inchiostro); font: 400 16px/1.65 var(--sans); overflow-x: hidden; -webkit-font-smoothing: antialiased; }
+  body::after { content: ""; position: fixed; inset: 0; z-index: 90; opacity: .5; pointer-events: none; mix-blend-mode: multiply; background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 .4 0 0 0 0 .3 0 0 0 0 .2 0 0 0 .12 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E"); }
+  h1, h2, h3 { font-family: var(--serif); font-weight: 400; line-height: .98; letter-spacing: -.01em; }
+  img { display: block; max-width: 100%; }
+  a { color: inherit; }
+  .wrap { max-width: 1280px; margin: 0 auto; padding: 0 28px; position: relative; }
+  .petit { font: 500 11.5px/1.5 var(--sans); letter-spacing: .2em; text-transform: uppercase; }
+  .mot { display: inline-block; overflow: hidden; vertical-align: bottom; padding-bottom: .08em; margin-bottom: -.08em; }
+  .mot > span { display: inline-block; will-change: transform; }
+  .btn { display: inline-flex; align-items: center; gap: 12px; min-height: 54px; padding: 0 28px; border-radius: 999px; border: 0; cursor: pointer; background: var(--inchiostro); color: var(--crema); font: 600 13px/1 var(--sans); letter-spacing: .14em; text-transform: uppercase; text-decoration: none; transition: background .3s, color .3s; will-change: transform; }
+  .btn::after { content: "→"; transition: transform .3s; }
+  .btn:hover::after { transform: translateX(5px); }
+  .btn.orange { background: var(--arancio); color: var(--inchiostro); }
+  .stella { display: block; }
+
+  /* L'en-tête : le nom à gauche, trois mots à droite */
+  header.top { position: fixed; top: 0; left: 0; right: 0; z-index: 60; color: var(--crema); transition: background .4s, color .4s, box-shadow .4s; }
+  header.top.plein { background: rgba(245,239,227,.96); color: var(--inchiostro); backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px); box-shadow: 0 1px 0 var(--ligne); }
+  header.top.vert.plein { background: rgba(31,74,43,.96); color: var(--crema); box-shadow: 0 1px 0 rgba(245,239,227,.14); }
+  .top-in { display: flex; align-items: center; justify-content: space-between; gap: 20px; padding: 20px 28px; max-width: 1280px; margin: 0 auto; }
+  html.cadre .top-in { padding-top: 66px; }
+  .brand { display: inline-flex; align-items: center; gap: 10px; font: 400 30px/1 var(--serif); text-decoration: none; text-shadow: 0 1px 0 rgba(0,0,0,.08); }
+  .brand i { width: 14px; height: 14px; border-radius: 48% 52% 45% 55%; background: var(--tomate); box-shadow: inset -3px -3px 0 rgba(0,0,0,.12); }
+  header nav { display: flex; align-items: center; gap: 28px; }
+  header nav a { font: 500 12px/1 var(--sans); letter-spacing: .18em; text-transform: uppercase; text-decoration: none; }
+  header nav a.prenota { padding: 12px 18px; border-radius: 999px; border: 1.5px solid currentColor; }
+  @media (max-width: 759px) { header nav a:not(.prenota) { display: none; } }
+
+  /* L'affiche : orange, tomates et basilic, le nom immense */
+  .affiche { position: relative; min-height: 100svh; background: var(--arancio); color: var(--crema); overflow: hidden; display: grid; place-items: center; padding: 120px 20px max(150px, 32vh); isolation: isolate; }
+  .motif { position: absolute; inset: -4%; z-index: -1; }
+  .motif .t, .motif .s { position: absolute; will-change: transform; }
+  .motif .t { background: var(--tomate); border-radius: 48% 52% 55% 45% / 52% 44% 56% 48%; }
+  .motif .s svg { width: 100%; height: 100%; overflow: visible; }
+  .affiche-in { text-align: center; position: relative; }
+  .affiche .sur { display: block; margin-bottom: clamp(22px, 3.4vw, 44px); }
+  .affiche h1 { font-size: clamp(96px, 23vw, 380px); line-height: .82; text-transform: uppercase; letter-spacing: -.02em; color: var(--crema); text-shadow: 0 2px 0 rgba(0,0,0,.04); }
+  .affiche .sous { display: block; margin-top: 22px; font: 400 clamp(18px, 2vw, 26px)/1.3 var(--serif); text-align: left; padding-left: .06em; }
+  /* La fourchette fait le I : les pâtes enroulées au milieu des capitales (épaisseur d'un fût de lettre), les dents au-dessus, le manche sous la ligne */
+  .forchetta { display: inline-block; position: relative; width: .34em; height: .82em; vertical-align: baseline; margin: 0 .02em; }
+  .forchetta img { position: absolute; left: 50%; bottom: -.86em; height: 1.5em; width: auto; max-width: none; transform: translateX(-50%); transform-origin: 50% 70%; filter: drop-shadow(0 .05em .06em rgba(60,20,0,.35)); will-change: transform; }
+  @media (max-width: 759px) { .affiche h1 { padding-bottom: .5em; } }
+  .coin { position: absolute; bottom: 30px; font: 500 11.5px/1.6 var(--sans); letter-spacing: .16em; text-transform: uppercase; color: var(--crema); }
+  .coin.g { left: 28px; } .coin.d { right: 28px; text-align: right; }
+  @media (max-width: 759px) { .coin { display: none; } .affiche { min-height: 78svh; padding: 110px 16px 36vw; } }
+
+  /* L'assiette posée à cheval entre l'affiche et la suite ; elle tourne quand on descend */
+  .assiette-pose { position: relative; z-index: 5; height: 0; display: flex; justify-content: center; perspective: 1200px; pointer-events: none; }
+  .assiette { width: min(520px, 76vw, 58vh); margin-top: calc(min(520px, 76vw, 58vh) / -2); transform-style: preserve-3d; }
+  .assiette img { width: 100%; height: auto; filter: drop-shadow(0 40px 40px rgba(60,20,0,.35)); will-change: transform; }
+
+  /* La phrase de Fellini : les mots se colorent au défilement */
+  .citazione { padding: calc(min(260px, 38vw) + 60px) 0 140px; text-align: center; }
+  .citazione .qui { color: var(--basilico); }
+  .citazione blockquote { font: 400 clamp(44px, 7.4vw, 118px)/1 var(--serif); max-width: 13ch; margin: 22px auto 0; color: var(--arancio); }
+  .citazione blockquote .m { color: rgba(29,23,18,.12); transition: none; }
+  .citazione .fr { margin: 30px auto 0; max-width: 46ch; color: var(--gris); font-size: 17px; }
+  .citazione .fr b { color: var(--inchiostro); font-weight: 600; }
+
+  /* Fatta a mano : épinglé, la fenêtre sur les mains s'ouvre jusqu'à remplir l'écran */
+  .fatta { position: relative; height: 100svh; overflow: hidden; background: var(--crema); }
+  .fatta .mains { position: absolute; inset: 0; clip-path: inset(24% 36% 22% 36% round 4px); will-change: clip-path; }
+  .fatta .mains img { width: 100%; height: 100%; object-fit: cover; transform: scale(1.25); }
+  .fatta .mains::after { content: ""; position: absolute; inset: 0; background: linear-gradient(180deg, rgba(29,23,18,.05), rgba(29,23,18,.6)); opacity: var(--voile, 0); }
+  .fatta canvas { position: absolute; inset: 0; width: 100%; height: 100%; pointer-events: none; }
+  .fatta .ligne { position: absolute; font: 400 clamp(64px, 15vw, 250px)/.85 var(--serif); text-transform: uppercase; color: var(--inchiostro); white-space: nowrap; }
+  .fatta .l1 { left: 3vw; top: 11svh; } .fatta .l2 { right: 3vw; bottom: 9svh; }
+  .fatta .l1 em, .fatta .l2 em { font-style: normal; color: var(--arancio); }
+  .fatta .heures { position: absolute; left: 3vw; bottom: 12svh; display: grid; gap: 4px; font: 500 12px/1.5 var(--sans); letter-spacing: .08em; }
+  .fatta .heures b { display: inline-block; width: 64px; }
+  .fatta .fin { position: absolute; left: 0; right: 0; bottom: 14svh; text-align: center; color: var(--crema); opacity: 0; padding: 0 24px; }
+  .fatta .fin h2 { font-size: clamp(38px, 5.6vw, 88px); }
+  .fatta .fin p { margin-top: 14px; font-size: 17px; opacity: .85; }
+  @media (max-width: 759px) { .fatta .mains { clip-path: inset(30% 14% 30% 14% round 4px); } .fatta .l1 { top: 13svh; } .fatta .l2 { bottom: 15svh; } .fatta .heures { display: none; } }
+
+  /* Il menu : vert basilic, des lignes comme sur une ardoise ; l'assiette suit la souris */
+  .menu { background: var(--basilico); color: var(--crema); padding: 130px 0 120px; position: relative; z-index: 3; }
+  .menu-tete { display: grid; gap: 20px; align-items: end; margin-bottom: 60px; }
+  .menu-tete h2 { font-size: clamp(76px, 15vw, 230px); line-height: .85; }
+  .menu-tete h2 em { font-style: normal; color: var(--arancio); }
+  .menu-tete p { max-width: 36ch; opacity: .78; font-size: 17px; }
+  @media (min-width: 900px) { .menu-tete { grid-template-columns: 1.6fr 1fr; } }
+  .rubrique { display: grid; gap: 0; margin-top: 30px; }
+  .rubrique > .petit { color: var(--arancio); padding: 18px 0; border-bottom: 1px solid rgba(245,239,227,.22); }
+  .plat { display: grid; grid-template-columns: auto 1fr auto; align-items: center; gap: 22px; padding: 22px 0; border-bottom: 1px solid rgba(245,239,227,.22); cursor: default; }
+  .plat .n { font: 500 12px/1 var(--sans); letter-spacing: .14em; opacity: .55; width: 26px; }
+  .plat h3 { font-size: clamp(28px, 4.2vw, 58px); transition: transform .5s cubic-bezier(.2,.7,.2,1), color .3s; }
+  .plat p { font-size: 14.5px; opacity: .7; margin-top: 8px; max-width: 52ch; }
+  .plat .prix { font: 400 clamp(22px, 2.6vw, 34px)/1 var(--serif); }
+  @media (hover: hover) { .plat:hover h3 { transform: translateX(18px); color: var(--arancio); } .plat:hover .n { opacity: 1; color: var(--arancio); } }
+  .apercu { position: fixed; left: 0; top: 0; width: 240px; height: 240px; pointer-events: none; z-index: 40; opacity: 0; transform: scale(.6); }
+  .apercu img { width: 100%; height: 100%; object-fit: contain; filter: drop-shadow(0 30px 30px rgba(0,0,0,.4)); will-change: transform; }
+  .apercu.colle { position: sticky; top: 72px; left: auto; width: auto; height: 0; display: flex; justify-content: flex-end; transform: none; z-index: 4; }
+  .apercu.colle img { width: 118px; height: 118px; filter: drop-shadow(0 18px 18px rgba(0,0,0,.4)); }
+  html.cadre .apercu.colle { top: 116px; }
+  .menu .tomate { position: absolute; right: 6vw; top: -150px; width: min(230px, 30vw); pointer-events: none; filter: drop-shadow(0 30px 30px rgba(0,0,0,.35)); z-index: 2; }
+  @media (max-width: 759px) { .menu .tomate { top: -90px; right: 4vw; } }
+  .menu .note { margin-top: 36px; opacity: .72; font-size: 15px; }
+
+  /* Giulia : la carte postale, le tampon, l'histoire */
+  .giulia { background: var(--arancio); color: var(--inchiostro); padding: 140px 0; position: relative; overflow: hidden; isolation: isolate; }
+  .giulia .motif { opacity: .45; }
+  .giulia-grid { display: grid; gap: 70px; align-items: center; }
+  @media (min-width: 900px) { .giulia-grid { grid-template-columns: .9fr 1.1fr; gap: 90px; } }
+  .postale { position: relative; justify-self: center; width: min(400px, 82vw); background: #fbf8f1; padding: 16px 16px 60px; border-radius: 3px; transform: rotate(-4deg); box-shadow: 0 40px 70px -30px rgba(60,20,0,.55); }
+  .postale .photo { overflow: hidden; aspect-ratio: 3/4; }
+  .postale .photo img { width: 100%; height: 100%; object-fit: cover; }
+  .postale .dos { position: absolute; left: 20px; bottom: 18px; font: 400 22px/1 var(--serif); color: var(--inchiostro); }
+  .postale .dos small { font: 500 10.5px/1 var(--sans); letter-spacing: .18em; text-transform: uppercase; color: var(--gris); margin-left: 8px; }
+  .timbre { position: absolute; right: -26px; top: -30px; width: 96px; height: 116px; background: var(--crema); padding: 7px; transform: rotate(8deg); -webkit-mask: radial-gradient(circle 5px at 5px 5px, #0000 98%, #000) -5px -5px / 11px 11px; mask: radial-gradient(circle 5px at 5px 5px, #0000 98%, #000) -5px -5px / 11px 11px; }
+  .timbre div { height: 100%; background: var(--pomodoro); display: grid; place-items: center; color: var(--crema); font: 400 13px/1.1 var(--serif); text-align: center; }
+  .timbre div span { font: 400 30px/1 var(--serif); display: block; }
+  .cachet { position: absolute; left: -44px; top: 42%; width: 130px; height: 130px; color: var(--inchiostro); opacity: .7; }
+  .giulia-texte .petit { color: var(--crema); }
+  .giulia-texte h2 { font-size: clamp(60px, 9vw, 140px); color: var(--crema); margin: 16px 0 26px; }
+  .giulia-texte p { max-width: 50ch; font-size: 17.5px; margin-bottom: 16px; }
+  .giulia-texte .dit { font: 400 clamp(24px, 2.6vw, 34px)/1.2 var(--serif); color: var(--crema); margin: 30px 0 8px; max-width: 24ch; }
+  .frise { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; margin-top: 36px; border-top: 1.5px solid var(--inchiostro); padding-top: 18px; }
+  .frise b { display: block; font: 400 clamp(30px, 3.4vw, 44px)/1 var(--serif); color: var(--crema); }
+  .frise span { font-size: 13.5px; line-height: 1.45; display: block; margin-top: 6px; }
+
+  /* Bandeau qui défile */
+  .bande { background: var(--pomodoro); color: var(--crema); overflow: hidden; padding: 26px 0; }
+  .bande-in { display: flex; gap: 42px; width: max-content; align-items: center; font: 400 clamp(34px, 5vw, 70px)/1 var(--serif); }
+  .bande-in .stella { width: .6em; height: .6em; }
+
+  /* Prenota */
+  .prenota { padding: 130px 0 140px; }
+  .prenota-grid { display: grid; gap: 60px; }
+  @media (min-width: 900px) { .prenota-grid { grid-template-columns: 1fr 1fr; gap: 90px; } }
+  .prenota h2 { font-size: clamp(76px, 13vw, 200px); line-height: .85; }
+  .prenota h2 em { font-style: normal; color: var(--arancio); }
+  .prenota .intro { margin: 24px 0 34px; max-width: 42ch; color: var(--gris); font-size: 17px; }
+  .orari { display: grid; grid-template-columns: 1fr 1fr; gap: 22px 30px; border-top: 1.5px solid var(--inchiostro); padding-top: 22px; }
+  .orari b { display: block; font: 600 12px/1.4 var(--sans); letter-spacing: .14em; text-transform: uppercase; }
+  .orari span { font-size: 15px; color: var(--gris); }
+  .voci { margin-top: 44px; display: grid; gap: 18px; }
+  .voci p { font: 400 21px/1.3 var(--serif); }
+  .voci cite { display: block; font: 500 12px/1 var(--sans); letter-spacing: .12em; text-transform: uppercase; font-style: normal; color: var(--gris); margin-top: 8px; }
+  .formulaire { background: #fbf8f1; border-radius: 6px; padding: 34px; display: grid; grid-template-columns: 1fr 1fr; gap: 18px; align-self: start; box-shadow: 0 40px 80px -40px rgba(60,30,0,.35); position: relative; }
+  .formulaire::before { content: "N° 0427"; position: absolute; right: 26px; top: -12px; background: var(--arancio); color: var(--inchiostro); font: 600 11px/1 var(--sans); letter-spacing: .16em; padding: 7px 10px; border-radius: 3px; }
+  .formulaire h3 { grid-column: 1 / -1; font-size: 34px; margin-bottom: 4px; }
+  .formulaire label { display: grid; gap: 7px; font: 600 11px/1 var(--sans); letter-spacing: .16em; text-transform: uppercase; }
+  .formulaire input, .formulaire select { font: 400 16px/1.2 var(--sans); padding: 14px 0; border: 0; border-bottom: 1.5px solid var(--inchiostro); background: transparent; color: var(--inchiostro); border-radius: 0; }
+  .formulaire input:focus, .formulaire select:focus { outline: none; border-color: var(--arancio); }
+  .formulaire .plein { grid-column: 1 / -1; }
+  .formulaire .btn { grid-column: 1 / -1; justify-self: start; margin-top: 8px; }
+  .formulaire .note { grid-column: 1 / -1; color: var(--gris); font-size: 14px; }
+  @media (max-width: 520px) { .formulaire { grid-template-columns: 1fr; padding: 26px 22px; } }
+
+  footer { background: var(--basilico); color: rgba(245,239,227,.7); padding: 80px 0 120px; position: relative; overflow: hidden; }
+  footer .geant { position: absolute; left: 50%; bottom: -.2em; transform: translateX(-50%); font: 400 clamp(120px, 30vw, 460px)/1 var(--serif); text-transform: uppercase; color: rgba(245,239,227,.07); pointer-events: none; white-space: nowrap; }
+  .pied { display: grid; gap: 30px; font-size: 14.5px; position: relative; }
+  @media (min-width: 760px) { .pied { grid-template-columns: 1.3fr 1fr 1fr; } footer { padding-bottom: 60px; } }
+  .pied b { display: block; color: var(--crema); font: 600 11px/1 var(--sans); letter-spacing: .2em; text-transform: uppercase; margin-bottom: 14px; }
+  .pied .brand { color: var(--crema); margin-bottom: 14px; }
+  .pied a { text-decoration: none; }
+  .demo-note { background: var(--inchiostro); color: rgba(255,255,255,.55); text-align: center; font-size: 12.5px; padding: 10px 16px; }
+  .demo-note a { color: #fff; font-weight: 500; }
+  .fixe { position: fixed; left: 12px; right: 12px; bottom: max(12px, env(safe-area-inset-bottom)); z-index: 50; display: grid; grid-template-columns: 1fr 1.4fr 1fr; gap: 6px; padding: 6px; border-radius: 999px; background: rgba(29,23,18,.92); backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px); box-shadow: 0 20px 50px -20px rgba(0,0,0,.5); }
+  .fixe a { display: flex; align-items: center; justify-content: center; min-height: 46px; border-radius: 999px; color: var(--crema); font: 600 12px/1 var(--sans); letter-spacing: .1em; text-transform: uppercase; text-decoration: none; }
+  .fixe a.principal { background: var(--arancio); color: var(--inchiostro); }
+  @media (min-width: 760px) { .fixe { display: none; } }
+  .devanturo { position: fixed; left: 50%; top: 10px; transform: translateX(-50%); z-index: 70; padding: 8px 14px; border-radius: 999px; background: #000; color: #fff; font: 500 12px/1 var(--sans); text-decoration: none; box-shadow: 0 8px 24px rgba(0,0,0,.4); }
+  .reveal { opacity: 0; transform: translateY(30px); }
+  html.statique .reveal { opacity: 1; transform: none; }
+  html.statique .citazione blockquote .m { color: inherit; }
+  html.statique .fatta .mains { clip-path: none; }
+  html.statique .fatta .fin { opacity: 1; }
+  html.statique .fatta .ligne { display: none; }
+</style>
+</head>
+<body>
+<svg width="0" height="0" style="position:absolute" aria-hidden="true"><defs><symbol id="stella" viewBox="-50 -50 100 100"><g stroke="currentColor" stroke-width="7" stroke-linecap="round"><path d="M0-12V-46M0 12V46M-12 0H-46M12 0H46M-8.5-8.5-32.5-32.5M8.5 8.5 32.5 32.5M8.5-8.5 32.5-32.5M-8.5 8.5-32.5 32.5"/></g></symbol></defs></svg>
+
+<header class="top">
+  <div class="top-in">
+    <a class="brand" href="#"><i aria-hidden="true"></i>Giulia</a>
+    <nav aria-label="Principale"><a href="#menu">Il menu</a><a href="#giulia">Giulia</a><a class="prenota" href="#prenota">Prenota</a></nav>
+  </div>
+</header>
+
+<section class="affiche" aria-label="Giulia, trattoria">
+  <div class="motif" data-motif aria-hidden="true"></div>
+  <div class="affiche-in">
+    <span class="sur petit">Trattoria · Pasta fatta a mano · Lille</span>
+    <h1 data-lettres>Giul<span class="forchetta"><img src="assets/forchetta.webp" alt="I" width="420" height="1024"></span>a</h1>
+    <span class="sous">Les pâtes de Naples, faites ce matin.</span>
+  </div>
+  <div class="coin g">Mardi → dimanche<br>12 h – 14 h 30 · 19 h – 22 h 30</div>
+  <div class="coin d">22 rue de la Monnaie<br>Vieux-Lille</div>
+</section>
+<div class="assiette-pose" aria-hidden="true"><div class="assiette"><img src="assets/tagliatelle.webp" alt="" width="900" height="900" fetchpriority="high"></div></div>
+
+<section class="citazione">
+  <div class="wrap">
+    <span class="qui petit reveal">Come disse Federico Fellini</span>
+    <blockquote data-colorer>La vita è una combinazione di pasta e magia.</blockquote>
+    <p class="fr reveal">« La vie est un mélange de pâtes et de magie. » Chez Giulia, la magie, c'est <b>sept heures du matin</b>, un plan de travail en bois et deux kilos de farine.</p>
+  </div>
+</section>
+
+<section class="fatta" aria-label="Fatta a mano">
+  <div class="mains"><img src="assets/mains.jpg" alt="Les mains de Giulia pétrissent la pâte dans la farine" loading="lazy"></div>
+  <canvas id="farine" aria-hidden="true"></canvas>
+  <span class="ligne l1" aria-hidden="true">Fatta</span>
+  <span class="ligne l2" aria-hidden="true">a <em>mano</em></span>
+  <div class="heures"><div><b>7 h 00</b>la farine, tipo 00</div><div><b>7 h 20</b>vingt œufs de Bailleul</div><div><b>8 h 00</b>la sfoglia, au rouleau</div><div><b>11 h 30</b>les tagliatelle sèchent</div></div>
+  <div class="fin"><h2>Deux kilos de farine, vingt œufs, deux mains.</h2><p>Tous les matins, avant d'ouvrir. Rien ne sort d'un sachet.</p></div>
+</section>
+
+<section class="menu" id="menu">
+  <img class="tomate" src="assets/tomate.webp" alt="" data-parallaxe="60" aria-hidden="true">
+  <div class="wrap">
+    <div class="apercu" aria-hidden="true"><img alt=""></div>
+    <div class="menu-tete"><h2 class="reveal">Il <em>menu</em></h2><p class="reveal">Une carte courte qui change avec le marché de Wazemmes. Les pâtes, elles, sont faites ici, le matin même.</p></div>
+    <div class="rubrique reveal"><span class="petit">Antipasti</span>
+      <div class="plat" data-img="assets/burrata.webp"><span class="n">01</span><div><h3>Burrata e pomodorini</h3><p>Burrata des Pouilles, tomates cerises rouges et jaunes, basilic, huile d'olive de Sicile.</p></div><span class="prix">13 €</span></div>
+      <div class="plat" data-img="assets/vitello.webp"><span class="n">02</span><div><h3>Vitello tonnato</h3><p>Veau rosé, sauce au thon et aux câpres, comme à Turin le dimanche.</p></div><span class="prix">12 €</span></div>
+    </div>
+    <div class="rubrique reveal"><span class="petit">Primi · pasta fresca</span>
+      <div class="plat" data-img="assets/tagliatelle.webp"><span class="n">03</span><div><h3>Tagliatelle al ragù</h3><p>Le ragù de nonna Carmela, six heures sur le feu, parmigiano 24 mois.</p></div><span class="prix">18 €</span></div>
+      <div class="plat" data-img="assets/cacio.webp"><span class="n">04</span><div><h3>Cacio e pepe</h3><p>Tonnarelli, pecorino romano, poivre noir concassé au moment.</p></div><span class="prix">16 €</span></div>
+      <div class="plat" data-img="assets/ravioli.webp"><span class="n">05</span><div><h3>Ravioli ricotta e limone</h3><p>Ricotta de brebis, citron d'Amalfi, beurre noisette et sauge.</p></div><span class="prix">19 €</span></div>
+    </div>
+    <div class="rubrique reveal"><span class="petit">Dolci</span>
+      <div class="plat" data-img="assets/tiramisu.webp"><span class="n">06</span><div><h3>Il tiramisù di Giulia</h3><p>Mascarpone, café serré, savoiardi, cacao amer. Servi dans un verre, comme à Naples.</p></div><span class="prix">8 €</span></div>
+    </div>
+    <p class="note reveal">Formule du midi, du mardi au vendredi : un primo et un dolce, 21 €. Vins italiens au verre dès 6 €.</p>
+  </div>
+</section>
+
+<section class="giulia" id="giulia">
+  <div class="motif" data-motif="doux" aria-hidden="true"></div>
+  <div class="wrap giulia-grid">
+    <div class="postale reveal" data-carte>
+      <div class="photo"><img src="assets/giulia.jpg" alt="Giulia dans sa cuisine, les pâtes fraîches qui sèchent derrière elle" loading="lazy"></div>
+      <span class="dos">Ciao da Lille<small>· Giulia</small></span>
+      <div class="timbre" aria-hidden="true"><div><p><span>1983</span>Napoli</p></div></div>
+      <svg class="cachet" viewBox="0 0 120 120" aria-hidden="true" data-cachet><defs><path id="rond" d="M60 60m-44 0a44 44 0 1 1 88 0a44 44 0 1 1-88 0"/></defs><circle cx="60" cy="60" r="56" fill="none" stroke="currentColor" stroke-width="2"/><circle cx="60" cy="60" r="32" fill="none" stroke="currentColor" stroke-width="1.5"/><text font-family="Hanken Grotesk, sans-serif" font-size="11" font-weight="600" letter-spacing="3" fill="currentColor"><textPath href="#rond">NAPOLI · LILLE · FATTA A MANO ·</textPath></text><text x="60" y="66" text-anchor="middle" font-family="Gloock, serif" font-size="18" fill="currentColor">2017</text></svg>
+    </div>
+    <div class="giulia-texte">
+      <span class="petit reveal">Qui cucina</span>
+      <h2 class="reveal">Voici Giulia.</h2>
+      <p class="reveal">Giulia Esposito a appris les pâtes dans la cuisine de sa grand-mère Carmela, dans les Quartieri Spagnoli de Naples. Elle est arrivée à Lille en 2008 pour un an. Elle y est toujours.</p>
+      <p class="reveal">En 2017, elle ouvre sa trattoria rue de la Monnaie avec Marco, son frère, qui tient la salle et choisit les vins. Trente couverts, une cuisine ouverte, et une table de douze pour le déjeuner du dimanche.</p>
+      <p class="dit reveal">« Si la pâte ne colle pas un peu aux doigts, c'est qu'on a eu peur des œufs. »</p>
+      <div class="frise reveal"><div><b>1983</b><span>Naples, les dimanches chez nonna Carmela</span></div><div><b>2008</b><span>Lille, cuisinière dans une brasserie du Vieux-Lille</span></div><div><b>2017</b><span>Rue de la Monnaie, la trattoria avec Marco</span></div></div>
+    </div>
+  </div>
+</section>
+
+<div class="bande" aria-hidden="true"><div class="bande-in" data-bande></div></div>
+
+<section class="prenota" id="prenota">
+  <div class="wrap prenota-grid">
+    <div>
+      <span class="petit reveal" style="color: var(--pomodoro)">Un tavolo da Giulia</span>
+      <h2 class="reveal">Pre<em>nota.</em></h2>
+      <p class="intro reveal">Marco vous rappelle dans l'heure pour confirmer. Le dimanche midi, c'est la grande tavolata : douze places, un menu unique, on partage.</p>
+      <div class="orari reveal">
+        <div><b>Mardi → vendredi</b><span>12 h – 14 h 30 · 19 h – 22 h 30</span></div>
+        <div><b>Samedi</b><span>19 h – 23 h</span></div>
+        <div><b>Dimanche</b><span>12 h – 15 h, la tavolata</span></div>
+        <div><b>22 rue de la Monnaie</b><span><a href="tel:+33320000000">03 20 00 00 00</a></span></div>
+      </div>
+      <div class="voci reveal">
+        <div><p>« Les tagliatelle les plus fines que j'ai mangées hors d'Italie. Et Marco connaît chaque bouteille. »</p><cite>Chloé M. · sur Google</cite></div>
+        <div><p>« On est venus pour la tavolata, on est repartis avec des amis. »</p><cite>Julien et Sarah · sur Google</cite></div>
+      </div>
+    </div>
+    <form class="formulaire reveal" onsubmit="event.preventDefault(); this.querySelector('.note').textContent = 'Grazie ! Marco vous rappelle pour confirmer. (Démonstration : rien n\'est envoyé.)';">
+      <h3>Votre table</h3>
+      <label class="plein">Nom<input type="text" name="nom" placeholder="Votre nom" required></label>
+      <label>Personnes<select name="personnes"><option>1</option><option selected>2</option><option>3</option><option>4</option><option>5</option><option>6</option><option>7 et plus</option></select></label>
+      <label>Date<input type="date" name="date" required></label>
+      <label>Heure<select name="heure"><option>12 h</option><option>12 h 30</option><option>13 h</option><option selected>19 h 30</option><option>20 h</option><option>20 h 30</option><option>21 h</option></select></label>
+      <label>Téléphone<input type="tel" name="tel" placeholder="06 …" required></label>
+      <button class="btn orange" type="submit">Demander une table</button>
+      <p class="note">Ou directement : <a href="tel:+33320000000">03 20 00 00 00</a>, du mardi au dimanche dès 11 h.</p>
+    </form>
+  </div>
+</section>
+
+<footer>
+  <span class="geant" aria-hidden="true">Giulia</span>
+  <div class="wrap pied">
+    <div><a class="brand" href="#"><i aria-hidden="true"></i>Giulia</a><p>22 rue de la Monnaie, 59800 Lille</p><p>Métro Rihour, 9 min à pied</p><p><a href="tel:+33320000000">03 20 00 00 00</a></p></div>
+    <div><b>Orari</b><p>Mardi → samedi, midi et soir</p><p>Dimanche midi, la tavolata</p><p>Fermé le lundi</p></div>
+    <div><b>Seguici</b><p><a href="#">Instagram</a></p><p><a href="#">La carte en PDF</a></p><p>© 2026 Giulia · SIRET 000 000 000 00000</p></div>
+  </div>
+</footer>
+<div class="demo-note">Site fictif de démonstration, réalisé par <a href="../../index.html" target="_top">Devanturo</a> · le site de votre restaurant, en ligne sept jours après notre visite</div>
+
+<nav class="fixe" aria-label="Actions">
+  <a href="tel:+33320000000">Appeler</a>
+  <a class="principal" href="#prenota">Prenota</a>
+  <a href="#menu">Il menu</a>
+</nav>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.13.0/gsap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.13.0/ScrollTrigger.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/lenis@1.3.4/dist/lenis.min.js"></script>
+<script>
+(() => {
+  const html = document.documentElement;
+  const embarque = /[?&]embarque=1/.test(location.search);
+  if (embarque || /[?&](cadre=1|de=devanturo)/.test(location.search)) html.classList.add('cadre');
+  if (/[?&]de=devanturo/.test(location.search)) { const a = document.createElement('a'); a.className = 'devanturo'; a.href = '../../index.html#exemple'; a.textContent = '← Devanturo · démonstration'; document.body.append(a); }
+
+  /* Le motif : des tomates et des étoiles de basilic, posées à la main (pseudo-aléatoire, toujours le même dessin) */
+  let graine = 7; const alea = () => (graine = (graine * 16807) % 2147483647) / 2147483647;
+  document.querySelectorAll('[data-motif]').forEach(m => {
+    const cols = 6, rangs = 5;
+    for (let r = 0; r < rangs; r++) for (let c = 0; c < cols; c++) {
+      const t = document.createElement('i'); t.className = 't'; const s = 9 + alea() * 7;
+      t.style.cssText = `left:${(c + (r % 2) * .5) / cols * 100 + (alea() - .5) * 6}%;top:${r / rangs * 100 + (alea() - .5) * 8}%;width:${s}vmax;height:${s * (.86 + alea() * .2)}vmax;border-radius:${44 + alea() * 12}% ${44 + alea() * 12}% ${44 + alea() * 12}% ${44 + alea() * 12}% / ${44 + alea() * 12}% ${44 + alea() * 12}% ${44 + alea() * 12}% ${44 + alea() * 12}%`;
+      t.dataset.z = (.4 + alea()).toFixed(2); m.append(t);
+      if (alea() > .35) { const e = document.createElement('i'); e.className = 's'; const z = 3.6 + alea() * 2.6; e.style.cssText = `left:${(c + .25 + (r % 2) * .5) / cols * 100 + (alea() - .5) * 5}%;top:${(r + .55) / rangs * 100 + (alea() - .5) * 5}%;width:${z}vmax;height:${z}vmax;color:var(--basilico)`; e.innerHTML = '<svg><use href="#stella"/></svg>'; e.dataset.z = (1 + alea() * .8).toFixed(2); m.append(e); }
+    }
+  });
+  /* Le bandeau */
+  const bande = document.querySelector('[data-bande]');
+  const mots = ['Pasta fresca', 'Vino naturale', 'Tiramisù', 'La tavolata della domenica', 'Fatta a mano'].map(m => `<span>${m}</span><svg class="stella" style="color:var(--arancio)"><use href="#stella"/></svg>`).join('');
+  bande.innerHTML = mots + mots;
+
+  const reduit = matchMedia('(prefers-reduced-motion: reduce)').matches, souris = matchMedia('(hover: hover)').matches;
+  if (reduit || !window.gsap || /[?&]anim=0/.test(location.search)) { html.classList.add('statique'); return; }
+  gsap.registerPlugin(ScrollTrigger);
+  let lenis = null;
+  if (window.Lenis && !embarque && souris) {
+    lenis = new Lenis({ lerp: .09 });
+    lenis.on('scroll', ScrollTrigger.update); gsap.ticker.add(t => lenis.raf(t * 1000)); gsap.ticker.lagSmoothing(0); html.classList.add('lenis');
+    document.querySelectorAll('a[href^="#"]').forEach(a => a.addEventListener('click', e => { const h = a.getAttribute('href'); const c = h.length > 1 && document.querySelector(h); if (c) { e.preventDefault(); lenis.scrollTo(c, { offset: -40 }); } }));
+  }
+  /* Les lettres du nom, et les mots de Fellini */
+  const h1 = document.querySelector('[data-lettres]');
+  h1.innerHTML = [...h1.childNodes].map(n => n.nodeType === 3 ? [...n.textContent].map(l => `<span class="mot"><span>${l}</span></span>`).join('') : n.outerHTML).join('');
+  const bq = document.querySelector('[data-colorer]');
+  bq.innerHTML = bq.textContent.split(' ').map(m => `<span class="m">${m}</span>`).join(' ');
+
+  /* L'entrée : les tomates poussent, le basilic tourne, le nom monte, l'assiette arrive en tournant */
+  const hero = document.querySelector('.affiche');
+  gsap.timeline({ defaults: { ease: 'power4.out' } })
+    .from(hero.querySelectorAll('.motif .t'), { scale: 0, duration: 1.1, ease: 'back.out(1.6)', stagger: { each: .025, from: 'center' } }, 0)
+    .from(hero.querySelectorAll('.motif .s'), { scale: 0, rotate: -120, duration: 1, ease: 'back.out(2)', stagger: { each: .03, from: 'random' } }, .3)
+    .from('.affiche h1 .mot > span', { yPercent: 105, duration: 1.2, stagger: .06 }, .5)
+    .from('.forchetta img', { yPercent: -70, rotate: -28, autoAlpha: 0, duration: 1.5, ease: 'elastic.out(1, .55)' }, 1.15)
+    .from('.affiche .sur, .affiche .sous, .coin', { autoAlpha: 0, y: 16, duration: .9, stagger: .08 }, 1)
+    .from('.assiette img', { autoAlpha: 0, y: 120, rotate: -140, scale: .7, duration: 1.8, ease: 'power3.out' }, .6);
+  /* Le basilic tourne doucement, les tomates respirent */
+  document.querySelectorAll('.motif .s').forEach((s, i) => gsap.to(s, { rotate: (i % 2 ? -1 : 1) * 360, duration: 40 + (i % 5) * 8, ease: 'none', repeat: -1 }));
+  document.querySelectorAll('.motif .t').forEach((t, i) => gsap.to(t, { yPercent: 6, xPercent: (i % 3 - 1) * 3, duration: 3 + (i % 4), ease: 'sine.inOut', yoyo: true, repeat: -1, delay: (i % 7) * .3 }));
+  /* La souris : le motif glisse selon sa profondeur, l'assiette s'incline */
+  if (souris) {
+    const couches = [...document.querySelectorAll('.affiche .motif i')].map(el => ({ x: gsap.quickTo(el, 'x', { duration: 1.2, ease: 'power2.out' }), y: gsap.quickTo(el, 'y', { duration: 1.2, ease: 'power2.out' }), z: +el.dataset.z }));
+    const rx = gsap.quickTo('.assiette', 'rotationX', { duration: 1, ease: 'power2.out' }), ry = gsap.quickTo('.assiette', 'rotationY', { duration: 1, ease: 'power2.out' }), rf = gsap.quickTo('.forchetta img', 'rotate', { duration: 1.2, ease: 'power2.out' });
+    addEventListener('pointermove', e => { const dx = e.clientX / innerWidth - .5, dy = e.clientY / innerHeight - .5; couches.forEach(c => { c.x(-dx * 40 * c.z); c.y(-dy * 30 * c.z); }); rx(-dy * 26); ry(dx * 30); rf(dx * 14); }, { passive: true });
+  }
+  /* En descendant : le nom s'éloigne, l'assiette tourne comme un disque */
+  gsap.to('.affiche-in', { yPercent: -35, autoAlpha: .2, ease: 'none', scrollTrigger: { trigger: hero, start: 'top top', end: 'bottom top', scrub: true } });
+  gsap.to('.forchetta img', { yPercent: -45, rotate: 10, ease: 'none', scrollTrigger: { trigger: hero, start: 'top top', end: 'bottom top', scrub: true } });
+  gsap.to('.assiette img', { rotate: 220, ease: 'none', scrollTrigger: { trigger: hero, start: 'top top', end: () => '+=' + innerHeight * 1.8, scrub: .6 } });
+  gsap.to('.assiette', { y: () => -innerHeight * .12, scale: .84, ease: 'none', scrollTrigger: { trigger: '.citazione', start: 'top bottom', end: 'center top', scrub: true } });
+  /* L'en-tête */
+  /* Fellini : chaque mot prend la couleur au défilement */
+  gsap.to('.citazione blockquote .m', { color: 'var(--arancio)', stagger: .12, ease: 'none', scrollTrigger: { trigger: bq, start: 'top 80%', end: 'bottom 45%', scrub: true } });
+  /* Fatta a mano : épinglé ; la fenêtre s'ouvre, les mots s'écartent, la phrase arrive */
+  const fatta = document.querySelector('.fatta');
+  gsap.timeline({ scrollTrigger: { trigger: fatta, start: 'top top', end: () => '+=' + innerHeight * 1.6, pin: true, scrub: .8, anticipatePin: 1 } })
+    .to('.fatta .mains', { clipPath: 'inset(0% 0% 0% 0% round 0px)', ease: 'power2.inOut', duration: 1 }, 0)
+    .to('.fatta .mains img', { scale: 1, ease: 'power2.inOut', duration: 1 }, 0)
+    .to('.fatta .l1', { xPercent: -60, autoAlpha: 0, ease: 'power2.in', duration: .7 }, 0)
+    .to('.fatta .l2', { xPercent: 60, autoAlpha: 0, ease: 'power2.in', duration: .7 }, 0)
+    .to('.fatta .heures', { autoAlpha: 0, duration: .3 }, 0)
+    .to('.fatta .mains', { '--voile': 1, ease: 'none', duration: 1 }, 0)
+    .to('.fatta .fin', { autoAlpha: 1, y: -20, duration: .4 }, .75)
+    .set({}, {}, 1.2);
+  /* L'en-tête : plein après l'affiche, vert sur le menu et le pied (créé après l'épinglage, pour que ses positions en tiennent compte) */
+  const enTete = document.querySelector('header.top'), verts = new Set();
+  ScrollTrigger.create({ start: 0, end: 'max', onUpdate: s => enTete.classList.toggle('plein', s.scroll() > innerHeight * .6) });
+  gsap.utils.toArray('.menu, footer').forEach(el => ScrollTrigger.create({ trigger: el, start: 'top 70px', end: 'bottom 70px', onToggle: s => { s.isActive ? verts.add(el) : verts.delete(el); enTete.classList.toggle('vert', verts.size > 0); } }));
+  /* Le menu : à la souris, l'assiette du plat survolé flotte au-dessus du pointeur (jamais sur la ligne qu'on lit) et tourne quand on change de plat ;
+     au doigt, elle est collée en haut à droite et change avec le plat qui passe au milieu de l'écran */
+  const apercu = document.querySelector('.apercu'), apImg = apercu.querySelector('img'), plats = gsap.utils.toArray('.plat[data-img]');
+  let actuel = '';
+  const poser = src => { if (src === actuel) return; actuel = src; apImg.src = src; gsap.fromTo(apImg, { rotate: -60, scale: .55 }, { rotate: 0, scale: 1, duration: .65, ease: 'back.out(1.5)', overwrite: 'auto' }); };
+  if (souris) {
+    const ax = gsap.quickTo(apercu, 'x', { duration: .45, ease: 'power3.out' }), ay = gsap.quickTo(apercu, 'y', { duration: .45, ease: 'power3.out' }), ar = gsap.quickTo(apercu, 'rotate', { duration: .8, ease: 'power3.out' });
+    let dernierX = 0, sortie;
+    addEventListener('pointermove', e => { ax(gsap.utils.clamp(16, innerWidth - 256, e.clientX - 120)); ay(e.clientY > 330 ? e.clientY - 290 : e.clientY + 48); ar(gsap.utils.clamp(-14, 14, (e.clientX - dernierX) * .5)); dernierX = e.clientX; }, { passive: true });
+    plats.forEach(p => {
+      p.addEventListener('mouseenter', () => { clearTimeout(sortie); poser(p.dataset.img); gsap.to(apercu, { autoAlpha: 1, scale: 1, duration: .45, ease: 'back.out(1.4)', overwrite: 'auto' }); });
+      p.addEventListener('mouseleave', () => { sortie = setTimeout(() => gsap.to(apercu, { autoAlpha: 0, scale: .6, duration: .3, ease: 'power2.in', overwrite: 'auto' }), 140); });
+    });
+  } else {
+    apercu.classList.add('colle');
+    plats.forEach(p => ScrollTrigger.create({ trigger: p, start: 'top 58%', end: 'bottom 58%', onToggle: s => { if (s.isActive) { poser(p.dataset.img); gsap.to(apercu, { autoAlpha: 1, duration: .3 }); } } }));
+    ScrollTrigger.create({ trigger: plats[0], start: 'top 58%', endTrigger: '.menu .note', end: 'top 58%', onToggle: s => { if (!s.isActive) { gsap.to(apercu, { autoAlpha: 0, duration: .3 }); actuel = ''; } } });
+  }
+  /* Giulia : la carte postale se pose, le cachet tourne */
+  gsap.fromTo('[data-carte]', { rotate: -14, y: 80 }, { rotate: -4, y: 0, ease: 'power2.out', scrollTrigger: { trigger: '.giulia', start: 'top 85%', end: 'top 25%', scrub: .8 } });
+  gsap.to('[data-cachet]', { rotate: 360, duration: 30, ease: 'none', repeat: -1 });
+  if (souris) { gsap.set('[data-carte]', { transformPerspective: 1100 }); const kx = gsap.quickTo('[data-carte]', 'rotationX', { duration: 1, ease: 'power2.out' }), ky = gsap.quickTo('[data-carte]', 'rotationY', { duration: 1, ease: 'power2.out' });
+    document.querySelector('.giulia').addEventListener('pointermove', e => { kx(-(e.clientY / innerHeight - .5) * 16); ky((e.clientX / innerWidth - .5) * 18); }, { passive: true });
+    document.querySelector('.giulia').addEventListener('pointerleave', () => { kx(0); ky(0); }); }
+  /* Le bandeau défile, plus vite quand on descend vite */
+  const boucle = gsap.to(bande, { xPercent: -50, duration: 26, ease: 'none', repeat: -1 });
+  ScrollTrigger.create({ start: 0, end: 'max', onUpdate: s => gsap.to(boucle, { timeScale: 1 + Math.min(4, Math.abs(s.getVelocity()) / 400), duration: .2, overwrite: true, onComplete: () => gsap.to(boucle, { timeScale: 1, duration: 1 }) }) });
+  /* Révélations, titres qui se relèvent, parallaxes */
+  gsap.utils.toArray('.reveal').forEach(el => {
+    const titre = el.tagName === 'H2';
+    if (titre) gsap.set(el, { rotationX: -30, transformOrigin: '50% 100%', transformPerspective: 900 });
+    gsap.to(el, { autoAlpha: 1, y: 0, rotationX: 0, duration: titre ? 1.3 : 1, ease: 'power3.out', scrollTrigger: { trigger: el, start: 'top 88%' } });
+  });
+  gsap.utils.toArray('[data-parallaxe]').forEach(el => gsap.fromTo(el, { y: -parseFloat(el.dataset.parallaxe), rotate: -10 }, { y: parseFloat(el.dataset.parallaxe), rotate: 12, ease: 'none', scrollTrigger: { trigger: el.parentElement, start: 'top bottom', end: 'bottom top', scrub: true } }));
+  gsap.utils.toArray('.giulia .motif i').forEach(el => gsap.fromTo(el, { y: -60 * el.dataset.z }, { y: 60 * el.dataset.z, ease: 'none', scrollTrigger: { trigger: '.giulia', start: 'top bottom', end: 'bottom top', scrub: true } }));
+  if (souris && !embarque) document.querySelectorAll('.btn, header nav a.prenota').forEach(b => { b.addEventListener('mousemove', e => { const r = b.getBoundingClientRect(); gsap.to(b, { x: (e.clientX - r.left - r.width / 2) * .22, y: (e.clientY - r.top - r.height / 2) * .3, duration: .4, ease: 'power2.out' }); }); b.addEventListener('mouseleave', () => gsap.to(b, { x: 0, y: 0, duration: .6, ease: 'elastic.out(1, .4)' })); });
+  // ?defile=2.4 place la page à 2,4 hauteurs de fenêtre après le chargement (captures automatiques)
+  const defile = parseFloat(new URLSearchParams(location.search).get('defile'));
+  if (defile > 0) setTimeout(() => { if (lenis) lenis.scrollTo(innerHeight * defile, { immediate: true }); else window.scrollTo(0, innerHeight * defile); ScrollTrigger.update(); }, 900);
+})();
+</script>
+<script type="module">
+/* De la farine dans la lumière de la fenêtre (Three.js, points) : elle flotte, descend, et s'écarte de la souris. Jamais requis. */
+if (!document.documentElement.classList.contains('statique') && !/[?&](embarque=1|trois=0)/.test(location.search)) try {
+  const THREE = await import('three');
+  const canvas = document.getElementById('farine'), zone = document.querySelector('.fatta');
+  const renderer = new THREE.WebGLRenderer({ canvas, alpha: true, antialias: true }); renderer.setPixelRatio(Math.min(devicePixelRatio, 2));
+  const scene = new THREE.Scene(), cam = new THREE.PerspectiveCamera(40, 1, .1, 100); cam.position.z = 10;
+  const N = 260, pos = new Float32Array(N * 3), vit = [];
+  for (let i = 0; i < N; i++) { pos[i * 3] = (Math.random() - .5) * 18; pos[i * 3 + 1] = (Math.random() - .5) * 10; pos[i * 3 + 2] = (Math.random() - .5) * 5; vit.push({ x: (Math.random() - .5) * .003, y: -(.002 + Math.random() * .005), p: Math.random() * 6.28 }); }
+  const geo = new THREE.BufferGeometry(); geo.setAttribute('position', new THREE.BufferAttribute(pos, 3));
+  const tex = (() => { const c = document.createElement('canvas'); c.width = c.height = 32; const g = c.getContext('2d'); const r = g.createRadialGradient(16, 16, 0, 16, 16, 16); r.addColorStop(0, 'rgba(255,252,244,1)'); r.addColorStop(.4, 'rgba(255,248,235,.5)'); r.addColorStop(1, 'rgba(255,248,235,0)'); g.fillStyle = r; g.fillRect(0, 0, 32, 32); return new THREE.CanvasTexture(c); })();
+  const mat = new THREE.PointsMaterial({ size: .09, map: tex, transparent: true, depthWrite: false, opacity: .8, sizeAttenuation: true });
+  const points = new THREE.Points(geo, mat); scene.add(points);
+  const taille = () => { const w = zone.clientWidth, h = zone.clientHeight; renderer.setSize(w, h, false); cam.aspect = w / h; cam.updateProjectionMatrix(); };
+  taille(); addEventListener('resize', taille);
+  const souris = { x: 99, y: 99 }; addEventListener('pointermove', e => { const r = zone.getBoundingClientRect(); souris.x = ((e.clientX - r.left) / r.width - .5) * 18; souris.y = -((e.clientY - r.top) / r.height - .5) * 10; }, { passive: true });
+  let visible = false; new IntersectionObserver(es => visible = es[0].isIntersecting).observe(zone);
+  let t = 0;
+  renderer.setAnimationLoop(() => {
+    if (!visible) return; t += .01;
+    const p = geo.attributes.position.array;
+    for (let i = 0; i < N; i++) {
+      p[i * 3] += vit[i].x + Math.sin(t + vit[i].p) * .002; p[i * 3 + 1] += vit[i].y;
+      const dx = p[i * 3] - souris.x, dy = p[i * 3 + 1] - souris.y, d = Math.hypot(dx, dy);
+      if (d < 1.8) { p[i * 3] += dx / d * .03; p[i * 3 + 1] += dy / d * .03; }
+      if (p[i * 3 + 1] < -5.5) { p[i * 3 + 1] = 5.5; p[i * 3] = (Math.random() - .5) * 18; }
+    }
+    geo.attributes.position.needsUpdate = true;
+    renderer.render(scene, cam);
+  });
+} catch (e) { console.debug('farine absente :', e.message); }
+</script>
+</body>
+</html>

@@ -1,0 +1,535 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Kaori — Izakaya, ramen et gyoza à Lille</title>
+<meta name="description" content="Kaori, izakaya rue de Gand à Lille : ramen tonkotsu, gyoza maison, sakés de petits brasseurs, huit tabourets face à la cuisine. Du mardi au samedi, midi et soir.">
+<meta name="robots" content="noindex">
+<meta name="theme-color" content="#faf9f6">
+<meta property="og:title" content="Kaori — Izakaya, ramen et gyoza à Lille">
+<meta property="og:description" content="Huit tabourets face à la cuisine, un ramen qui mijote douze heures, et Kaori en face.">
+<meta property="og:image" content="assets/ramen.webp">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Crect width='24' height='24' rx='4' fill='%23c3272b'/%3E%3Ctext x='12' y='17' font-size='14' text-anchor='middle' fill='%23fff' font-family='serif'%3E%E9%A6%99%3C/text%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Reggae+One&family=Karla:wght@300;400;500;600&display=swap">
+<script type="importmap">{"imports":{"three":"https://cdn.jsdelivr.net/npm/three@0.186.0/build/three.module.min.js"}}</script>
+<style>
+  :root { --papier: #faf9f6; --papier-2: #f1efe9; --sumi: #141412; --rouge: #c3272b; --gris: rgba(20,20,18,.58); --ligne: rgba(20,20,18,.14); --filigrane: rgba(20,20,18,.045); --ombre: 0 30px 60px -30px rgba(20,20,18,.35); --serif: "Reggae One", "Yu Gothic", sans-serif; --sans: "Karla", system-ui, sans-serif; }
+  * { box-sizing: border-box; margin: 0; }
+  html { scroll-behavior: smooth; }
+  html.lenis { scroll-behavior: auto; }
+  body { background: var(--papier); color: var(--sumi); font: 400 16px/1.7 var(--sans); overflow-x: hidden; -webkit-font-smoothing: antialiased; }
+  body::after { content: ""; position: fixed; inset: 0; z-index: 0; opacity: .35; pointer-events: none; mix-blend-mode: multiply; background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='220' height='220'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 .45 0 0 0 0 .43 0 0 0 0 .4 0 0 0 .14 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E"); }
+  h1, h2, h3 { font-family: var(--serif); font-weight: 400; letter-spacing: 0; line-height: 1.06; }
+  em { font-style: normal; color: var(--rouge); }
+  img { display: block; max-width: 100%; }
+  a { color: inherit; }
+  .wrap { max-width: 1240px; margin: 0 auto; padding: 0 28px; position: relative; }
+  .kanji { position: absolute; right: 2vw; top: 30px; font: 400 clamp(140px, 22vw, 300px)/1 var(--serif); color: var(--filigrane); pointer-events: none; user-select: none; z-index: 0; letter-spacing: -.04em; }
+  .tategaki { writing-mode: vertical-rl; text-orientation: upright; font: 400 13px/1 var(--serif); letter-spacing: .34em; color: var(--gris); }
+  .hanko { display: inline-grid; place-items: center; width: 54px; height: 54px; border-radius: 6px; background: var(--rouge); color: #fff; font: 400 30px/1 var(--serif); box-shadow: inset 0 0 0 2px rgba(255,255,255,.25), 0 10px 24px -12px rgba(195,39,43,.7); transform: rotate(-6deg); }
+  .num { font: 500 12px/1 var(--sans); letter-spacing: .26em; color: var(--rouge); }
+  .repere { position: absolute; left: 28px; top: 120px; writing-mode: vertical-rl; font: 500 11px/1 var(--sans); letter-spacing: .3em; text-transform: uppercase; color: var(--rouge); z-index: 2; }
+  .repere::before { content: ""; display: inline-block; width: 1px; height: 40px; background: var(--rouge); margin-bottom: 14px; vertical-align: top; }
+  @media (max-width: 899px) { .repere { display: none; } }
+  .noir { background: var(--sumi); color: var(--papier); }
+  .noir .kanji { color: rgba(255,255,255,.05); }
+  .noir .num, .noir .repere { color: var(--rouge); }
+  .btn { display: inline-flex; align-items: center; justify-content: center; gap: 12px; min-height: 52px; padding: 0 28px; border-radius: 999px; background: var(--sumi); color: #fff; font: 500 14px/1 var(--sans); letter-spacing: .1em; text-transform: uppercase; text-decoration: none; transition: transform .3s cubic-bezier(.2,.7,.2,1), box-shadow .3s, background .3s; will-change: transform; }
+  .btn::after { content: "→"; transition: transform .3s; }
+  .btn:hover { transform: translateY(-2px); box-shadow: var(--ombre); }
+  .btn:hover::after { transform: translateX(5px); }
+  .btn.rouge { background: var(--rouge); }
+  .lien { color: var(--sumi); text-decoration: none; font: 500 13px/1 var(--sans); letter-spacing: .14em; text-transform: uppercase; border-bottom: 1px solid var(--sumi); padding-bottom: 5px; transition: color .25s, border-color .25s; }
+  .lien:hover { color: var(--rouge); border-color: var(--rouge); }
+  .mot { display: inline-block; overflow: hidden; vertical-align: bottom; padding-bottom: .12em; margin-bottom: -.12em; }
+  .mot > span { display: inline-block; will-change: transform; }
+
+  /* L'en-tête : le sceau et le nom à gauche, deux liens à droite, rien d'autre */
+  header.top { position: fixed; top: 0; left: 0; right: 0; z-index: 60; transition: background .4s, box-shadow .4s; }
+  header.top.plein { background: rgba(250,249,246,.96); backdrop-filter: blur(14px); -webkit-backdrop-filter: blur(14px); box-shadow: 0 1px 0 var(--ligne); }
+  /* Sur une section noire, l'en-tête passe en clair */
+  header.top.sombre { color: var(--papier); }
+  header.top.sombre .brand, header.top.sombre nav a { color: var(--papier); }
+  header.top.sombre nav a:last-child { color: var(--rouge); }
+  header.top.sombre.plein { background: rgba(20,20,18,.92); box-shadow: 0 1px 0 rgba(250,249,246,.12); }
+  .top-in { display: flex; align-items: center; justify-content: space-between; padding: 24px 28px; max-width: 1240px; margin: 0 auto; }
+  html.cadre .top-in { padding-top: 70px; }
+  .brand { display: inline-flex; align-items: center; gap: 12px; font-family: var(--serif); font-size: 24px; color: var(--sumi); text-decoration: none; letter-spacing: .02em; }
+  .brand .hanko { width: 30px; height: 30px; font-size: 16px; border-radius: 4px; }
+  .top nav { display: flex; align-items: center; gap: 34px; font: 500 12px/1 var(--sans); letter-spacing: .22em; text-transform: uppercase; }
+  .top nav a { position: relative; text-decoration: none; color: var(--sumi); padding: 6px 0; opacity: .7; transition: opacity .25s; }
+  .top nav a::after { content: ""; position: absolute; left: 0; right: 0; bottom: 0; height: 1px; background: currentColor; transform: scaleX(0); transform-origin: right; transition: transform .4s cubic-bezier(.2,.7,.2,1); }
+  .top nav a:hover { opacity: 1; }
+  .top nav a:hover::after { transform: scaleX(1); transform-origin: left; }
+  .top nav a:last-child { color: var(--rouge); opacity: 1; }
+  .top nav a:last-child::after { transform: scaleX(1); background: var(--rouge); }
+  @media (max-width: 860px) { .top nav { display: none; } }
+
+  /* 1. L'affiche : le bol au centre dans un cercle ensō, le nom immense en bas sur toute la largeur, un texte vertical à gauche */
+  .affiche { position: relative; min-height: 100svh; display: grid; grid-template-rows: 1fr auto; padding: 100px 28px 34px; max-width: 1400px; margin: 0 auto; z-index: 1; }
+  #graines { position: absolute; inset: 0; width: 100%; height: 100%; pointer-events: none; z-index: 0; }
+  .affiche-scene { position: relative; display: grid; place-items: center; }
+  .affiche-vertical { position: absolute; left: 0; top: 50%; transform: translateY(-50%); z-index: 2; display: flex; gap: 14px; }
+  .affiche-vertical .rouge { color: var(--rouge); }
+  .affiche-cote { position: absolute; right: 0; top: 50%; transform: translateY(-50%); z-index: 2; max-width: 22ch; text-align: right; font-size: 15px; color: var(--gris); }
+  .affiche-cote b { display: block; font: 400 20px/1.25 var(--serif); color: var(--sumi); margin-bottom: 8px; }
+  @media (max-width: 899px) { .affiche-cote { display: none; } .affiche-vertical { left: 2px; } .affiche-vertical .tategaki:not(.rouge) { display: none; } .affiche { padding-bottom: 110px; } .affiche-scene { padding-left: 26px; } }
+  @media (max-width: 759px) { .indice { display: none; } }
+  .bol-scroll { position: relative; width: min(560px, 76vw); perspective: 1400px; z-index: 1; }
+  .bol { position: relative; aspect-ratio: 1; transform-style: preserve-3d; will-change: transform; }
+  .bol img { position: relative; z-index: 2; width: 100%; height: 100%; object-fit: contain; filter: drop-shadow(0 40px 44px rgba(20,20,18,.32)); will-change: transform; }
+  .enso { position: absolute; inset: -6%; width: 112%; height: 112%; z-index: 1; }
+  .enso path { fill: none; stroke: var(--sumi); stroke-linecap: round; stroke-dasharray: 1200; stroke-dashoffset: 1200; }
+  .enso .e1 { stroke-width: 9; opacity: .9; }
+  .enso .e2 { stroke-width: 4; opacity: .45; transform: translate(3px, 4px); }
+  .affiche-nom { position: relative; z-index: 2; display: grid; grid-template-columns: 1fr auto; align-items: end; gap: 20px; margin-top: -8vw; }
+  .affiche-nom h1 { font-size: clamp(84px, 17vw, 250px); line-height: .9; letter-spacing: -.02em; display: flex; align-items: flex-start; gap: .12em; }
+  .affiche-nom h1 .hanko { margin-top: .16em; width: max(.3em, 38px); height: max(.3em, 38px); font-size: max(.16em, 20px); border-radius: max(.04em, 5px); }
+  .affiche-nom .infos { display: grid; gap: 10px; justify-items: end; text-align: right; font: 500 12px/1.5 var(--sans); letter-spacing: .18em; text-transform: uppercase; color: var(--gris); padding-bottom: .4em; }
+  .affiche-nom .infos .btn { margin-top: 6px; }
+  @media (max-width: 760px) { .affiche-nom { grid-template-columns: 1fr; gap: 18px; margin-top: -4vw; } .affiche-nom .infos { justify-items: start; text-align: left; padding-bottom: 0; } }
+  .indice { position: absolute; left: 50%; bottom: 12px; transform: translateX(-50%); display: flex; flex-direction: column; align-items: center; gap: 8px; font: 400 12px/1 var(--serif); letter-spacing: .3em; color: var(--gris); }
+  .indice i { display: block; width: 1px; height: 40px; background: var(--sumi); animation: goutte 2.2s ease-in-out infinite; transform-origin: top; }
+  @keyframes goutte { 0% { transform: scaleY(0); } 50% { transform: scaleY(1); } 100% { transform: scaleY(0); transform-origin: bottom; } }
+
+  /* 2. Le manifeste : trois phrases qui s'allument une à une, page épinglée */
+  .manifeste-outer { position: relative; height: 260vh; z-index: 1; }
+  .manifeste { position: sticky; top: 0; height: 100svh; display: grid; place-items: center; padding: 0 28px; overflow: hidden; background: var(--sumi); color: var(--papier); }
+  .manifeste .kanji { top: auto; bottom: -4vw; right: -2vw; color: rgba(255,255,255,.06); }
+  .manifeste ol { list-style: none; padding: 0; margin: 0; position: relative; width: min(1100px, 100%); height: 62svh; }
+  .manifeste-compte { position: absolute; left: 50%; bottom: 64px; transform: translateX(-50%); font: 500 12px/1 var(--sans); letter-spacing: .3em; color: rgba(250,249,246,.5); }
+  .manifeste li { position: absolute; inset: 0; display: grid; place-content: center; text-align: center; padding: 0 30px; opacity: 0; visibility: hidden; font-family: var(--serif); font-size: clamp(34px, 6.4vw, 96px); line-height: 1.08; color: var(--papier); will-change: transform, opacity; }
+  .manifeste li .jp { display: block; font-size: clamp(12px, 1.2vw, 15px); letter-spacing: .4em; color: var(--rouge); margin-bottom: 18px; }
+  .manifeste-jauge { position: absolute; left: 50%; bottom: 40px; transform: translateX(-50%); width: min(320px, 50vw); height: 2px; background: rgba(250,249,246,.18); }
+  .manifeste-jauge i { display: block; height: 100%; width: 0; background: var(--rouge); }
+  .manifeste-fond { position: absolute; right: -5vw; bottom: -7vw; width: min(440px, 50vw); opacity: .32; pointer-events: none; z-index: 0; }
+  .manifeste-fond img { width: 100%; filter: drop-shadow(0 30px 40px rgba(0,0,0,.6)); }
+  .manifeste li em { color: var(--rouge); }
+  .manifeste .num { position: absolute; left: 28px; top: 50%; transform: translateY(-50%); writing-mode: vertical-rl; }
+
+  /* 3. La carte : une file qui glisse à l'horizontale pendant qu'on descend (grand écran), en colonne sur téléphone */
+  .carte { position: relative; z-index: 1; background: var(--papier-2); }
+  .carte-tete { padding: 90px 28px 0; max-width: 1240px; margin: 0 auto; display: flex; align-items: baseline; justify-content: space-between; gap: 30px; flex-wrap: wrap; }
+  @media (min-width: 900px) { .carte-tete { padding-top: 120px; } }
+  .carte-tete h2 { font-size: clamp(38px, 5.6vw, 76px); }
+  .carte-tete p { color: var(--gris); max-width: 44ch; }
+  .carte-piste { display: flex; gap: 40px; padding: 50px 28px 90px; overflow-x: auto; scroll-snap-type: x mandatory; scrollbar-width: none; }
+  .carte-piste::-webkit-scrollbar { display: none; }
+  .plat { flex: 0 0 min(300px, 78vw); scroll-snap-align: center; position: relative; padding-top: 22px; border-top: 1px solid var(--sumi); }
+  .plat .grand { position: absolute; left: 50%; top: 40px; transform: translateX(-50%); font: 400 clamp(180px, 22vw, 260px)/1 var(--serif); color: var(--filigrane); pointer-events: none; z-index: 0; }
+  .plat .petit { position: absolute; right: 0; top: 16px; font: 400 22px/1 var(--serif); color: var(--rouge); }
+  .plat-img { position: relative; aspect-ratio: 1; margin: 10px 0 18px; z-index: 1; }
+  .plat-img::after { content: ""; position: absolute; left: 12%; right: 12%; bottom: 2%; height: 12%; border-radius: 50%; background: radial-gradient(ellipse, rgba(20,20,18,.22), transparent 70%); z-index: -1; }
+  .plat-img img { width: 100%; height: 100%; object-fit: contain; filter: drop-shadow(0 30px 34px rgba(20,20,18,.28)); transition: transform .7s cubic-bezier(.2,.7,.2,1); will-change: transform; }
+  .plat:hover .plat-img img { transform: scale(1.06) rotate(-4deg); }
+  .plat h3 { font-size: 30px; margin-bottom: 8px; display: flex; align-items: baseline; justify-content: space-between; gap: 12px; }
+  .plat h3 .prix { font: 400 22px/1 var(--serif); white-space: nowrap; }
+  .plat p { color: var(--gris); font-size: 15px; }
+  .plat .jp { display: block; margin-top: 14px; font: 400 13px/1 var(--serif); letter-spacing: .3em; color: var(--gris); }
+  .plat.fin { border-top: 0; display: grid; align-content: space-between; padding: 34px 30px; background: var(--sumi); color: var(--papier); min-height: 420px; }
+  .plat.fin p { font-family: var(--serif); font-size: 26px; line-height: 1.35; margin-bottom: 22px; }
+  .plat.fin .lien { color: var(--papier); border-color: var(--papier); }
+  .plat.fin .lien:hover { color: var(--rouge); border-color: var(--rouge); }
+  .plat.fin .sceau { font: 400 64px/1 var(--serif); color: var(--rouge); }
+  .carte-jauge { position: absolute; left: 28px; right: 28px; bottom: 34px; height: 1px; background: var(--ligne); }
+  .carte-jauge i { display: block; height: 100%; width: 0; background: var(--rouge); }
+  @media (max-width: 899px) { .carte-jauge { display: none; } }
+  @media (min-width: 900px) {
+    .carte-piste { overflow: visible; padding: 60px 0 100px max(28px, calc((100vw - 1240px) / 2)); width: max-content; scroll-snap-type: none; gap: 60px; }
+    .plat { flex: 0 0 340px; }
+    .plat.fin { flex-basis: 420px; }
+  }
+
+  /* 4. Kaori : le portrait à fond perdu à gauche, l'histoire à droite */
+  .kaori { position: relative; z-index: 1; display: grid; grid-template-columns: 1fr; gap: 40px; padding: 110px 28px; max-width: 1240px; margin: 0 auto; }
+  @media (min-width: 900px) { .kaori { grid-template-columns: 1fr 1.15fr; gap: 80px; align-items: center; } }
+  /* Le kakejiku : un panneau de vagues seigaiha, deux baguettes, la photo au milieu, un cadre rouge décalé */
+  .kakejiku { position: relative; width: min(340px, 74vw); margin: 40px auto; padding: 34px 26px; }
+  .kakejiku .vagues { position: absolute; inset: -30px -40px; z-index: 0; }
+  .kakejiku .baguette { position: absolute; left: -6%; right: -6%; height: 10px; background: var(--sumi); border-radius: 5px; z-index: 3; box-shadow: 0 6px 14px -6px rgba(20,20,18,.5); }
+  .kakejiku .baguette.haut { top: 0; }
+  .kakejiku .baguette.bas { bottom: 0; }
+  .kakejiku .baguette::before, .kakejiku .baguette::after { content: ""; position: absolute; top: -2px; width: 14px; height: 14px; border-radius: 50%; background: var(--rouge); }
+  .kakejiku .baguette::before { left: -4px; } .kakejiku .baguette::after { right: -4px; }
+  .kakejiku .papier { position: relative; z-index: 2; padding: 22px 18px; background: #fff; box-shadow: var(--ombre); }
+  .kaori-photo { position: relative; overflow: hidden; aspect-ratio: 3 / 4; }
+  .kaori-photo img { width: 100%; height: 100%; object-fit: cover; transform: scale(1.12); }
+  .kaori-photo .tategaki { position: absolute; right: 12px; top: 16px; color: #fff; mix-blend-mode: difference; }
+  .kaori-photo .ville { position: absolute; left: 12px; top: 12px; font: 400 44px/1 var(--serif); color: #fff; mix-blend-mode: difference; writing-mode: vertical-rl; letter-spacing: .1em; }
+  .kaori-photo .hanko { position: absolute; right: 14px; bottom: 14px; width: 44px; height: 44px; font-size: 24px; }
+  .kakejiku .cadre { position: absolute; inset: 34px 26px; transform: translate(16px, 16px); border: 1px solid var(--rouge); z-index: 1; pointer-events: none; }
+  .kakejiku .legende { display: block; margin-top: 14px; text-align: center; font: 400 12px/1.6 var(--serif); letter-spacing: .3em; color: var(--gris); }
+  .frise { display: grid; grid-template-columns: repeat(3, 1fr); gap: 0; margin-top: 34px; border-top: 1px solid var(--sumi); }
+  .frise div { padding: 16px 16px 0 0; }
+  .frise div + div { border-left: 1px solid var(--ligne); padding-left: 16px; }
+  .frise b { display: block; font: 400 30px/1 var(--serif); color: var(--rouge); margin-bottom: 6px; }
+  .frise span { font-size: 13px; color: var(--gris); line-height: 1.4; display: block; }
+  .kaori-photo .hanko { position: absolute; left: 28px; bottom: 28px; }
+  .kaori-texte { display: grid; align-content: center; gap: 0; position: relative; }
+  .kaori-texte .kanji { right: -4vw; top: -40px; }
+  .kaori-texte h2 { font-size: clamp(38px, 4.4vw, 62px); margin-bottom: 26px; max-width: 14ch; }
+  .kaori-texte p { color: var(--gris); max-width: 46ch; margin-bottom: 14px; }
+  .citation { font-family: var(--serif); font-size: clamp(22px, 2.2vw, 30px); line-height: 1.4; color: var(--sumi); margin: 28px 0 8px; max-width: 30ch; }
+  .citation::before { content: "「"; color: var(--rouge); }
+  .citation::after { content: "」"; color: var(--rouge); }
+  .signature { font: 500 12px/1 var(--sans); letter-spacing: .3em; text-transform: uppercase; color: var(--rouge); }
+
+  /* 5. Le comptoir : à gauche ce qui se passe, à droite ce qu'on propose, comme une page de journal */
+  .comptoir { position: relative; z-index: 1; padding: 110px 0; background: var(--papier-2); }
+  .comptoir-grid { display: grid; grid-template-columns: 1fr; gap: 60px; }
+  @media (min-width: 900px) { .comptoir-grid { grid-template-columns: 1.3fr 1fr; gap: 80px; } }
+  .col-tete { display: flex; align-items: baseline; gap: 18px; margin-bottom: 30px; padding-bottom: 14px; border-bottom: 1px solid var(--sumi); }
+  .col-tete h2 { font-size: clamp(30px, 3.2vw, 44px); }
+  .soiree { display: grid; grid-template-columns: 120px 1fr; gap: 6px 26px; align-items: baseline; padding: 22px 0; border-bottom: 1px solid var(--ligne); transition: padding .3s; }
+  .soiree:hover { padding-left: 10px; }
+  .soiree .quand { font: 400 15px/1.3 var(--serif); color: var(--rouge); }
+  .soiree .quand b { display: block; font: 400 40px/1 var(--serif); color: var(--rouge); margin-bottom: 4px; }
+  .soiree h3 { font-size: 26px; }
+  .soiree p { grid-column: 2; color: var(--gris); font-size: 15px; max-width: 52ch; }
+  .soiree .lien { grid-column: 2; justify-self: start; margin-top: 6px; }
+  .service { display: grid; grid-template-columns: 64px 1fr; gap: 20px; align-items: start; padding: 22px 0; border-bottom: 1px solid var(--ligne); }
+  .service .glyphe { font: 400 52px/1 var(--serif); color: var(--sumi); }
+  .service h3 { font-size: 22px; margin-bottom: 4px; }
+  .service p { color: var(--gris); font-size: 15px; }
+  @media (max-width: 600px) { .soiree { grid-template-columns: 1fr; } .soiree p, .soiree .lien { grid-column: 1; } }
+
+  /* 6. Une voix à la fois */
+  .voix { position: relative; z-index: 1; padding: 130px 0; background: var(--sumi); color: var(--papier); overflow: hidden; }
+  .voix .kanji { color: rgba(255,255,255,.06); }
+  .voix .wrap { text-align: center; max-width: 980px; }
+  .voix .guillemet { font: 400 90px/1 var(--serif); color: var(--rouge); line-height: .6; display: block; margin-bottom: 20px; }
+  .voix blockquote { font-family: var(--serif); font-size: clamp(24px, 3.4vw, 46px); line-height: 1.3; min-height: 3.9em; }
+  .voix cite { display: block; margin-top: 22px; font: 500 12px/1 var(--sans); letter-spacing: .26em; text-transform: uppercase; color: rgba(250,249,246,.55); font-style: normal; }
+  .voix-nav { display: flex; justify-content: center; gap: 10px; margin-top: 30px; }
+  .voix-nav button { width: 34px; height: 3px; border: 0; background: rgba(250,249,246,.2); cursor: pointer; padding: 0; transition: background .3s; }
+  .voix-nav button.actif { background: var(--rouge); }
+
+  /* 7. Réserver : les horaires d'un côté, le formulaire de l'autre */
+  .reserver { position: relative; z-index: 1; padding: 110px 0; overflow: hidden; }
+  .reserver-grid { display: grid; grid-template-columns: 1fr; gap: 40px; align-items: start; }
+  @media (min-width: 900px) { .reserver-grid { grid-template-columns: 1fr 1.2fr; gap: 80px; } }
+  .reserver h2 { font-size: clamp(38px, 5vw, 68px); margin-bottom: 22px; max-width: 12ch; }
+  .couverts { display: flex; align-items: baseline; gap: 12px; margin: 26px 0 6px; }
+  .couverts b { font: 400 72px/1 var(--serif); color: var(--rouge); }
+  .couverts span { font: 500 12px/1.4 var(--sans); letter-spacing: .2em; text-transform: uppercase; color: var(--gris); }
+  .horaires { border-top: 1px solid var(--sumi); margin-top: 26px; }
+  .horaires div { display: flex; justify-content: space-between; gap: 20px; padding: 14px 0; border-bottom: 1px solid var(--ligne); font-size: 15px; }
+  .horaires b { font-weight: 500; }
+  .formulaire { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; padding: 30px; background: #fff; border: 1px solid var(--ligne); box-shadow: var(--ombre); position: relative; z-index: 1; }
+  .formulaire label { display: grid; gap: 7px; font: 500 11px/1 var(--sans); letter-spacing: .18em; text-transform: uppercase; color: var(--gris); }
+  .formulaire input, .formulaire select { font: 400 16px/1.2 var(--sans); color: var(--sumi); background: var(--papier); border: 1px solid var(--ligne); border-radius: 0; padding: 14px 14px; transition: border-color .25s, background .25s; }
+  .formulaire input:focus, .formulaire select:focus { outline: 0; border-color: var(--rouge); background: #fff; }
+  .formulaire .btn { grid-column: 1 / -1; justify-self: start; margin-top: 6px; }
+  .formulaire .note { grid-column: 1 / -1; color: var(--gris); font-size: 14px; }
+  @media (max-width: 520px) { .formulaire { grid-template-columns: 1fr; } }
+
+  footer { padding: 70px 0 120px; background: var(--sumi); color: rgba(250,249,246,.6); position: relative; z-index: 1; overflow: hidden; }
+  footer .geant { font: 400 clamp(90px, 18vw, 260px)/1 var(--serif); color: rgba(250,249,246,.08); position: absolute; right: -2vw; bottom: -.18em; pointer-events: none; letter-spacing: -.04em; }
+  .pied-grid { display: grid; grid-template-columns: 1fr; gap: 30px; color: rgba(250,249,246,.6); font-size: 14px; position: relative; z-index: 1; }
+  @media (min-width: 760px) { .pied-grid { grid-template-columns: 1.2fr 1fr 1fr; gap: 40px; } footer { padding-bottom: 54px; } }
+  .pied-grid b { display: block; color: var(--papier); font: 500 11px/1 var(--sans); letter-spacing: .22em; text-transform: uppercase; margin-bottom: 14px; }
+  footer .brand { color: var(--papier); }
+  .pied-grid a { text-decoration: none; }
+  .pied-grid p { margin-bottom: 4px; }
+  .pied-grid .brand { margin-bottom: 14px; }
+  .demo-note { background: var(--sumi); color: rgba(255,255,255,.55); text-align: center; font-size: 12.5px; padding: 10px 16px; position: relative; z-index: 1; }
+  .demo-note a { color: #fff; font-weight: 500; }
+  .fixe { position: fixed; left: 12px; right: 12px; bottom: max(12px, env(safe-area-inset-bottom)); z-index: 50; display: grid; grid-template-columns: 1fr 1.4fr 1fr; gap: 6px; padding: 6px; border-radius: 999px; background: rgba(20,20,18,.92); backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px); box-shadow: 0 20px 50px -20px rgba(0,0,0,.5); }
+  .fixe a { display: flex; align-items: center; justify-content: center; min-height: 46px; border-radius: 999px; color: #fff; font: 500 12px/1 var(--sans); letter-spacing: .1em; text-transform: uppercase; text-decoration: none; }
+  .fixe a.principal { background: var(--rouge); }
+  @media (min-width: 760px) { .fixe { display: none; } }
+  .devanturo { position: fixed; left: 50%; top: 10px; transform: translateX(-50%); z-index: 70; padding: 8px 14px; border-radius: 999px; background: #000; color: #fff; font: 500 12px/1 var(--sans); text-decoration: none; box-shadow: 0 8px 24px rgba(0,0,0,.4); }
+  .curseur-pt { position: fixed; left: 0; top: 0; width: 34px; height: 34px; margin: -17px 0 0 -17px; border-radius: 50%; border: 1.5px solid var(--rouge); pointer-events: none; z-index: 100; opacity: .85; transition: width .3s, height .3s, margin .3s, background .3s; }
+  .curseur-pt.gros { width: 64px; height: 64px; margin: -32px 0 0 -32px; background: rgba(195,39,43,.1); }
+  html.curseur, html.curseur a, html.curseur button { cursor: none; }
+  .reveal { opacity: 0; transform: translateY(30px); }
+  html.statique .reveal { opacity: 1; transform: none; }
+  html.statique .kaori-photo img { transform: none; }
+  html.statique .mot > span { transform: none !important; }
+  html.statique .enso path { stroke-dashoffset: 0; }
+  html.statique .manifeste-outer { height: auto; }
+  html.statique .manifeste { position: static; height: auto; padding: 80px 28px; }
+  html.statique .manifeste ol { height: auto; }
+  html.statique .manifeste li { position: static; opacity: 1; visibility: visible; margin-bottom: 30px; }
+  :focus-visible { outline: 2px solid var(--rouge); outline-offset: 3px; }
+  @media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } }
+</style>
+</head>
+<body>
+
+<header class="top">
+  <div class="top-in">
+    <a class="brand" href="#"><span class="hanko" aria-hidden="true">香</span>Kaori</a>
+    <nav><a href="#carte">La carte</a><a href="#kaori">Kaori</a><a href="#comptoir">Le comptoir</a><a href="#reserver">Réserver</a></nav>
+  </div>
+</header>
+
+<section class="affiche" id="haut">
+  <canvas id="graines" aria-hidden="true"></canvas>
+  <div class="affiche-scene">
+    <div class="affiche-vertical" aria-hidden="true"><span class="tategaki rouge">いらっしゃいませ</span><span class="tategaki">ラーメン・餃子・日本酒</span></div>
+    <p class="affiche-cote"><b>Izakaya, rue de Gand</b>Huit tabourets face à la cuisine, du mardi au samedi, midi et soir.</p>
+    <div class="bol-scroll">
+      <div class="bol" data-flotte>
+        <svg class="enso" viewBox="0 0 200 200" aria-hidden="true"><path class="e2" d="M62 24C104 6 158 28 166 78c8 52-32 92-80 92C42 170 12 132 22 84 28 52 44 32 62 24"/><path class="e1" d="M60 22C102 4 156 26 164 76c8 52-32 92-80 92C40 168 10 130 20 82 26 50 42 30 60 22"/></svg>
+        <img src="assets/ramen.webp" alt="Le ramen tonkotsu de Kaori" width="1024" height="1024" fetchpriority="high">
+      </div>
+    </div>
+  </div>
+  <div class="affiche-nom">
+    <h1><span data-mots>Kaori</span><span class="hanko" aria-hidden="true">香</span></h1>
+    <div class="infos"><span><b data-compte="12" data-suffixe=" h">12 h</b> de bouillon · <b data-compte="8">8</b> tabourets</span><span>Lille, rue de Gand</span><a class="btn rouge" href="#reserver">Réserver</a></div>
+  </div>
+  <div class="indice" aria-hidden="true"><i></i><span>下へ</span></div>
+</section>
+
+<div class="manifeste-outer" id="manifeste">
+  <div class="manifeste">
+    <span class="kanji" aria-hidden="true">香り</span>
+    <span class="num" aria-hidden="true">01 — LA MAISON</span>
+    <div class="manifeste-fond" aria-hidden="true" data-parallaxe="-60"><img src="assets/gyoza.webp" alt="" loading="lazy"></div>
+    <ol data-manifeste>
+      <li><span class="jp" aria-hidden="true">十二時間</span>Un bouillon qu'on surveille <em>douze heures.</em></li>
+      <li><span class="jp" aria-hidden="true">今朝</span>Des gyoza pliés <em>le matin même.</em></li>
+      <li><span class="jp" aria-hidden="true">八席</span>Huit tabourets, <em>et Kaori en face.</em></li>
+    </ol>
+    <span class="manifeste-compte" aria-hidden="true" data-compte-phrase>1 / 3</span>
+    <div class="manifeste-jauge" aria-hidden="true"><i data-jauge></i></div>
+  </div>
+</div>
+
+<section class="carte" id="carte">
+  <span class="kanji" aria-hidden="true">献立</span>
+  <span class="repere" aria-hidden="true">02 — La carte</span>
+  <div class="carte-tete"><div><span class="num">02 — LA CARTE</span><h2 class="reveal">Ce qu'on fait <em>bien.</em></h2></div><p class="reveal">Une carte courte, qui change avec Kaori et les saisons. Le bouillon, lui, ne change jamais.</p></div>
+  <div class="carte-piste" data-piste>
+    <div class="plat reveal"><span class="grand" aria-hidden="true">一</span><span class="petit" aria-hidden="true">一</span><div class="plat-img" data-parallaxe="-30"><img src="assets/ramen.webp" alt="Ramen tonkotsu" loading="lazy"></div><h3>Ramen tonkotsu <span class="prix">16 €</span></h3><p>Bouillon de porc douze heures, chashu, œuf mollet mariné, nouilles fraîches. Le plat de la maison.</p><span class="jp" aria-hidden="true">豚骨ラーメン</span></div>
+    <div class="plat reveal"><span class="grand" aria-hidden="true">二</span><span class="petit" aria-hidden="true">二</span><div class="plat-img" data-parallaxe="30"><img src="assets/gyoza.webp" alt="Gyoza maison" loading="lazy"></div><h3>Gyoza maison <span class="prix">8 €</span></h3><p>Pliés le matin, porc et chou, ou champignons et gingembre. Sauce soja, vinaigre, piment.</p><span class="jp" aria-hidden="true">手作り餃子</span></div>
+    <div class="plat reveal"><span class="grand" aria-hidden="true">三</span><span class="petit" aria-hidden="true">三</span><div class="plat-img" data-parallaxe="-16"><img src="assets/matcha.webp" alt="Cheesecake au matcha" loading="lazy"></div><h3>Cheesecake matcha <span class="prix">7 €</span></h3><p>Matcha d'Uji, base de biscuit au sésame noir, framboises. Le dessert qu'on refuse d'enlever.</p><span class="jp" aria-hidden="true">抹茶チーズケーキ</span></div>
+    <div class="plat fin reveal"><span class="sceau" aria-hidden="true">酒</span><div><p>Bento du midi à 14 €, à emporter aussi. Sakés au verre dès 6 €, bières japonaises, thé hojicha.</p><a class="lien" href="#reserver">Réserver le comptoir</a></div></div>
+  </div>
+  <div class="carte-jauge" aria-hidden="true"><i data-carte-jauge></i></div>
+</section>
+
+<section class="kaori" id="kaori">
+  <div class="kakejiku reveal">
+    <svg class="vagues" viewBox="0 0 400 520" preserveAspectRatio="none" aria-hidden="true"><defs><pattern id="seigaiha" width="40" height="20" patternUnits="userSpaceOnUse"><g fill="none" stroke="#141412" stroke-opacity=".16" stroke-width="1.2"><path d="M-20 30a20 20 0 0 1 40 0M-16 30a16 16 0 0 1 32 0M-12 30a12 12 0 0 1 24 0M-8 30a8 8 0 0 1 16 0"/><path d="M20 30a20 20 0 0 1 40 0M24 30a16 16 0 0 1 32 0M28 30a12 12 0 0 1 24 0M32 30a8 8 0 0 1 16 0"/><path d="M0 20a20 20 0 0 1 40 0M4 20a16 16 0 0 1 32 0M8 20a12 12 0 0 1 24 0M12 20a8 8 0 0 1 16 0"/></g></pattern></defs><rect width="400" height="520" fill="url(#seigaiha)"/></svg>
+    <span class="baguette haut" aria-hidden="true"></span>
+    <span class="cadre" aria-hidden="true"></span>
+    <div class="papier"><div class="kaori-photo" data-photo><img src="assets/kaori.jpg" alt="Kaori derrière le comptoir" loading="lazy"><span class="ville" aria-hidden="true">福岡</span><span class="tategaki" aria-hidden="true">かおり</span><span class="hanko" aria-hidden="true">香</span></div><span class="legende">カウンターの向こうに、かおり</span></div>
+    <span class="baguette bas" aria-hidden="true"></span>
+  </div>
+  <div class="kaori-texte">
+    <span class="kanji" aria-hidden="true">人</span>
+    <span class="num reveal">03 — KAORI</span>
+    <h2 class="reveal">Elle a grandi à Fukuoka, <em>la ville du tonkotsu.</em></h2>
+    <p class="reveal">Kaori a ouvert ce comptoir en 2021 avec Léo, qui s'occupe de la salle et des sakés. On mange au comptoir, on la regarde cuisiner, et on lui parle. Le bouillon est mis à chauffer à six heures du matin, il est servi à midi.</p>
+    <p class="reveal">Pas de réservation en ligne pour le comptoir, on vous répond au téléphone. Pour la table de six au fond, écrivez-nous.</p>
+    <p class="citation reveal">Un ramen, c'est un bouillon qu'on surveille douze heures, et trois minutes pour le servir.</p>
+    <p class="signature reveal">Kaori</p>
+    <div class="frise reveal"><div><b>1998</b><span>Fukuoka, l'école dans les cuisines d'un yatai</span></div><div><b>2016</b><span>Lille, cheffe de partie rue de Béthune</span></div><div><b>2021</b><span>Rue de Gand, le comptoir avec Léo</span></div></div>
+  </div>
+</section>
+
+<section class="comptoir" id="comptoir">
+  <span class="kanji" aria-hidden="true">今週</span>
+  <span class="repere" aria-hidden="true">04 — Le comptoir</span>
+  <div class="wrap comptoir-grid">
+    <div>
+      <div class="col-tete reveal"><span class="num">04</span><h2>Ce qui se passe au comptoir</h2></div>
+      <div class="soiree reveal"><span class="quand"><b>24</b>jeudi · 19 h</span><h3>Soirée saké avec la brasserie Ito</h3><p>Six sakés commentés par le brasseur, six bouchées de Kaori. Vingt places, 38 €.</p><a class="lien" href="#reserver">Réserver</a></div>
+      <div class="soiree reveal"><span class="quand"><b>26</b>samedi · 11 h</span><h3>Atelier gyoza</h3><p>Deux heures avec Kaori, on plie, on cuit, on mange. Huit personnes, 45 €.</p><a class="lien" href="#reserver">Réserver</a></div>
+      <div class="soiree reveal"><span class="quand"><b>火</b>chaque mardi</span><h3>Le ramen du mardi</h3><p>Un ramen différent chaque mardi soir, hors carte, jusqu'à épuisement du bouillon.</p><a class="lien" href="#carte">La carte</a></div>
+    </div>
+    <div>
+      <div class="col-tete reveal"><span class="num">05</span><h2>Ce qu'on propose</h2></div>
+      <div class="service reveal"><span class="glyphe" aria-hidden="true">夜</span><div><h3>Le comptoir, le soir</h3><p>Huit places face à Kaori, du mardi au samedi de 19 h à 22 h 30. On réserve par téléphone.</p></div></div>
+      <div class="service reveal"><span class="glyphe" aria-hidden="true">昼</span><div><h3>Le bento du midi</h3><p>Sur place ou à emporter, 14 €, prêt en dix minutes. Commandez la veille pour les groupes.</p></div></div>
+      <div class="service reveal"><span class="glyphe" aria-hidden="true">酒</span><div><h3>Sakés et bières</h3><p>Quatorze sakés de petits brasseurs, choisis par Léo, et des bières japonaises. Dégustation le jeudi.</p></div></div>
+    </div>
+  </div>
+</section>
+
+<section class="voix" id="voix">
+  <span class="kanji" aria-hidden="true">声</span>
+  <span class="repere" aria-hidden="true">05 — Les voix</span>
+  <div class="wrap">
+    <span class="guillemet reveal" aria-hidden="true">〝</span>
+    <blockquote class="reveal" data-voix-texte>Le meilleur ramen que j'ai mangé en dehors du Japon. Le bouillon, on le sent dans les os.</blockquote>
+    <cite class="reveal" data-voix-qui>Mathis L. · sur Google</cite>
+    <div class="voix-nav reveal" data-voix-nav aria-label="Autres avis"></div>
+  </div>
+</section>
+
+<section class="reserver" id="reserver">
+  <span class="kanji" aria-hidden="true">予約</span>
+  <span class="repere" aria-hidden="true">06 — Réserver</span>
+  <div class="wrap reserver-grid">
+    <div>
+      <span class="num reveal">06 — RÉSERVER</span>
+      <h2 class="reveal">Une place <em>au comptoir.</em></h2>
+      <div class="couverts reveal"><b data-compte="22">22</b><span>couverts<br>huit au comptoir, six au fond, la cour l'été</span></div>
+      <p class="reveal" style="color: var(--gris); max-width: 40ch">On confirme par téléphone dans l'heure. Le comptoir se réserve par téléphone, la table du fond par le formulaire.</p>
+      <div class="horaires reveal">
+        <div><b>Mardi → vendredi</b><span>12 h – 14 h · 19 h – 22 h 30</span></div>
+        <div><b>Samedi</b><span>19 h – 23 h</span></div>
+        <div><b>Dimanche, lundi</b><span>Fermé</span></div>
+        <div><b>14 rue de Gand, Lille</b><span><a href="tel:+33320000000">03 20 00 00 00</a></span></div>
+      </div>
+    </div>
+    <form class="formulaire reveal" onsubmit="event.preventDefault(); this.querySelector('.note').textContent = 'Merci, on vous rappelle pour confirmer. (Démonstration : rien n\'est envoyé.)';">
+      <label>Nom<input type="text" name="nom" placeholder="Votre nom" required></label>
+      <label>Personnes<select name="personnes"><option>1</option><option selected>2</option><option>3</option><option>4</option><option>5</option><option>6</option></select></label>
+      <label>Date<input type="date" name="date" required></label>
+      <label>Heure<select name="heure"><option>12 h</option><option>12 h 30</option><option>13 h</option><option selected>19 h</option><option>19 h 30</option><option>20 h</option><option>20 h 30</option><option>21 h</option></select></label>
+      <button class="btn rouge" type="submit">Demander une table</button>
+      <p class="note">Ou directement : <a href="tel:+33320000000">03 20 00 00 00</a>, du mardi au samedi dès 11 h.</p>
+    </form>
+  </div>
+</section>
+
+<footer>
+  <span class="geant" aria-hidden="true">香り</span>
+  <div class="wrap pied-grid">
+    <div><a class="brand" href="#"><span class="hanko" aria-hidden="true">香</span>Kaori</a><p>14 rue de Gand, 59800 Lille</p><p>Métro Gare Lille-Flandres, 8 min</p><p><a href="tel:+33320000000">03 20 00 00 00</a></p></div>
+    <div><b>Horaires</b><p>Mardi → samedi</p><p>12 h – 14 h · 19 h – 22 h 30</p><p>Fermé dimanche et lundi</p></div>
+    <div><b>Suivre</b><p><a href="#">Instagram</a></p><p><a href="#">La carte en PDF</a></p><p>© 2026 Kaori · SIRET 000 000 000 00000</p></div>
+  </div>
+</footer>
+<div class="demo-note">Site fictif de démonstration, réalisé par <a href="../../index.html" target="_top">Devanturo</a> · le site de votre restaurant, en ligne sept jours après notre visite</div>
+
+<nav class="fixe" aria-label="Actions">
+  <a href="tel:+33320000000">Appeler</a>
+  <a class="principal" href="#reserver">Réserver</a>
+  <a href="#carte">La carte</a>
+</nav>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.13.0/gsap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.13.0/ScrollTrigger.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/lenis@1.3.4/dist/lenis.min.js"></script>
+<script>
+(() => {
+  const html = document.documentElement;
+  const embarque = /[?&]embarque=1/.test(location.search);
+  if (embarque || /[?&](cadre=1|de=devanturo)/.test(location.search)) html.classList.add('cadre');
+  if (/[?&]de=devanturo/.test(location.search)) { const a = document.createElement('a'); a.className = 'devanturo'; a.href = '../../index.html#exemple'; a.textContent = '← Devanturo · démonstration'; document.body.append(a); }
+  /* Les voix, une à la fois */
+  const VOIX = [
+    { t: "Le meilleur ramen que j'ai mangé en dehors du Japon. Le bouillon, on le sent dans les os.", q: 'Mathis L. · sur Google' },
+    { t: "Huit places, donc on réserve. Mais regarder Kaori travailler vaut le coup à lui seul.", q: 'Inès D. · sur Google' },
+    { t: "Léo m'a fait goûter trois sakés, j'ai compris que je n'y connaissais rien. Merci.", q: 'Karim B. · sur Google' },
+  ];
+  const nav = document.querySelector('[data-voix-nav]'); let k = 0, minuteur;
+  const montrer = i => { k = i; document.querySelector('[data-voix-texte]').textContent = VOIX[i].t; document.querySelector('[data-voix-qui]').textContent = VOIX[i].q; [...nav.children].forEach((b, j) => b.classList.toggle('actif', j === i)); };
+  VOIX.forEach((v, i) => { const b = document.createElement('button'); b.type = 'button'; b.setAttribute('aria-label', 'Avis ' + (i + 1)); b.addEventListener('click', () => { montrer(i); clearInterval(minuteur); }); nav.append(b); });
+  montrer(0); minuteur = setInterval(() => montrer((k + 1) % VOIX.length), 6500);
+
+  const reduit = matchMedia('(prefers-reduced-motion: reduce)').matches, souris = matchMedia('(hover: hover)').matches;
+  if (reduit || !window.gsap || /[?&]anim=0/.test(location.search)) { html.classList.add('statique'); return; }
+  gsap.registerPlugin(ScrollTrigger);
+  let lenis = null;
+  if (window.Lenis && !embarque && souris) {
+    lenis = new Lenis({ lerp: .09 });
+    lenis.on('scroll', ScrollTrigger.update); gsap.ticker.add(t => lenis.raf(t * 1000)); gsap.ticker.lagSmoothing(0); html.classList.add('lenis');
+    document.querySelectorAll('a[href^="#"]').forEach(a => a.addEventListener('click', e => { const c = document.querySelector(a.getAttribute('href')); if (c) { e.preventDefault(); lenis.scrollTo(c, { offset: -60 }); } }));
+  }
+  document.querySelectorAll('[data-mots]').forEach(el => [...el.childNodes].forEach(n => {
+    const cible = n.nodeType === 3 ? n : (n.childNodes.length === 1 && n.firstChild.nodeType === 3 ? n.firstChild : null);
+    if (!cible) return;
+    const frag = document.createDocumentFragment();
+    cible.textContent.split(/(\s+)/).forEach(m => { if (!m) return; if (/^\s+$/.test(m)) return frag.append(m); const w = document.createElement('span'); w.className = 'mot'; const i = document.createElement('span'); i.textContent = m; w.append(i); frag.append(w); });
+    cible.replaceWith(frag);
+  }));
+  /* L'entrée : le cercle se dessine au pinceau, le bol se pose, le nom monte, le sceau tombe */
+  gsap.timeline({ defaults: { ease: 'power4.out' } })
+    .to('.enso .e1', { strokeDashoffset: 0, duration: 1.6, ease: 'power2.inOut' }, .1)
+    .to('.enso .e2', { strokeDashoffset: 0, duration: 1.6, ease: 'power2.inOut' }, .3)
+    .from('.bol img', { autoAlpha: 0, y: 70, scale: .9, rotate: -8, duration: 1.5, ease: 'power3.out' }, .4)
+    .from('.affiche-nom h1 .mot > span', { yPercent: 110, duration: 1.2 }, .7)
+    .from('.affiche-nom .hanko', { scale: 2.2, rotate: 20, autoAlpha: 0, duration: .7, ease: 'back.out(2)' }, 1.3)
+    .from('.affiche-vertical, .affiche-cote, .affiche-nom .infos > *, .indice', { autoAlpha: 0, y: 14, duration: .8, stagger: .08 }, 1.2);
+  gsap.to('.bol img', { y: -16, rotate: 2, duration: 3.2, ease: 'sine.inOut', yoyo: true, repeat: -1 });
+  gsap.to('.enso', { rotate: 360, duration: 90, ease: 'none', repeat: -1, transformOrigin: '50% 50%' });
+  if (souris) { const rx = gsap.quickTo('.bol', 'rotationX', { duration: 1, ease: 'power2.out' }), ry = gsap.quickTo('.bol', 'rotationY', { duration: 1, ease: 'power2.out' });
+    addEventListener('pointermove', e => { rx(-(e.clientY / innerHeight - .5) * 22); ry((e.clientX / innerWidth - .5) * 26); }, { passive: true }); }
+  ScrollTrigger.create({ start: 0, end: 'max', onUpdate: s => document.querySelector('header.top').classList.toggle('plein', s.scroll() > innerHeight * .6) });
+  const enTete = document.querySelector('header.top'), sombres = new Set();
+  gsap.utils.toArray('.manifeste-outer, .voix, footer').forEach(el => ScrollTrigger.create({ trigger: el, start: 'top 70px', end: 'bottom 70px', onToggle: s => { s.isActive ? sombres.add(el) : sombres.delete(el); enTete.classList.toggle('sombre', sombres.size > 0); } }));
+  /* En descendant, le bol bascule en perspective et se retire ; le nom glisse un peu plus lentement */
+  gsap.to('.bol-scroll', { rotationX: 48, yPercent: 40, scale: .84, autoAlpha: .1, transformOrigin: '50% 80%', ease: 'none', scrollTrigger: { trigger: '.affiche', start: 'top top', end: 'bottom top', scrub: true } });
+  gsap.to('.affiche-nom', { yPercent: -30, ease: 'none', scrollTrigger: { trigger: '.affiche', start: 'top top', end: 'bottom top', scrub: true } });
+  document.querySelectorAll('[data-compte]').forEach(b => { const fin = parseFloat(b.dataset.compte), suf = b.dataset.suffixe || ''; const o = { v: 0 }; gsap.to(o, { v: fin, duration: 1.6, ease: 'power3.out', delay: 1.6, onUpdate: () => b.textContent = Math.round(o.v) + suf }); });
+  /* Le manifeste : épinglé, les trois phrases s'allument une à une */
+  const phrases = gsap.utils.toArray('[data-manifeste] li');
+  const jauge = document.querySelector('[data-jauge]'), comptePhrase = document.querySelector('[data-compte-phrase]');
+  let courante = -1;
+  const montrerPhrase = i => {
+    if (i === courante) return;
+    phrases.forEach((li, k) => { if (k === i) gsap.fromTo(li, { autoAlpha: 0, y: 34 }, { autoAlpha: 1, y: 0, duration: .7, ease: 'power3.out', overwrite: true }); else if (k === courante) gsap.to(li, { autoAlpha: 0, y: -34, duration: .4, ease: 'power2.in', overwrite: true }); });
+    courante = i; if (comptePhrase) comptePhrase.textContent = (i + 1) + ' / ' + phrases.length;
+  };
+  montrerPhrase(0);
+  ScrollTrigger.create({ trigger: '.manifeste-outer', start: 'top top', end: 'bottom bottom', onUpdate: s => { montrerPhrase(Math.min(phrases.length - 1, Math.floor(s.progress * phrases.length * .999))); if (jauge) jauge.style.width = (s.progress * 100) + '%'; } });
+  /* La carte : sur grand écran, la file glisse à l'horizontale pendant qu'on descend */
+  ScrollTrigger.matchMedia({ '(min-width: 900px)': () => {
+    const piste = document.querySelector('[data-piste]'); const distance = () => Math.max(0, piste.scrollWidth - innerWidth + 60);
+    const cj = document.querySelector('[data-carte-jauge]'), biais = gsap.quickTo('.plat-img img', 'skewX', { duration: .5, ease: 'power2.out' });
+    gsap.to(piste, { x: () => -distance(), ease: 'none', scrollTrigger: { trigger: '.carte', start: 'top top', end: () => '+=' + distance(), pin: true, scrub: .8, invalidateOnRefresh: true, anticipatePin: 1, onUpdate: s => { if (cj) cj.style.width = (s.progress * 100) + '%'; biais(gsap.utils.clamp(-8, 8, -s.getVelocity() / 260)); } } });
+  } });
+  gsap.utils.toArray('.reveal').forEach(el => {
+    const titre = el.tagName === 'H2';
+    if (titre) gsap.set(el, { rotationX: -28, transformOrigin: '50% 100%', transformPerspective: 900 });
+    gsap.to(el, { autoAlpha: 1, y: 0, rotationX: 0, duration: titre ? 1.3 : 1, ease: 'power3.out', scrollTrigger: { trigger: el, start: 'top 88%' } });
+  });
+  gsap.utils.toArray('.kanji').forEach(kj => gsap.fromTo(kj, { y: 80 }, { y: -80, ease: 'none', scrollTrigger: { trigger: kj.parentElement, start: 'top bottom', end: 'bottom top', scrub: true } }));
+  gsap.utils.toArray('[data-photo] img').forEach(img => gsap.to(img, { scale: 1.06, duration: 1.8, ease: 'power2.out', scrollTrigger: { trigger: img, start: 'top 85%' } }));
+  gsap.utils.toArray('[data-parallaxe-photo]').forEach(img => gsap.fromTo(img, { yPercent: -6 }, { yPercent: 6, ease: 'none', scrollTrigger: { trigger: img.parentElement, start: 'top bottom', end: 'bottom top', scrub: true } }));
+  gsap.utils.toArray('[data-parallaxe]').forEach(el => gsap.fromTo(el, { y: -parseFloat(el.dataset.parallaxe) }, { y: parseFloat(el.dataset.parallaxe), ease: 'none', scrollTrigger: { trigger: el, start: 'top bottom', end: 'bottom top', scrub: true } }));
+  // ?defile=2.4 place la page à 2,4 hauteurs de fenêtre après le chargement (captures automatiques)
+  const defile = parseFloat(new URLSearchParams(location.search).get('defile'));
+  if (defile > 0) setTimeout(() => { if (lenis) lenis.scrollTo(innerHeight * defile, { immediate: true }); else window.scrollTo(0, innerHeight * defile); ScrollTrigger.update(); }, 900);
+  if (souris && !embarque) {
+    document.querySelectorAll('.btn').forEach(b => { b.addEventListener('mousemove', e => { const r = b.getBoundingClientRect(); gsap.to(b, { x: (e.clientX - r.left - r.width / 2) * .22, y: (e.clientY - r.top - r.height / 2) * .3, duration: .4, ease: 'power2.out' }); }); b.addEventListener('mouseleave', () => gsap.to(b, { x: 0, y: 0, duration: .6, ease: 'elastic.out(1, .4)' })); });
+    const pt = document.createElement('div'); pt.className = 'curseur-pt';
+    const px = gsap.quickTo(pt, 'x', { duration: .3, ease: 'power2.out' }), py = gsap.quickTo(pt, 'y', { duration: .3, ease: 'power2.out' });
+    addEventListener('pointermove', e => { if (!pt.isConnected) { gsap.set(pt, { x: e.clientX, y: e.clientY }); document.body.append(pt); html.classList.add('curseur'); } px(e.clientX); py(e.clientY); }, { passive: true });
+    document.querySelectorAll('a, button, .plat').forEach(el => { el.addEventListener('mouseenter', () => pt.classList.add('gros')); el.addEventListener('mouseleave', () => pt.classList.remove('gros')); });
+  }
+})();
+</script>
+<script type="module">
+/* Des graines de sésame dans l'air de l'affiche (Three.js, points) : elles dérivent lentement et s'écartent de la souris. Jamais requis. */
+if (!document.documentElement.classList.contains('statique') && !/[?&](embarque=1|trois=0)/.test(location.search)) try {
+  const THREE = await import('three');
+  const canvas = document.getElementById('graines'), hero = document.querySelector('.affiche');
+  const renderer = new THREE.WebGLRenderer({ canvas, alpha: true, antialias: true }); renderer.setPixelRatio(Math.min(devicePixelRatio, 2));
+  const scene = new THREE.Scene(), cam = new THREE.PerspectiveCamera(40, 1, .1, 100); cam.position.z = 10;
+  const N = 120, pos = new Float32Array(N * 3), vit = [];
+  for (let i = 0; i < N; i++) { pos[i * 3] = (Math.random() - .5) * 18; pos[i * 3 + 1] = (Math.random() - .5) * 10; pos[i * 3 + 2] = (Math.random() - .5) * 4; vit.push({ x: (Math.random() - .5) * .004, y: .003 + Math.random() * .006 }); }
+  const geo = new THREE.BufferGeometry(); geo.setAttribute('position', new THREE.BufferAttribute(pos, 3));
+  const tex = (() => { const c = document.createElement('canvas'); c.width = c.height = 32; const g = c.getContext('2d'); const r = g.createRadialGradient(16, 16, 0, 16, 16, 16); r.addColorStop(0, 'rgba(60,48,32,.9)'); r.addColorStop(.5, 'rgba(120,95,40,.45)'); r.addColorStop(1, 'rgba(120,95,40,0)'); g.fillStyle = r; g.fillRect(0, 0, 32, 32); return new THREE.CanvasTexture(c); })();
+  const mat = new THREE.PointsMaterial({ size: .08, map: tex, transparent: true, depthWrite: false, opacity: .55, sizeAttenuation: true });
+  const points = new THREE.Points(geo, mat); scene.add(points);
+  const taille = () => { const w = hero.clientWidth, h = hero.clientHeight; renderer.setSize(w, h, false); cam.aspect = w / h; cam.updateProjectionMatrix(); };
+  taille(); addEventListener('resize', taille);
+  const souris = { x: 0, y: 0 }; addEventListener('pointermove', e => { souris.x = (e.clientX / innerWidth - .5) * 18; souris.y = -(e.clientY / innerHeight - .5) * 10; }, { passive: true });
+  let visible = true; new IntersectionObserver(es => visible = es[0].isIntersecting).observe(hero);
+  renderer.setAnimationLoop(() => {
+    if (!visible) return;
+    const p = geo.attributes.position.array;
+    for (let i = 0; i < N; i++) {
+      p[i * 3] += vit[i].x; p[i * 3 + 1] += vit[i].y;
+      const dx = p[i * 3] - souris.x, dy = p[i * 3 + 1] - souris.y, d = Math.hypot(dx, dy);
+      if (d < 1.6) { p[i * 3] += dx / d * .02; p[i * 3 + 1] += dy / d * .02; }
+      if (p[i * 3 + 1] > 5.5) { p[i * 3 + 1] = -5.5; p[i * 3] = (Math.random() - .5) * 18; }
+    }
+    geo.attributes.position.needsUpdate = true; points.rotation.z += .0003;
+    renderer.render(scene, cam);
+  });
+} catch (e) { console.debug('graines absentes :', e.message); }
+</script>
+</body>
+</html>

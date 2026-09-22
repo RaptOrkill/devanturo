@@ -1,0 +1,63 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Mentions légales et vos données — Devanturo</title>
+<meta name="description" content="Qui édite le site de Devanturo, où il est hébergé, et ce qu'on fait des coordonnées laissées pour un rendez-vous.">
+<link rel="canonical" href="https://devanturo.fr/mentions.html">
+<link rel="icon" href="assets/logo-devanturo.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Inter+Tight:wght@500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css?v=58">
+<script>(function(){var h=document.documentElement;var t=(location.search.match(/[?&]theme=(clair|sombre)/)||[])[1];try{t=t||localStorage.getItem('devanturo-theme')}catch(e){}if(!t)t=matchMedia('(prefers-color-scheme: light)').matches?'clair':'sombre';if(t==='clair')h.setAttribute('data-theme','clair')})();</script>
+</head>
+<body>
+<header class="entete">
+  <a class="marque" href="index.html"><span class="marque-icone" aria-hidden="true"></span>Devanturo <span>— Roubaix</span></a>
+  <nav class="nav" aria-label="Sections"><a href="#donnees">Vos données</a><a href="index.html#questions">Questions</a></nav>
+  <button class="theme" type="button" aria-label="Passer en mode clair" title="Clair / sombre"><span aria-hidden="true">☀</span></button>
+  <a class="entete-cta" href="index.html#devis-debut">Réserver</a>
+</header>
+<main class="locale">
+  <p class="etiquette">Le site, en toute transparence</p>
+  <h1>Mentions légales <em>et vos données.</em></h1>
+
+  <h2 id="editeur">Qui édite ce site</h2>
+  <p class="corps">Devanturo est une entreprise individuelle de Baptiste Ruin, 2 rue Vauban, 59100 Roubaix, SIRET 108 488 131 00013. Baptiste Ruin est le directeur de la publication. Pour nous joindre : <a href="https://wa.me/33614979604" target="_blank" rel="noopener">WhatsApp</a> ou <a href="tel:+33614979604">06 14 97 96 04</a>.</p>
+  <p class="corps">Le site est hébergé par GitHub, Inc. (service GitHub Pages), 88 Colin P. Kelly Jr. Street, San Francisco, CA 94107, États-Unis.</p>
+  <p class="corps">Les textes, les images et le code du site appartiennent à Devanturo. Les établissements présentés dans les démonstrations (Kaori, Giulia) sont fictifs. Les noms des établissements réels cités appartiennent à leurs propriétaires.</p>
+
+  <h2 id="donnees">Ce qu'on fait de vos données</h2>
+  <p class="corps">Quand vous réservez un rendez-vous, on vous demande le nom de votre établissement, votre prénom, votre numéro de téléphone, le créneau choisi, et, si vous le dites, le type d'établissement. Rien d'autre.</p>
+  <ul class="locale-points">
+    <li><b>Pourquoi.</b> Organiser le rendez-vous, vous le confirmer et vous prévenir si quelque chose change, par SMS ou WhatsApp. C'est ce qui précède un devis : on n'a pas besoin de votre accord écrit pour ça, et on ne s'en sert pour rien d'autre.</li>
+    <li><b>Qui les voit.</b> Les trois personnes de Devanturo, et personne d'autre. Si on vous envoie un SMS, le message passe par un prestataire d'envoi, qui ne voit que votre numéro et le texte.</li>
+    <li><b>Où.</b> Le site lui-même n'enregistre rien sur un serveur : le créneau et le nom que vous tapez restent dans votre navigateur (jusqu'à ce que vous effaciez ses données) et nous arrivent par le message WhatsApp ou l'appel que vous nous envoyez. On les note ensuite dans notre agenda.</li>
+    <li><b>Combien de temps.</b> Douze mois après le rendez-vous, puis effacement automatique. Si on travaille ensemble ensuite, vos coordonnées passent dans le dossier de votre site, comme pour n'importe quel client.</li>
+    <li><b>Vos droits.</b> Voir, corriger ou faire effacer ce qu'on a sur vous : un message sur <a href="https://wa.me/33614979604" target="_blank" rel="noopener">WhatsApp</a> ou <a href="tel:+33614979604">06 14 97 96 04</a> suffit, on le fait dans la journée. Si vous n'êtes pas satisfait, vous pouvez écrire à la CNIL, cnil.fr.</li>
+  </ul>
+  <p class="corps">Ce site ne pose aucun cookie et n'utilise aucun outil de mesure d'audience. Il garde seulement dans votre navigateur, chez vous, votre choix clair ou sombre et le rendez-vous que vous avez pris, pour pouvoir le retrouver. Les polices d'écriture sont chargées depuis Google Fonts, qui reçoit alors votre adresse IP, comme pour n'importe quelle image chargée depuis un autre site.</p>
+  <div class="locale-actions">
+    <a class="bouton principal" href="index.html#devis-debut">Réserver</a>
+    <a class="bouton" href="index.html">Retour à l'accueil</a>
+  </div>
+</main>
+<footer class="pied">
+  <div class="pied-int">
+    <a class="marque" href="index.html"><span class="marque-icone" aria-hidden="true"></span>Devanturo <span>— Roubaix</span></a>
+    <p class="pied-ligne">Des sites pour les restaurants et les bars. <a href="https://wa.me/33614979604" target="_blank" rel="noopener">WhatsApp</a> · <a href="tel:+33614979604">06 14 97 96 04</a></p>
+    <p class="mentions">Entreprise individuelle Baptiste Ruin · 2 rue Vauban, 59100 Roubaix · SIRET 108 488 131 00013</p>
+  </div>
+</footer>
+<script>
+(function () {
+  var html = document.documentElement, b = document.querySelector('.theme');
+  function appliquer(t) { if (t === 'clair') html.setAttribute('data-theme', 'clair'); else html.removeAttribute('data-theme'); b.firstElementChild.textContent = t === 'clair' ? '☾' : '☀'; }
+  appliquer(html.getAttribute('data-theme') === 'clair' ? 'clair' : 'sombre');
+  b.addEventListener('click', function () { var t = html.getAttribute('data-theme') === 'clair' ? 'sombre' : 'clair'; appliquer(t); try { localStorage.setItem('devanturo-theme', t); } catch (e) {} });
+})();
+</script>
+</body>
+</html>

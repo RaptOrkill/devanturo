@@ -1,636 +1,373 @@
-/* Devanturo — feuille de style
-   Fond blanc cassé, une couleur d'accent, Fraunces pour les grands textes, DM Sans pour l'interface.
-   Mise en page de base = statique (sans JS, ou mouvement réduit). La classe .anim sur <html> active la mise en scène. */
+/* Devanturo (site de l'agence) — deux thèmes (sombre par défaut, clair), un seul écran inversé (la sortie).
+   Inter Tight (serrée, grasse) pour les grands textes, Inter pour l'interface. Interface en verre arrondi (translucide, bord clair, reflet). Aucune couleur d'accent : blanc, noir, gris. */
 
 :root {
-  --fond: #F6F4EF;
-  --encre: #141311;
-  --rouge: #C8321F;
-  --gris: #7a766f;
-  --gris-texte: #66625b; /* texte gris de réassurance (ligne de prix, 15 €/an, pied) : ≈ 5,6:1 sur le fond ; --gris (≈ 4,1:1) reste pour le décoratif (constat C10) */
-  --ligne: #e3dfd6;
-  --serif: 'Fraunces', Georgia, 'Times New Roman', serif;
-  --sans: 'DM Sans', system-ui, -apple-system, 'Segoe UI', sans-serif;
-  --entete-h: 84px; /* hauteur réservée à l'en-tête (promesse sur deux lignes) ; 52 px après le récit sur mobile (html.apres) ; 64 px à partir de 1024 */
-  --duree: 420ms; --courbe: cubic-bezier(.2, .7, .2, 1); /* transitions de l'interface (CAP §1) */
+  --fond: #F6F4EF; --encre: #141311; --rouge: #C8321F; /* le rouge de la marque : réservé au logo, jamais à l'écran */ --gris: #7a766f; --ligne: #e3dfd6;
+  /* Le thème : sombre par défaut. --t est le triplet RVB du texte, pour les transparences (rgba(var(--t), .5)). Les -inv servent à la sortie, inversée. */
+  --bg: #000; --texte: #F6F4EF; --t: 246,244,239;
+  --bg-inv: #F6F4EF; --texte-inv: #141311; --t-inv: 20,19,17;
+  --capsule: rgba(18,18,18,.55); --lueur: 255,255,255; --ombre-portable: rgba(255,255,255,.10); --ombre-tel: rgba(0,0,0,.55);
+  --serif: 'Inter Tight', 'Inter', system-ui, sans-serif;   /* les grands textes (le nom de la variable est historique) */
+  --sans: 'Inter', system-ui, -apple-system, 'Segoe UI', sans-serif;
+  --gout: 24px; --duree: 420ms; --courbe: cubic-bezier(.2,.7,.2,1);
+  /* Le verre (façon « liquid glass ») : translucide, bord clair fin, reflet en haut. Le flou de fond est réservé aux éléments qui flottent. */
+  --verre: rgba(255,255,255,.06); --verre-bord: rgba(255,255,255,.14); --verre-reflet: inset 0 1px 0 rgba(255,255,255,.22);
+  --verre-fort: rgba(255,255,255,.12); --verre-bord-fort: rgba(255,255,255,.35);
+  --verre-inv: rgba(20,19,17,.05); --verre-bord-inv: rgba(20,19,17,.16); --verre-reflet-inv: inset 0 1px 0 rgba(255,255,255,.7);
+  --verre-fort-inv: rgba(20,19,17,.1); --verre-bord-fort-inv: rgba(20,19,17,.4);
+  --rond: 20px; --rond-petit: 14px;
+  /* Le portable : l'écran fait --ecran-l de large, ratio 16/10. Tout le reste en découle. */
+  --ecran-l: min(720px, 86vw, 64vh); --ecran-h: calc(var(--ecran-l) * .625); --bezel: calc(var(--ecran-l) * .018);
+  --prof: calc(var(--ecran-l) * .66);
+  /* Pose par défaut (page sans animation) : ouvert, vu de trois quarts. atelier.js la ferme puis l'anime. */
+  --lid: 8deg; --rx: -18deg; --ry: -16deg; --s: 1;
 }
-* { box-sizing: border-box; margin: 0; padding: 0; }
-html { background: var(--fond); color: var(--encre); -webkit-text-size-adjust: 100%; }
-body { font-family: var(--sans); font-size: 17px; line-height: 1.45; overflow-x: hidden; -webkit-font-smoothing: antialiased; }
-img { max-width: 100%; display: block; }
+html[data-theme="clair"] {
+  --bg: #F6F4EF; --texte: #141311; --t: 20,19,17;
+  --bg-inv: #000; --texte-inv: #F6F4EF; --t-inv: 246,244,239;
+  --capsule: rgba(246,244,239,.62); --lueur: 20,19,17; --ombre-portable: rgba(20,19,17,.18); --ombre-tel: rgba(20,19,17,.3);
+  --verre: rgba(20,19,17,.05); --verre-bord: rgba(20,19,17,.16); --verre-reflet: inset 0 1px 0 rgba(255,255,255,.7);
+  --verre-fort: rgba(20,19,17,.1); --verre-bord-fort: rgba(20,19,17,.4);
+  --verre-inv: rgba(255,255,255,.06); --verre-bord-inv: rgba(255,255,255,.14); --verre-reflet-inv: inset 0 1px 0 rgba(255,255,255,.22);
+  --verre-fort-inv: rgba(255,255,255,.12); --verre-bord-fort-inv: rgba(255,255,255,.35);
+}
+@media (min-width: 1024px) { :root { --gout: 4vw; } }
+@media (min-width: 1440px) { :root { --gout: 5vw; } }
+
+* { box-sizing: border-box; }
+[hidden] { display: none !important; }   /* les boutons et étapes de l'assistant ont leur propre display : hidden doit gagner */
+.evitement { position: fixed; left: 16px; top: -60px; z-index: 60; padding: 12px 18px; border-radius: 999px; background: var(--texte); color: var(--bg); text-decoration: none; font-weight: 500; transition: top 200ms; }
+.evitement:focus { top: 16px; }
+html { scroll-behavior: smooth; background: var(--bg); color: var(--texte); transition: background 400ms, color 400ms; }
+html.anim { scroll-behavior: auto; }
+body { margin: 0; font: 400 17px/1.45 var(--sans); overflow-x: hidden; -webkit-font-smoothing: antialiased; }
+h1, h2, h3 { font-family: var(--serif); font-weight: 600; margin: 0; letter-spacing: -.035em; }
 a { color: inherit; }
-ul, ol { list-style: none; }
-button { font: inherit; color: inherit; }
-[hidden] { display: none !important; }
-.visually-hidden { position: absolute !important; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
-/* Focus visible au clavier, une seule couleur ; le champ garde son filet bas épaissi (CAP §15, constat M7). */
-:where(a, button, summary, [tabindex]):focus-visible { outline: 2px solid var(--rouge); outline-offset: 3px; }
-/* Menu ouvert : verrou posé sur <body> et non sur <html> (sinon body devient conteneur de défilement et la scène collante saute : même piège que la modale, demos.css). */
-.menu-ouvert body { overflow: hidden; }
+button, input { font: inherit; color: inherit; }
+ul, ol { list-style: none; margin: 0; padding: 0; }
+::selection { background: var(--texte); color: var(--bg); }
+.bloc, .final, .histoire { scroll-margin-top: 72px; }
+.etiquette { margin: 0 0 14px; font: 500 12px/1 var(--sans); letter-spacing: .18em; text-transform: uppercase; color: rgba(var(--t),.55); }
+.corps { max-width: 56ch; font-size: clamp(16px, 1.05vw, 19px); }
+.note { font-size: 14px; color: var(--gris); }
+.bouton { display: inline-flex; align-items: center; justify-content: center; min-height: 60px; padding: 0 32px; font-size: 17px; border-radius: 999px; border: 1px solid var(--verre-bord-fort); background: var(--verre); box-shadow: var(--verre-reflet); text-decoration: none; font-weight: 500; transition: transform var(--duree) var(--courbe), background var(--duree) var(--courbe), color var(--duree) var(--courbe), box-shadow var(--duree); }
+.bouton:hover { transform: translateY(-2px); background: var(--verre-fort); }
+.bouton.principal { background: var(--texte); color: var(--bg); border-color: var(--texte); box-shadow: 0 12px 30px rgba(0,0,0,.35); }
 
-/* En-tête : transparent sur le récit ; opaque, filet bas et compact (mobile) dès que le pied de page entre à l'écran (html.apres, posé par page.js — constat I3).
-   Le filet est un box-shadow interne : la hauteur ne bouge pas. */
-.entete { position: fixed; top: 0; left: 0; right: 0; z-index: 50; display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center;
-  padding: calc(2px + env(safe-area-inset-top)) 20px 8px; font-size: 11px; letter-spacing: .16em; text-transform: uppercase; pointer-events: none;
-  background: rgba(246, 244, 239, 0); box-shadow: inset 0 -1px 0 rgba(227, 223, 214, 0);
-  transition: background-color var(--duree) var(--courbe), box-shadow var(--duree) var(--courbe); }
-.entete > * { pointer-events: auto; }
-.apres .entete, .menu-ouvert .entete { pointer-events: auto; }
-/* Version statique (sans .anim) : la page défile sous l'en-tête dès le début, il est donc opaque tout de suite. */
-.apres .entete, :root:not(.anim) .entete { background: rgba(246, 244, 239, .92); -webkit-backdrop-filter: blur(8px); backdrop-filter: blur(8px); box-shadow: inset 0 -1px 0 var(--ligne); }
-/* Première page (#accueil) : elle défile normalement sous l'en-tête ; sans fond, « DEVANTURO » et « Menu » passaient sur ses textes (captures téléphone du 14/09). */
-html.anim:not(.accueil-quitte) .entete { background: rgba(246, 244, 239, .92); -webkit-backdrop-filter: blur(8px); backdrop-filter: blur(8px); }
-.entete-marque, .entete-lien, .nav a { display: inline-flex; align-items: center; min-height: 44px; text-decoration: none; }
-/* Logo Devanturo (D + fourchette, choisi le 14/09/2026) devant le nom. */
-.marque-icone { width: 20px; height: 20px; margin-right: 10px; flex: none; }
-.nav { display: none; } /* sous 1024 : dans le menu */
-/* Le CTA de l'en-tête : bouton rouge carré, le même geste que partout (constat C04). Sous 1024, « Rendez-vous » compact collé à « Menu ».
-   Caché sans décaler l'en-tête (visibility + opacity) quand un autre « Prendre rendez-vous » est à l'écran (html.cta-ecran, posé par recit.js),
-   pendant l'introduction sur mobile, et menu ouvert (le menu a le sien). */
-.entete-lien { justify-content: center; margin-left: auto; margin-right: 8px; padding: 0 12px; background: var(--rouge); color: #fff;
-  font: 500 14px/1 var(--sans); letter-spacing: .01em; text-transform: none; -webkit-tap-highlight-color: transparent;
-  transition: background-color var(--duree) var(--courbe), opacity 260ms var(--courbe), visibility 0s; }
-.entete-lien:hover { background: #a82816; }
-.entete-long { display: none; }
-.cta-ecran .entete-lien, .menu-ouvert .entete-lien { opacity: 0; visibility: hidden; pointer-events: none;
-  transition: opacity 260ms var(--courbe), visibility 0s linear 260ms; }
-@media (max-width: 1023.98px) { .anim:not(.intro-finie) .entete-lien { opacity: 0; visibility: hidden; pointer-events: none; } }
-.menu-bouton { display: inline-flex; align-items: center; justify-content: center; min-width: 44px; min-height: 44px; margin-right: -10px; padding: 0 10px;
-  border: 0; background: none; letter-spacing: inherit; text-transform: inherit; cursor: pointer; -webkit-tap-highlight-color: transparent; }
-/* La promesse, lisible dès la première seconde, sur tous les écrans ; après le récit, sur mobile, elle laisse la place à un en-tête de 52 px (reprise en toutes lettres dans l'offre).
-   14 px et le prix et le paiement en graisse 500 : ce qui est vendu se lit avant la démo (constat C05). */
-.promesse { flex-basis: 100%; order: 3; margin: 0; font-size: 14px; line-height: 1.3; letter-spacing: .01em; text-transform: none; color: var(--encre); pointer-events: none; }
-.promesse b { font-weight: 500; }
-@media (max-width: 1023.98px) {
-  :root.apres { --entete-h: 52px; }
-  .apres .entete { padding-top: calc(4px + env(safe-area-inset-top)); padding-bottom: 4px; }
-  .apres .promesse { display: none; }
+/* ---------- En-tête ---------- */
+.entete { position: fixed; top: 14px; left: 50%; transform: translateX(-50%); width: min(1240px, calc(100% - 28px)); z-index: 50; display: flex; align-items: center; gap: 24px; padding: 8px 8px 8px 20px; border-radius: 999px; color: var(--texte);
+  background: var(--capsule); backdrop-filter: blur(24px) saturate(1.6); -webkit-backdrop-filter: blur(24px) saturate(1.6); border: 1px solid var(--verre-bord); box-shadow: var(--verre-reflet), 0 10px 40px rgba(0,0,0,.25); }
+.marque { font: 500 15px/1 var(--sans); text-decoration: none; letter-spacing: .01em; }
+.marque span { font-weight: 400; opacity: .7; }
+.marque-icone { display: inline-block; width: 22px; height: 22px; vertical-align: -6px; margin-right: 8px; background: currentColor; mask: url("assets/logo-devanturo.svg") center / contain no-repeat; -webkit-mask: url("assets/logo-devanturo.svg") center / contain no-repeat; }
+.theme { width: 38px; height: 38px; border-radius: 50%; border: 1px solid var(--verre-bord); background: var(--verre); box-shadow: var(--verre-reflet); color: var(--texte); font-size: 16px; line-height: 1; cursor: pointer; display: grid; place-items: center; transition: background var(--duree), transform var(--duree) var(--courbe); }
+.theme:hover { background: var(--verre-fort); transform: rotate(20deg); }
+.nav { display: none; gap: 22px; margin-left: auto; font-size: 14px; }
+.entete .theme { margin-left: auto; }
+.nav a { text-decoration: none; opacity: .8; }
+.nav a:hover { opacity: 1; }
+.entete-cta { margin-left: auto; padding: 11px 18px; border-radius: 999px; background: var(--texte); color: var(--bg); font: 500 13px/1 var(--sans); text-decoration: none; transition: transform var(--duree) var(--courbe); }
+.entete-cta:hover { transform: scale(1.04); }
+@media (min-width: 1024px) { .nav { display: flex; } .entete .theme, .entete-cta { margin-left: 0; } }
+@media (max-width: 480px) { .marque span { display: none; } .entete { gap: 12px; padding-left: 16px; } }
+
+/* ---------- L'entrée ---------- */
+.hero { position: relative; min-height: 100vh; }
+.hero-colle { position: relative; min-height: 100vh; display: grid; grid-template-rows: auto 1fr; padding: 108px var(--gout) 0; overflow: hidden; }
+.hero-texte, .scene { position: relative; z-index: 1; }
+.seuil { position: absolute; inset: 0; z-index: 0; --l: 100vw !important; }
+.seuil .compo-nom { top: 7.8vw; }
+html:not(.anim) .seuil { display: none; }
+html.anim .seuil { opacity: 0; }   /* révélé par la frise, quand la scène s'efface */
+.hero-texte { text-align: center; max-width: 900px; margin: 0 auto; }
+.hero-titre { font-size: clamp(32px, 5.4vw, 80px); line-height: .98; color: rgba(var(--t),.55); }
+.hero-titre em { font-style: normal; color: var(--texte); }
+.hero-sous { margin: 18px auto 0; max-width: 46ch; font-size: clamp(15px, 1.1vw, 19px); color: rgba(var(--t),.65); }
+.hero-indice { display: inline-block; margin: 18px 0 0; padding: 10px 18px; border-radius: 999px; background: var(--verre); border: 1px solid var(--verre-bord); box-shadow: var(--verre-reflet); font-size: 11px; letter-spacing: .18em; text-transform: uppercase; color: rgba(var(--t),.7); }
+html.intro { cursor: progress; }
+html.intro .hero-indice { animation: none; opacity: 0; transition: opacity 300ms; }
+.hero-titre .mot { display: inline-block; }
+
+.scene { align-self: stretch; width: 100%; min-height: calc(var(--ecran-h) * 1.3); perspective: 1800px; perspective-origin: 50% 40%; transform: translateY(var(--ty, 0px)) scale(var(--s)); transform-origin: 50% 50%; will-change: transform; }
+.ombre { position: absolute; left: 50%; top: 50%; width: calc(var(--ecran-l) * 1.15); height: calc(var(--prof) * .5); transform: translate(-50%, 10%); background: radial-gradient(ellipse at center, var(--ombre-portable), transparent 65%); filter: blur(8px); }
+.macbook { position: absolute; left: 50%; top: calc(50% + var(--ecran-h) * .25 + var(--bezel)); width: calc(var(--ecran-l) + var(--bezel) * 2); height: 0; transform: translateX(-50%) rotateX(var(--rx)) rotateY(var(--ry)); transform-style: preserve-3d; }
+.base { position: absolute; left: 0; top: 0; width: 100%; height: var(--prof); transform-origin: 50% 0; transform: rotateX(90deg); transform-style: preserve-3d; border-radius: 2% / 3%; background: linear-gradient(180deg, #dcd9d3, #c9c6bf 60%, #bcb9b2); box-shadow: inset 0 0 0 1px rgba(255,255,255,.35); }
+.clavier { position: absolute; left: 9%; right: 9%; top: 9%; height: 46%; border-radius: 4px; background:
+  repeating-linear-gradient(90deg, #26251f 0 5.6%, transparent 5.6% 6.4%),
+  repeating-linear-gradient(180deg, #26251f 0 16%, transparent 16% 20%); background-color: #3a3934; opacity: .9; }
+.pave { position: absolute; left: 34%; right: 34%; bottom: 8%; height: 26%; border-radius: 6px; background: #d3d0c9; box-shadow: inset 0 0 0 1px rgba(0,0,0,.08); }
+.base-avant { position: absolute; left: 0; top: 100%; width: 100%; height: calc(var(--ecran-l) * .014); transform-origin: 50% 0; transform: rotateX(-90deg); background: #a9a69f; border-radius: 0 0 2px 2px; }
+.couvercle { position: absolute; left: 0; bottom: 0; width: 100%; height: calc(var(--ecran-h) + var(--bezel) * 2); transform-origin: 50% 100%; transform: rotateX(var(--lid)); transform-style: preserve-3d; will-change: transform; }
+.couvercle-dos, .ecran { position: absolute; inset: 0; border-radius: 2.2% / 3.5%; backface-visibility: hidden; }
+.couvercle-dos { transform: rotateY(180deg); background: linear-gradient(160deg, #e2dfd8, #c6c3bc); box-shadow: inset 0 0 0 1px rgba(255,255,255,.4), 0 1px 0 rgba(0,0,0,.15); }
+.logo-dos { position: absolute; left: 50%; top: 50%; width: 13%; aspect-ratio: 1; transform: translate(-50%, -50%); background: #141311; mask: url("assets/logo-devanturo.svg") center / contain no-repeat; -webkit-mask: url("assets/logo-devanturo.svg") center / contain no-repeat; opacity: .9; }
+.ecran { background: #0c0c0b; box-shadow: inset 0 0 0 1px #2a2a28; }
+.ecran-int { position: absolute; inset: var(--bezel); border-radius: 1.4% / 2.2%; overflow: hidden; --l: var(--ecran-l); }
+
+/* ---------- La composition (inspirée d'Alinma) : écran noir, un mot géant, une rangée de téléphones ---------- */
+.compo { background: var(--bg); color: var(--texte); font-size: calc(var(--l) / 100); overflow: hidden; }
+.compo-nav { position: absolute; left: 3em; right: 3em; top: 2em; display: flex; justify-content: space-between; align-items: center; padding: 1em 1.8em; border-radius: 99em; background: var(--verre); border: .08em solid var(--verre-bord); font: 500 1.4em/1 var(--sans); letter-spacing: .04em; opacity: .85; }
+.compo-nom { position: absolute; left: 0; right: 0; top: 15%; text-align: center; font: 700 17em/1 var(--serif); letter-spacing: -.05em; white-space: nowrap; }
+/* Les téléphones : debout, éteints, de trois quarts. Au survol, celui sous le curseur se soulève.
+   C'est le vrai iPhone 17 Pro (modèle OBJ de Baptiste) rendu par sandbox/iphone/rendu.html → assets/telephone.webp, déjà tourné : pas de rotation CSS.
+   Un téléphone dessiné en CSS (.demo-ecran) attend dessous et ne se montre que si l'image manque (.demo sans .photo). */
+.demos { position: absolute; left: 0; right: 0; bottom: 0; height: 60%; perspective: calc(var(--l) * 1.6); perspective-origin: 30% 20%; transform-style: preserve-3d; }
+.demo { position: absolute; bottom: -10%; left: calc(5% + var(--i) * 9.2%); width: 17em; aspect-ratio: 600 / 1351; transform: translateZ(calc(var(--i) * .6em)); transform-origin: 50% 100%; z-index: var(--i); }
+.demo:hover, .demo:focus-within, .demo.touche { z-index: 30; }
+.demo-tel { position: absolute; inset: 0; display: block; cursor: pointer; transition: transform 600ms var(--courbe); }
+.demo-ecran { display: block; position: absolute; inset: 0; border-radius: 2.8em; background: linear-gradient(160deg, #55534f, #2a2927 55%, #3d3c39); box-shadow: inset 0 0 0 1px rgba(255,255,255,.28), -1.2em 1.2em 3em rgba(0,0,0,.7); }
+.demo-ecran::before { content: ""; position: absolute; inset: .8em; border-radius: 2.1em; background: #050505; }
+.demo.photo .demo-ecran { display: none; }
+.demo-tel img { position: absolute; inset: 0; width: 100%; height: 100%; display: block; filter: drop-shadow(-1em 1.4em 1.6em var(--ombre-tel)); }
+/* L'écran vivant : un cadre de 600 × 1351 (la taille du rendu) réduit à la boîte, et dedans la démo posée sur l'écran par la matrice */
+.demo-vivant { position: absolute; left: 0; top: 0; width: 600px; height: 1351px; transform: scale(var(--k, .2)); transform-origin: 0 0; pointer-events: none; }
+.ecran-pose { position: absolute; left: 0; top: 0; width: 390px; height: 844px; transform-origin: 0 0; border-radius: 54px; overflow: hidden; background: #000; }
+.ecran-pose iframe { display: block; width: 390px; height: 844px; border: 0; background: #000; }
+.ecran-pose.decale iframe { position: absolute; top: 54px; height: 790px; }
+.ecran-pose.clair .statut { color: #000; }
+.ecran-pose.clair .statut i { filter: invert(1); }   /* démo claire : barre d'état noire */   /* un site qui ne laisse pas la place de la barre d'état */
+.ecran-pose .reflet { position: absolute; inset: 0; background: linear-gradient(112deg, rgba(255,255,255,.16) 0%, rgba(255,255,255,.04) 30%, transparent 52%); }
+.ecran-pose .ilot { position: absolute; left: 50%; top: 11px; width: 126px; height: 37px; transform: translateX(-50%); border-radius: 20px; background: #000; box-shadow: inset 0 0 0 1px #111; }
+.ecran-pose .statut { position: absolute; left: 0; right: 0; top: 0; height: 54px; display: flex; align-items: flex-end; justify-content: space-between; padding: 0 26px 8px 36px; color: #fff; font: 600 16px/1 var(--sans); letter-spacing: -.01em; }
+.ecran-pose .statut i { width: 66px; height: 12px; background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 66 12' fill='%23fff'%3E%3Crect y='8' width='3' height='4' rx='.8'/%3E%3Crect x='5' y='5.5' width='3' height='6.5' rx='.8'/%3E%3Crect x='10' y='3' width='3' height='9' rx='.8'/%3E%3Crect x='15' y='0' width='3' height='12' rx='.8'/%3E%3Cpath d='M31 11.5 24.2 4.6a9.6 9.6 0 0 1 13.6 0z'/%3E%3Crect x='42.5' y='.5' width='22' height='11' rx='3.5' fill='none' stroke='%23fff' stroke-opacity='.5'/%3E%3Crect x='44' y='2' width='19' height='8' rx='2'/%3E%3C/svg%3E") center / contain no-repeat; }
+.demo:hover .demo-tel, .demo:focus-within .demo-tel, .demo.touche .demo-tel { transform: translateY(-10%) scale(1.04); }
+
+
+/* ---------- Le problème : la bande des métiers, puis trois phrases ---------- */
+/* Passe au-dessus de l'entrée épinglée : atelier.js lui donne une marge négative égale au « passage de relais » (voir la frise). */
+.histoire { position: relative; z-index: 2; background: var(--bg); padding: 0 0 8vh; }
+.bande { display: flex; overflow: hidden; border-top: 1px solid rgba(var(--t),.15); border-bottom: 1px solid rgba(var(--t),.15); padding: 16px 0; }
+.bande-int { flex: none; white-space: nowrap; padding-right: .5em; font: 500 13px/1 var(--sans); letter-spacing: .2em; text-transform: uppercase; color: rgba(var(--t),.6); animation: bande 40s linear infinite; }
+.bande:hover .bande-int { animation-play-state: paused; }
+@keyframes bande { to { transform: translateX(-100%); } }
+@media (prefers-reduced-motion: reduce) { .bande-int { animation: none; } .choix label, .choix label::before, .cal-jour, .cal-heure, .puce, .confirmation-coche { animation: none !important; } }
+.histoire-int { max-width: 1240px; margin: 0 auto; padding: 14vh var(--gout) 0; }
+.histoire-ligne { max-width: 20ch; margin: 0 0 16vh; font: 600 clamp(30px, 5.2vw, 80px)/1 var(--serif); letter-spacing: -.04em; color: rgba(var(--t),.42); }
+.histoire-ligne b { color: var(--texte); font-weight: 600; }
+.histoire-ligne:nth-child(2) { margin-left: auto; text-align: right; }
+.histoire-ligne:last-child { margin-bottom: 0; }
+
+/* ---------- L'intérieur ---------- */
+.atelier { background: radial-gradient(55% 35% at 85% 8%, rgba(var(--lueur),.06), transparent 70%), radial-gradient(45% 30% at 10% 60%, rgba(var(--lueur),.04), transparent 70%), var(--bg); color: var(--texte); }
+.atelier-int { max-width: 980px; margin: 0 auto; padding: 0 var(--gout) 120px; }
+.bloc { padding: 12vh 0; border-top: 1px solid rgba(var(--t),.12); }
+.bloc h2 { font-size: clamp(32px, 4.6vw, 72px); line-height: 1.02; margin-bottom: 22px; }
+.bloc .corps { color: rgba(var(--t),.75); }
+/* L'assistant : les quatre questions dans un seul panneau de verre, une à la fois, la feuille à côté */
+.reservation-tete { max-width: 720px; margin: 0 auto; text-align: center; }
+.reservation-tete .corps { margin-left: auto; margin-right: auto; }
+.assistant { margin: 36px auto 0; max-width: 720px; padding: 22px; border-radius: 26px; background: var(--verre); border: 1px solid var(--verre-bord); box-shadow: var(--verre-reflet), 0 30px 80px rgba(0,0,0,.22); }
+.assistant-etapes { display: flex; gap: 6px; margin-bottom: 22px; }
+.assistant-etapes li { flex: 1; display: flex; align-items: center; gap: 9px; min-width: 0; padding: 9px 12px; border-radius: 999px; border: 1px solid transparent; font-size: 13px; color: rgba(var(--t),.55); cursor: pointer; transition: background var(--duree), color var(--duree); }
+.assistant-etapes li span { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.assistant-etapes li b { flex: none; width: 22px; height: 22px; border-radius: 50%; display: grid; place-items: center; font: 600 12px/1 var(--sans); border: 1px solid rgba(var(--t),.35); }
+.assistant-etapes li.actif { color: var(--texte); background: var(--verre-fort); border-color: var(--verre-bord); }
+.assistant-etapes li.actif b, .assistant-etapes li.fait b { background: var(--texte); color: var(--bg); border-color: var(--texte); }
+.assistant-etapes li.fait b { font-size: 0; }
+.assistant-etapes li.fait b::before { content: "✓"; font-size: 12px; }
+.etape h3 { font: 600 clamp(26px, 3vw, 38px)/1.05 var(--serif); letter-spacing: -.03em; margin-bottom: 18px; }
+.etape .corps { margin: 0 0 18px; }
+.etape .note { margin-bottom: 0; }
+.note-donnees { margin: 16px 0 0; font-size: 13px; color: rgba(var(--t),.55); }
+.note-donnees a { color: inherit; }
+.assistant-pied { display: flex; justify-content: space-between; align-items: center; gap: 12px; flex-wrap: wrap; margin-top: 22px; }
+.assistant-suivant { margin-left: auto; }
+.assistant-reserver { margin-left: auto; }
+.creneau-rappel { margin: -8px 0 18px; font: 600 16px/1.3 var(--serif); letter-spacing: -.01em; color: rgba(var(--t),.75); }
+.creneau-rappel::first-letter { text-transform: uppercase; }
+.puces { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; margin-top: 16px; }
+.puces-titre { font-size: 14px; color: rgba(var(--t),.6); margin-right: 4px; }
+.puce { position: relative; padding: 9px 14px; border-radius: 999px; border: 1px solid var(--verre-bord); background: var(--verre); font: 500 14px/1 var(--sans); cursor: pointer; transition: background var(--duree), transform var(--duree) var(--courbe); }
+.puce:hover { background: var(--verre-fort); transform: translateY(-1px); }
+.puce input { position: absolute; opacity: 0; width: 1px; height: 1px; }
+.puce:has(input:checked) { background: var(--texte); color: var(--bg); border-color: var(--texte); animation: coche 420ms var(--courbe); }
+.puce:has(input:focus-visible) { outline: 2px solid var(--texte); outline-offset: 2px; }
+.erreur { margin: 14px 0 0; font-size: 14px; color: var(--texte); padding: 12px 16px; border-radius: var(--rond-petit); background: var(--verre-fort); border: 1px solid var(--verre-bord-fort); }
+.confirmation { text-align: center; padding: 12px 0 4px; }
+.confirmation-coche { display: grid; place-items: center; width: 64px; height: 64px; margin: 0 auto 18px; border-radius: 50%; background: var(--texte); color: var(--bg); font: 600 28px/1 var(--sans); animation: pop 500ms var(--courbe); }
+.confirmation h3 { margin-bottom: 8px; }
+.confirmation-quand { margin: 0 0 14px; font: 600 clamp(18px, 2vw, 24px)/1.25 var(--serif); letter-spacing: -.02em; }
+.confirmation .corps { margin: 0 auto 22px; max-width: 46ch; }
+.confirmation-actions { display: flex; gap: 10px; flex-wrap: wrap; justify-content: center; }
+.confirmation-actions .bouton { flex: 1 1 220px; }
+.suite { display: grid; gap: 8px; margin: 0 auto 22px; max-width: 460px; text-align: left; }
+.suite li { display: grid; grid-template-columns: 120px 1fr; gap: 12px; padding: 12px 16px; border-radius: var(--rond-petit); background: var(--verre); border: 1px solid var(--verre-bord); font-size: 15px; }
+.suite b { font: 600 14px/1.4 var(--sans); color: rgba(var(--t),.7); }
+@media (max-width: 480px) { .suite li { grid-template-columns: 1fr; gap: 2px; } }
+.lien { margin-top: 16px; background: none; border: 0; padding: 6px; color: rgba(var(--t),.6); font: 500 14px/1 var(--sans); text-decoration: underline; text-underline-offset: 3px; cursor: pointer; }
+.lien:hover { color: var(--texte); }
+.assistant.reserve .assistant-pied { display: none; }
+@media (max-width: 560px) { .assistant { padding: 16px; } .assistant-etapes li span { display: none; } .assistant-etapes li { justify-content: center; padding: 9px 6px; } }
+
+.choix { display: grid; gap: 10px; }
+.choix label { position: relative; display: flex; align-items: center; gap: 18px; padding: 20px 22px; border-radius: var(--rond); background: var(--verre); border: 1px solid var(--verre-bord); box-shadow: var(--verre-reflet); cursor: pointer; transition: border-color var(--duree), background var(--duree), transform var(--duree) var(--courbe); }
+.choix label:hover { border-color: var(--verre-bord-fort); background: var(--verre-fort); transform: translateY(-2px); }
+.choix label span { flex: 1; font-size: 18px; letter-spacing: -.01em; }
+.choix label small { font-size: 13px; color: rgba(var(--t),.6); white-space: nowrap; }
+.choix input { position: absolute; opacity: 0; width: 1px; height: 1px; }
+.choix label::before { content: ""; width: 22px; height: 22px; border-radius: 7px; border: 1px solid rgba(var(--t),.5); flex: none; display: grid; place-items: center; font: 600 12px/1 var(--sans); color: var(--bg); transition: background var(--duree), border-color var(--duree); }
+.choix label:has(input[type=checkbox]:checked)::before { content: "✓"; }
+.choix label:has(input[type=radio])::before { border-radius: 50%; }
+.choix label:active { transform: scale(.985); }
+.choix label:has(input:checked) { border-color: var(--texte); background: var(--texte); color: var(--bg); box-shadow: 0 12px 30px rgba(0,0,0,.3); animation: coche 420ms var(--courbe); }
+.choix label:has(input:checked):hover { background: var(--texte); transform: translateY(-2px); }
+.choix label:has(input:checked) small { color: inherit; opacity: .6; }
+@keyframes coche { 0% { transform: scale(1); } 35% { transform: scale(1.025); } 100% { transform: scale(1); } }
+@keyframes pop { 0% { transform: scale(0); } 70% { transform: scale(1.25); } 100% { transform: scale(1); } }
+.choix label:has(input:checked)::before { background: var(--bg); color: var(--texte); border-color: var(--bg); animation: pop 360ms var(--courbe); }
+.choix label:has(input[type=radio]:checked)::before { box-shadow: inset 0 0 0 4px var(--texte); }
+.choix label:has(input:focus-visible) { outline: 2px solid var(--texte); outline-offset: 2px; }
+.choix label.fixe { cursor: default; opacity: .85; }
+.choix label.fixe:hover { transform: none; background: var(--verre); }
+
+.services li { display: grid; grid-template-columns: auto 1fr; gap: 6px 24px; align-items: start; padding: 26px 0; border-top: 1px solid rgba(var(--t),.12); }
+.services li:first-child { border-top: 0; }
+.services .num { grid-row: 1 / 3; font: 700 clamp(56px, 9vw, 140px)/0.85 var(--serif); letter-spacing: -.06em; color: rgba(var(--t),.28); }
+.services h3 { font: 600 clamp(24px, 2.6vw, 40px)/1.05 var(--serif); letter-spacing: -.03em; }
+.services p { margin: 8px 0 0; max-width: 60ch; color: rgba(var(--t),.75); }
+@media (min-width: 760px) { .services li { grid-template-columns: auto 1fr; gap: 6px 40px; } .services .num { grid-row: auto; min-width: 2.1ch; } }
+
+.frise { display: grid; gap: 18px; }
+.frise li { display: grid; grid-template-columns: 64px 1fr; gap: 16px; align-items: baseline; }
+.frise b { font: 700 clamp(28px, 3vw, 44px)/1 var(--serif); letter-spacing: -.04em; color: var(--texte); }
+@media (min-width: 760px) { .frise { grid-template-columns: repeat(5, 1fr); gap: 24px; border-top: 1px solid rgba(var(--t),.25); padding-top: 22px; } .frise li { grid-template-columns: 1fr; gap: 10px; } }
+
+/* Le calendrier : un mois, n'importe quel jour à venir, puis une heure de 8 h à 22 h */
+.cal-tete { display: flex; align-items: center; justify-content: space-between; margin-bottom: 12px; }
+.cal-tete b { font: 600 17px/1 var(--serif); letter-spacing: -.02em; text-transform: capitalize; }
+.cal-nav { width: 38px; height: 38px; border-radius: 50%; border: 1px solid var(--verre-bord); background: var(--verre); color: var(--texte); font-size: 22px; line-height: 1; cursor: pointer; transition: background var(--duree); }
+.cal-nav:hover:not(:disabled) { background: var(--verre-fort); }
+.cal-nav:disabled { opacity: .3; cursor: default; }
+.cal-grille { display: grid; grid-template-columns: repeat(7, 1fr); gap: 4px; }
+.cal-jour-nom { text-align: center; font-size: 11px; letter-spacing: .1em; color: rgba(var(--t),.5); padding: 6px 0; }
+.cal-jour { padding: 12px 0; border-radius: 12px; border: 1px solid transparent; background: var(--verre); color: var(--texte); font: 500 15px/1 var(--sans); cursor: pointer; transition: background var(--duree), border-color var(--duree), transform var(--duree) var(--courbe); }
+.cal-jour:hover:not(:disabled) { background: var(--verre-fort); border-color: var(--verre-bord); transform: translateY(-1px); }
+.cal-jour:disabled { opacity: .22; cursor: default; background: none; }
+.cal-jour.auj { border-color: var(--verre-bord-fort); }
+.cal-jour.choisi { background: var(--texte); color: var(--bg); border-color: var(--texte); animation: coche 420ms var(--courbe); }
+.cal-heures { margin-top: 18px; }
+.cal-heures-titre { margin: 0 0 10px; font-size: 14px; color: rgba(var(--t),.7); }
+.cal-heures-titre::first-letter { text-transform: uppercase; }
+.cal-heures-grille { display: grid; grid-template-columns: repeat(auto-fill, minmax(62px, 1fr)); gap: 6px; }
+.cal-heure { padding: 11px 0; border-radius: 999px; border: 1px solid var(--verre-bord); background: var(--verre); color: var(--texte); font: 500 14px/1 var(--sans); cursor: pointer; transition: background var(--duree), transform var(--duree) var(--courbe); }
+.cal-heure:hover:not(:disabled) { background: var(--verre-fort); transform: translateY(-1px); }
+.cal-heure:disabled { opacity: .22; cursor: default; background: none; }
+.cal-heure.choisi { background: var(--texte); color: var(--bg); border-color: var(--texte); animation: coche 420ms var(--courbe); }
+
+.equipe { display: grid; gap: 22px; margin-bottom: 36px; }
+.equipe li { display: grid; grid-template-columns: 64px 1fr; gap: 4px 16px; padding: 18px; border-radius: var(--rond); background: var(--verre); border: 1px solid var(--verre-bord); box-shadow: var(--verre-reflet); }
+.equipe .portrait { position: relative; overflow: hidden; grid-row: 1 / 3; width: 64px; height: 64px; border-radius: 50%; display: grid; place-items: center; background: var(--texte); color: var(--bg); font: 600 15px var(--serif); }
+.equipe .portrait img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; border-radius: 50%; display: block; }
+.equipe b { font-weight: 500; }
+.equipe span:not(.portrait) { color: rgba(var(--t),.7); font-size: 15px; }
+/* Le chef : une carte plus grande, en premier, sur toute la largeur */
+.equipe li.chef { grid-template-columns: 88px 1fr; gap: 6px 20px; padding: 22px; border-color: var(--verre-bord-fort); }
+.equipe li.chef .portrait { width: 88px; height: 88px; font-size: 20px; }
+.equipe li.chef b { font-size: 20px; letter-spacing: -.01em; }
+.equipe .role { display: inline-block; margin-left: 8px; padding: 4px 10px; border-radius: 999px; background: var(--texte); color: var(--bg); font: 600 11px/1.2 var(--sans); letter-spacing: .06em; text-transform: uppercase; font-style: normal; vertical-align: 2px; white-space: nowrap; }
+.equipe .role.second { background: transparent; color: rgba(var(--t),.75); border: 1px solid var(--verre-bord-fort); }
+@media (min-width: 760px) { .equipe { grid-template-columns: repeat(2, 1fr); } .equipe li.chef { grid-column: 1 / -1; } }
+.garanties { display: grid; gap: 10px; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); }
+.garanties li { padding: 14px 18px; border-radius: var(--rond-petit); background: var(--verre); border: 1px solid var(--verre-bord); box-shadow: var(--verre-reflet); color: rgba(var(--t),.8); }
+.garanties b { color: var(--texte); font-weight: 500; }
+
+/* Les démonstrations : trois vrais iPhone, écrans allumés (la démo y vit), en ligne sur grand écran, en file qui glisse sur téléphone */
+.exemples .corps { max-width: 62ch; margin-bottom: 30px; }
+.exemples-liste { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(2, 1fr); gap: 40px; max-width: 720px; }
+.exemples-liste li { display: grid; gap: 4px; justify-items: center; text-align: center; }
+.exemples-liste b { font-weight: 500; margin-top: 12px; }
+.exemples-liste li > span { font-size: 14px; color: rgba(var(--t),.6); }
+.exemple-tel { display: block; width: min(300px, 100%); transition: transform 600ms var(--courbe); }
+.exemple-tel:hover { transform: translateY(-8px); }
+.exemple-cadre { position: relative; display: block; width: 100%; aspect-ratio: 600 / 1351; }
+.exemple-cadre > img { display: block; width: 100%; height: 100%; filter: drop-shadow(-14px 24px 30px var(--ombre-tel)); }
+@media (max-width: 759px) { .exemples-liste { display: flex; gap: 18px; overflow-x: auto; scroll-snap-type: x mandatory; margin: 0 calc(-1 * var(--gout)); padding: 4px var(--gout) 12px; scrollbar-width: none; } .exemples-liste::-webkit-scrollbar { display: none; } .exemples-liste li { flex: 0 0 72%; scroll-snap-align: center; } }
+
+/* Les questions */
+.faq { display: grid; gap: 8px; max-width: none; }
+.faq details { border-radius: var(--rond); background: var(--verre); border: 1px solid var(--verre-bord); box-shadow: var(--verre-reflet); padding: 0 22px; transition: background var(--duree); }
+.faq details[open] { background: var(--verre-fort); }
+.faq summary { display: flex; justify-content: space-between; gap: 24px; padding: 18px 0; cursor: pointer; list-style: none; font: 600 clamp(18px, 1.6vw, 24px)/1.2 var(--serif); letter-spacing: -.02em; }
+.faq summary::-webkit-details-marker { display: none; }
+.faq summary::after { content: "+"; font-weight: 400; color: rgba(var(--t),.5); }
+.faq details[open] summary::after { content: "–"; }
+.faq p { margin: 0 0 20px; max-width: 56ch; color: rgba(var(--t),.75); }
+
+.champs { display: grid; gap: 14px; }
+.champs label { display: grid; gap: 6px; }
+.champs span { font-size: 13px; letter-spacing: .04em; color: rgba(var(--t),.6); }
+.champs input { padding: 15px 18px; border-radius: var(--rond-petit); background: var(--verre); border: 1px solid var(--verre-bord); box-shadow: var(--verre-reflet); }
+.champs input::placeholder { color: rgba(var(--t),.35); }
+.champs input:focus { outline: none; border-color: var(--verre-bord-fort); background: var(--verre-fort); }
+
+/* ---------- La feuille de devis (à la fin seulement) ---------- */
+.feuille { background: #fff; color: #141311; padding: 26px 26px 22px; border-radius: 22px; box-shadow: 0 30px 60px rgba(0,0,0,.45), inset 0 0 0 1px rgba(20,19,17,.06); }
+.feuille-tete { display: flex; justify-content: space-between; font: 500 12px/1 var(--sans); letter-spacing: .18em; text-transform: uppercase; color: var(--gris); }
+.feuille-pour { margin: 18px 0 8px; font: 600 24px/1.1 var(--serif); letter-spacing: -.03em; }
+.feuille-lignes { min-height: 96px; border-top: 1px solid var(--ligne); }
+.feuille-lignes li { display: flex; justify-content: space-between; gap: 16px; padding: 10px 0 10px 22px; border-bottom: 1px solid var(--ligne); font-size: 15px; position: relative; }
+.feuille-lignes li::before { content: "✓"; position: absolute; left: 0; top: 10px; font: 600 12px/1.6 var(--sans); color: var(--gris); }
+.feuille-lignes li b { font-weight: 500; white-space: nowrap; }
+.feuille-lignes li small { color: var(--gris); }
+.feuille-total { display: flex; justify-content: space-between; align-items: baseline; margin-top: 12px; }
+.feuille-total b { font: 600 32px/1 var(--serif); letter-spacing: -.04em; }
+.feuille-total .feuille-prix { font-size: 22px; }
+.feuille-note { margin: 12px 0 0; font-size: 13px; color: var(--gris); }
+
+/* ---------- La sortie : papier et encre, le seul écran clair ---------- */
+.final { --bg: var(--bg-inv); --texte: var(--texte-inv); --t: var(--t-inv); --verre: var(--verre-inv); --verre-bord: var(--verre-bord-inv); --verre-reflet: var(--verre-reflet-inv); --verre-fort: var(--verre-fort-inv); --verre-bord-fort: var(--verre-bord-fort-inv);
+  background: var(--bg); color: var(--texte); min-height: 100vh; display: grid; place-items: center; padding: 120px var(--gout); }
+.final-int { width: 100%; max-width: 640px; text-align: center; }
+.final .etiquette { color: var(--gris); }
+.final h2 { font-size: clamp(36px, 5vw, 72px); line-height: 1.02; margin-bottom: 32px; }
+.final-actions { display: grid; gap: 10px; margin-top: 24px; }
+.final .bouton.principal { box-shadow: 0 12px 30px rgba(var(--t),.25); }
+.final-note { margin: 18px 0 0; font-size: 14px; color: var(--gris); }
+@media (min-width: 560px) { .final-actions { grid-template-columns: 1fr 1fr; } }
+
+/* ---------- Le pied : sobre ---------- */
+.pied { background: var(--bg); color: var(--texte); border-top: 1px solid rgba(var(--t),.12); }
+.pied-int { max-width: 1240px; margin: 0 auto; padding: 48px var(--gout) 40px; display: grid; gap: 14px; }
+.pied .marque { display: inline-flex; align-items: center; }
+.pied-ligne { margin: 0; font-size: 15px; color: rgba(var(--t),.75); }
+.pied-ligne a { color: var(--texte); }
+.pied-villes { margin: 0; font-size: 14px; color: rgba(var(--t),.6); }
+.pied-villes a { color: var(--texte); }
+.mentions { margin: 0; font-size: 12px; color: rgba(var(--t),.45); }
+.mentions a { color: rgba(var(--t),.7); }
+/* Les pages locales */
+.locale { max-width: 820px; margin: 0 auto; padding: 130px var(--gout) 80px; }
+.locale h1 { font-size: clamp(34px, 5.4vw, 72px); line-height: .98; margin-bottom: 22px; }
+.locale h1 em { font-style: normal; color: rgba(var(--t),.55); }
+.locale .corps { margin-bottom: 18px; max-width: 62ch; }
+.locale h2 { font-size: clamp(24px, 3vw, 40px); line-height: 1.05; margin: 48px 0 16px; }
+.locale-points { display: grid; gap: 10px; margin: 0 0 32px; }
+.locale-points li { padding: 14px 18px; border-radius: var(--rond-petit); background: var(--verre); border: 1px solid var(--verre-bord); box-shadow: var(--verre-reflet); }
+.locale-actions { display: flex; gap: 10px; flex-wrap: wrap; margin: 28px 0 8px; }
+.locale-villes { margin: 40px 0 0; font-size: 14px; color: rgba(var(--t),.6); }
+.locale-villes a { color: var(--texte); }
+.mentions a { color: inherit; }
+
+/* ---------- Mise en scène (html.anim) ---------- */
+html.anim .entete { opacity: 0; transition: opacity 400ms; }
+html.anim.dedans .entete { opacity: 1; }
+html.anim .bloc { opacity: 0; }
+html:not(.anim) .hero-colle { min-height: 0; padding-bottom: 8vh; }
+html:not(.anim) .scene { min-height: calc(var(--ecran-h) * 2.1); }
+html.anim .hero-indice { animation: indice 1.8s ease-in-out infinite; }
+@keyframes indice { 50% { transform: translateY(6px); } }
+
+
+/* Clavier */
+a:focus-visible, button:focus-visible, summary:focus-visible { outline: 2px solid var(--texte); outline-offset: 3px; }
+/* Téléphone tenu droit : le portable est plus petit et remonté pour être entier sous le texte ; le zoom remplit la largeur et
+   colle l'écran en haut (--seuil-haut) ; le seuil a exactement la géométrie de l'écran zoomé (100vw × 62,5vw), donc le fondu
+   de l'un à l'autre ne bouge rien. L'histoire vient ensuite recouvrir le bas, vide, de la fenêtre. */
+@media (orientation: portrait) {
+  :root { --ecran-l: min(720px, 70vw, 64vh); --seuil-haut: 84px; }
+  .hero-colle { padding-top: 96px; }
+  .macbook { top: calc(32% + var(--ecran-h) * .25 + var(--bezel)); }
+  .seuil .demo { width: 17em; }
+  .seuil { inset: auto 0 auto 0; top: var(--seuil-haut); height: calc(100vw * .625); }
+  .seuil .compo-nom { top: 15%; }
 }
-
-/* Menu mobile : panneau plein écran sous l'en-tête, ouvert par page.js (CAP §3.2). */
-.menu { position: fixed; inset: 0; z-index: 40; display: flex; flex-direction: column; overflow-y: auto; background: var(--fond);
-  padding: calc(var(--entete-h) + 16px + env(safe-area-inset-top)) 24px calc(24px + env(safe-area-inset-bottom));
-  visibility: hidden; opacity: 0; transform: translateY(-8px);
-  transition: opacity 260ms var(--courbe), transform 260ms var(--courbe), visibility 0s linear 260ms; }
-.menu.ouvert { visibility: visible; opacity: 1; transform: none; transition: opacity 260ms var(--courbe), transform 260ms var(--courbe), visibility 0s; }
-.menu-liens a { display: flex; align-items: center; min-height: 64px; font: 300 32px/1.1 var(--serif); letter-spacing: -.01em; text-decoration: none; border-bottom: 1px solid var(--ligne); }
-.menu-pied { margin-top: auto; padding-top: 24px; }
-.menu-cta { display: block; text-align: center; background: var(--rouge); color: #fff; padding: 18px 16px; text-decoration: none; font-weight: 500; font-size: 16px; }
-.menu-tel { display: inline-flex; align-items: center; min-height: 44px; margin-top: 10px; font-size: 15px; text-decoration: none; }
-.menu-tel > span { border-bottom: 1px solid currentColor; padding-bottom: 2px; }
-
-@media (prefers-reduced-motion: reduce) { .entete, .menu, .barre { transition: none; } }
-
-/* Typographie */
-h2.etiquette { font-weight: 400; }
-.etiquette { font-size: 11px; letter-spacing: .18em; text-transform: uppercase; color: var(--rouge); margin-bottom: 18px; }
-.titre { font-family: var(--serif); font-weight: 300; font-size: clamp(48px, 14vw, 104px); line-height: .94; letter-spacing: -.025em; font-variation-settings: 'opsz' 144; text-wrap: balance; }
-.phrase { font-family: var(--serif); font-weight: 300; font-size: clamp(26px, 7.4vw, 44px); line-height: 1.06; letter-spacing: -.012em; font-variation-settings: 'opsz' 96; text-wrap: balance; }
-.phrase + .titre, .titre + .phrase { margin-top: 14px; }
-.mot { display: inline-block; }
-
-/* Première page (14/09, demandée par Baptiste) : une phrase en gros, le prix, deux boutons et la démo visible ; l'histoire commence en descendant.
-   Téléphone : texte centré puis les écrans de la démo. Ordinateur : texte à gauche, démo à droite, le tout sur un écran. On peut toujours y remonter (logo). */
-.accueil { position: relative; z-index: 1; display: grid; justify-items: center; text-align: center; gap: 30px;
-  max-width: 1480px; margin: 0 auto; padding: calc(var(--entete-h) + 26px + env(safe-area-inset-top)) 22px 24px; }
-.accueil-texte { display: flex; flex-direction: column; align-items: center; }
-.accueil-etiquette { font-size: 11px; letter-spacing: .18em; text-transform: uppercase; color: var(--rouge); }
-.accueil-titre { margin-top: 14px; font: 300 clamp(36px, 10vw, 60px)/1.02 var(--serif); letter-spacing: -.028em; font-variation-settings: 'opsz' 144; text-wrap: balance; }
-.accueil-prix { display: block; margin-top: .16em; color: var(--rouge); font-weight: 400; }
-.accueil-sous { margin-top: 16px; max-width: 34ch; font-size: 16px; line-height: 1.4; color: var(--gris-texte); text-wrap: balance; }
-.accueil-actions { margin-top: 22px; width: 100%; max-width: 420px; display: grid; gap: 10px; }
-.accueil-actions .bouton-rdv { min-height: 56px; }
-.accueil-demo { display: flex; align-items: center; justify-content: center; min-height: 56px; border: 1px solid var(--encre); color: var(--encre); text-decoration: none; font: 500 15px/1.2 var(--sans);
-  transition: background-color var(--duree) var(--courbe), color var(--duree) var(--courbe); }
-.accueil-demo:hover { background: var(--encre); color: var(--fond); }
-.accueil-lancement { margin-top: 12px; font-size: 14px; color: var(--rouge); }
-.accueil-lancement b { font-weight: 600; }
-.accueil-etapes { margin-top: 16px; display: flex; flex-wrap: wrap; justify-content: center; gap: 6px 12px; font-size: 13px; color: var(--encre); }
-.accueil-etapes li { display: inline-flex; align-items: center; gap: 8px; }
-.accueil-etapes b { display: inline-grid; place-items: center; width: 22px; height: 22px; border-radius: 50%; background: var(--rouge); color: #fff; font: 600 12px/1 var(--sans); }
-/* Les écrans de la démo : un seul lien (clic = modale), captures fixes, aucune animation lourde. */
-.accueil-ecrans { position: relative; display: block; width: 100%; max-width: 520px; aspect-ratio: 16 / 11.5; color: var(--encre); text-decoration: none; -webkit-tap-highlight-color: transparent; }
-.accueil-ordi { position: absolute; right: 0; top: 0; width: 86%; aspect-ratio: 16 / 10; background: #111; border-radius: 10px; padding: 1.5%;
-  box-shadow: 0 22px 56px rgba(20, 19, 17, .22); transition: transform var(--duree) var(--courbe); }
-.accueil-tel { position: absolute; left: 0; bottom: 6%; width: 28%; aspect-ratio: 9 / 19.2; background: #111; border-radius: 16px; padding: 2.2%;
-  box-shadow: 0 22px 46px rgba(20, 19, 17, .3); transition: transform var(--duree) var(--courbe); }
-/* Chaque écran joue une vraie vidéo de la démo (fond en flammes + défilement), mise en pause quand la première page quitte l'écran (recit.js). */
-.accueil-defile { position: relative; display: block; width: 100%; height: 100%; overflow: hidden; container-type: size; background: #0d0c0b; }
-.accueil-ordi .accueil-defile { border-radius: 6px; }
-.accueil-tel .accueil-defile { border-radius: 12px; }
-.accueil-video { display: block; width: 100%; height: 100%; object-fit: cover; object-position: top; }
-.accueil-jouer { position: absolute; left: 57%; top: 66%; transform: translate(-50%, -50%); display: inline-flex; align-items: center; min-height: 44px; padding: 0 18px;
-  background: var(--fond); color: var(--encre); font: 500 14px/1 var(--sans); box-shadow: 0 8px 24px rgba(20, 19, 17, .25); white-space: nowrap;
-  transition: background-color var(--duree) var(--courbe), color var(--duree) var(--courbe); }
-.accueil-legende { position: absolute; right: 0; bottom: 0; font-size: 11px; color: var(--gris-texte); }
-.accueil-ecrans:hover .accueil-ordi { transform: translateY(-4px); }
-.accueil-ecrans:hover .accueil-tel { transform: translateY(-8px); }
-.accueil-ecrans:hover .accueil-jouer { background: var(--rouge); color: #fff; }
-.accueil-suite { display: inline-flex; align-items: center; gap: 6px; min-height: 44px; font-size: 14px; color: var(--encre); text-decoration: none; }
-.accueil-suite span { border-bottom: 1px solid currentColor; padding-bottom: 2px; }
-/* Tant que la première page est à l'écran : la promesse de l'en-tête (redondante) et son bouton s'effacent sans décaler l'en-tête. */
-html:not(.accueil-quitte) .promesse { visibility: hidden; }
-html:not(.accueil-quitte) .entete-lien { opacity: 0; visibility: hidden; pointer-events: none; } /* jamais deux « Prendre rendez-vous » à l'écran */
-@media (min-width: 1024px) {
-  .accueil { min-height: 100svh; grid-template-columns: minmax(0, 1fr) minmax(0, .92fr); grid-template-rows: 1fr auto; column-gap: 5vw; row-gap: 2vh;
-    align-items: center; justify-items: stretch; text-align: left; padding: calc(var(--entete-h) + 3vh) 6vw 2vh; }
-  .accueil-texte { align-items: flex-start; }
-  .accueil-etapes { justify-content: flex-start; margin-top: 3.2vh; font-size: clamp(14px, .95vw, 17px); }
-  .accueil-titre { margin-top: 2.4vh; font-size: clamp(46px, 4.9vw, 92px); }
-  .accueil-sous { margin-top: 2.8vh; max-width: 40ch; font-size: clamp(17px, 1.2vw, 22px); }
-  .accueil-actions { margin-top: 4vh; max-width: none; width: auto; display: flex; gap: 14px; }
-  .accueil-actions a { min-height: 60px; padding: 0 32px; font-size: 17px; }
-  .accueil-ecrans { max-width: none; justify-self: end; }
-  .accueil-tel { border-radius: 24px; }
-  .accueil-tel .accueil-defile { border-radius: 18px; }
-  .accueil-suite { grid-column: 1 / -1; justify-self: center; }
-}
-@media (prefers-reduced-motion: reduce) { .accueil-ordi, .accueil-tel { transition: none; } } /* la démo défile quand même, lentement : c'est le produit qu'on montre (demande du 14/09) */
-
-/* Récit : mise en page de base */
-.recit { position: relative; }
-.scene { position: relative; padding: calc(88px + env(safe-area-inset-top)) 24px 48px; max-width: 560px; margin: 0 auto; }
-.chapitre { padding: 40px 0; }
-.lumiere, .cartes { display: none; }
-.tel { position: relative; width: min(56vw, 215px); aspect-ratio: 9 / 19.2; margin: 32px auto; }
-.ecran > .ecran-braise { opacity: 1; } /* version statique : le téléphone montre LE BRAISÉ, juste avant la démo */
-.rdv { margin-top: 36px; }
-
-/* Récit : mise en scène (html.anim) */
-/* Frise de 0 à 218 unités (U, recit.js) : 100vh d'écran + 1133,6vh de défilement = 5,2vh par unité, comme toutes les frises précédentes.
-   Changer la longueur de la frise (recit.js) = changer cette hauteur dans la même proportion (on garde la même distance par unité). */
-.anim .recit { height: 1233.6vh; }
-.anim .scene { position: sticky; top: 0; height: 100svh; max-width: none; margin: 0; padding: 0; overflow: hidden; perspective: 1200px; }
-.anim .chapitre { position: absolute; left: 24px; right: 24px; top: calc(108px + env(safe-area-inset-top)); z-index: 5; padding: 0; max-width: 560px; }
-.anim .mot, .anim .ent { opacity: 0; transform: translateY(.4em); }
-/* Les chapitres de la suite (comment ça se passe, offre, qui vous parle, questions) prennent la hauteur de l'écran : ils commencent plus haut
-   (juste sous l'en-tête) et restent au-dessus de la barre du bas. */
-.anim .chapitre-plein { top: calc(96px + env(safe-area-inset-top)); }
-.anim .lumiere { display: block; position: absolute; inset: -20%; z-index: 1; opacity: 0; pointer-events: none;
-  background: radial-gradient(60% 50% at 72% 28%, rgba(255, 190, 110, .6), rgba(255, 190, 110, 0) 70%); }
-.anim .cartes { display: block; position: absolute; inset: 0; z-index: 3; pointer-events: none; }
-.carte { position: absolute; width: 31vw; max-width: 130px; aspect-ratio: 3 / 4; border-radius: 10px; overflow: hidden; background: #fff; box-shadow: 0 24px 48px -20px rgba(20, 19, 17, .4); }
-.carte img { width: 100%; height: 100%; object-fit: cover; }
-.carte-1 { left: 5%; top: 42%; }
-.carte-2 { right: 4%; top: 36%; }
-.carte-3 { left: 9%; top: 68%; }
-/* La carte « ? » vit dans un calque devant le téléphone (.cartes-avant) ; sur mobile, sous ses résultats : entièrement visible à l'arrivée de l'introduction (unité 42). */
-.anim .cartes-avant { z-index: 5; }
-.carte-vide { right: 4%; top: 71%; display: grid; place-items: center; align-content: center; gap: 6px; font-family: var(--serif); font-size: 64px; color: var(--rouge); font-weight: 300; }
-.carte-vide span { line-height: 1; }
-.carte-vide small { font: 500 11px/1.2 var(--sans); letter-spacing: .04em; color: var(--encre); text-align: center; padding: 0 6px; }
-/* Légende « Exemple » sur l'écran du téléphone quand il montre LE BRAISÉ (elle suit l'opacité de l'écran). */
-.ecran-braise { position: relative; }
-.ecran-exemple { position: absolute; left: 50%; bottom: 7%; transform: translateX(-50%); padding: 4px 10px; background: var(--fond); color: var(--encre);
-  font: 600 10px/1 var(--sans); letter-spacing: .14em; text-transform: uppercase; box-shadow: 0 4px 14px rgba(20, 19, 17, .3); white-space: nowrap; }
-/* Barre de progression en haut de l'écran, mise en scène seulement. */
-.progression { display: none; }
-.anim .progression { display: block; position: fixed; left: 0; right: 0; top: 0; z-index: 60; height: 3px; pointer-events: none; }
-.anim .progression span { display: block; height: 100%; background: var(--rouge); transform-origin: 0 50%; transform: scaleX(var(--progression, 0)); }
-/* Hauteur du téléphone — tableau unique (CAP §4.5), recopié à l'identique dans mesures() de scene3d.js (Hp).
-   Toute modification doit être faite des DEUX côtés, sinon le téléphone WebGL et le téléphone HTML ne coïncident
-   plus au fondu croisé (78–82 %) : vérifier ensuite window.__scene3d.ecartTel().
-   La position verticale (top: 41 %) ne change jamais : seules les fractions y de recit.js jouent. */
-.anim .tel { position: absolute; left: 50%; top: 41%; margin: 0; width: auto; height: min(52svh, 470px); z-index: 4; transform-style: preserve-3d; will-change: transform; }
-/* Écran bas (375×667) : téléphone plus court, titre plus serré et cartes descendues au niveau du téléphone,
-   pour que « Il ne vous voit pas. » reste entièrement lisible (CAP §4.5, constat I1). */
-@media (max-width: 759.98px) and (max-height: 699.98px) {
-  .anim .tel { height: min(48svh, 400px); }
-  .titre { font-size: clamp(40px, 12vw, 104px); }
-  .carte-1 { top: 48%; }
-  .carte-2 { top: 46%; }
-}
-/* Mobile haut (390×844, 430×932) : le téléphone prend la place qu'il a (constat M8) ; recit.js passe l'échelle du chapitre 4 à 1 sur le même palier. */
-@media (max-width: 759.98px) and (min-height: 800px) { .anim .tel { height: min(56svh, 520px); } }
-.anim .ecran > .ecran-braise { opacity: 0; }
-/* Tant que les actions de la démo ne sont pas .actif, elles sont aussi invisibles pour le clavier : aucun lien tabulable dans le vide (constat M2). */
-.anim .rdv { position: absolute; left: 24px; right: 24px; bottom: calc(20px + env(safe-area-inset-bottom)); z-index: 6; margin: 0; opacity: 0; visibility: hidden; pointer-events: none; max-width: 560px; }
-.anim .rdv.actif { visibility: visible; pointer-events: auto; }
-.anim .rdv.visible { visibility: visible; } /* visible pendant ses fondus (91 → 115), cliquable seulement avec .actif (92 → 112) */
-
-/* Mise en scène 3D (scene3d.js) : n'existe que par-dessus html.anim. Aucune transition ici : les opacités sont pilotées image par image par le défilement. */
-.anim .scene3d { position: absolute; inset: 0; width: 100%; height: 100%; z-index: 4; pointer-events: none; opacity: var(--tel-3d, 1); } /* width/height : un canvas garderait sinon la taille de son tampon */
-.anim .scene3d.masque { visibility: hidden; }
-.trois .tel-corps { opacity: var(--tel-css, 0); }
-.trois .tel { opacity: 1 !important; filter: none !important; }
-
-/* Le téléphone */
-.tel-corps { position: absolute; inset: 0; background: #0b0b0b; border-radius: 34px;
-  box-shadow: inset 0 0 0 1.5px #3a3a3a, inset 0 0 0 4px #111, 0 40px 70px -30px rgba(20, 19, 17, .55); }
-.tel-encoche { position: absolute; left: 50%; top: 12px; width: 26%; height: 14px; transform: translateX(-50%); background: #000; border-radius: 10px; z-index: 3; }
-.ecran { position: absolute; inset: 6px; border-radius: 29px; overflow: hidden; background: #000; }
-.ecran > div { position: absolute; inset: 0; opacity: 0; }
-.ecran-noir { background: #050505; opacity: 1; }
-.ecran-recherche { background: #f5f5f3; padding: 40px 10px 10px; color: #222; }
-/* Tailles relatives à l'écran (cqw, base : écran de 208 px de large) après une valeur en px de repli : lisibles sur grand écran (CAP §15, M1). */
-.ecran-recherche { padding: 19.2cqw 4.8cqw 4.8cqw; }
-.recherche-barre { background: #fff; border: 1px solid #e2e2df; border-radius: 20px; padding: 8px 12px; padding: 3.85cqw 5.8cqw; font-size: 11px; font-size: 5.3cqw; color: #333; }
-.recherche-barre::before { content: '⌕  '; color: #888; }
-/* La frappe (CAP §4.4) : le texte garde son espace final pendant qu'il se tape ; le curseur n'existe qu'en mise en scène,
-   clignote tant que la frappe est en cours (.frappe, posé par recit.js) et s'éteint une fois « restaurant ce soir » écrit en entier. */
-.recherche-texte { white-space: pre; }
-.recherche-curseur { display: none; }
-.anim .recherche-curseur { display: inline-block; width: 1px; height: 1.1em; margin-left: 1px; vertical-align: -.18em; background: #333; opacity: 0; }
-.anim .frappe .recherche-curseur { animation: clignote 1s steps(1, end) infinite; }
-@keyframes clignote { 0%, 49% { opacity: 1; } 50%, 100% { opacity: 0; } }
-.recherche-liste li { display: flex; gap: 8px; gap: 3.85cqw; align-items: center; padding: 9px 2px; padding: 4.3cqw 1cqw; border-bottom: 1px solid #e9e9e6; }
-.recherche-vignette { width: 40px; height: 40px; width: 19.2cqw; height: 19.2cqw; border-radius: 8px; flex: none; background: #e6e3dc center / cover no-repeat; }
-.vignette-bistrot { background-image: url('assets/img/carte-bistrot.webp'); }
-.vignette-moderne { background-image: url('assets/img/carte-moderne.webp'); }
-.vignette-bar { background-image: url('assets/img/carte-bar.webp'); }
-.recherche-liste b { display: block; font-size: 11px; font-size: 5.3cqw; font-weight: 500; }
-.recherche-liste small { display: block; font-size: 8.5px; font-size: 4.1cqw; color: #777; margin-top: 2px; margin-top: 1cqw; }
-.ecran-braise { background: #0d0c0b; }
-.ecran-braise img { width: 100%; height: 100%; object-fit: cover; object-position: top center; }
-/* Les deux écrans de la suite, dessinés en HTML : tailles relatives à l'écran (cqw), valeur en px d'abord pour les navigateurs sans container queries.
-   Le téléphone est aria-hidden : ces textes sont décoratifs (la même information est dans le texte du chapitre). */
-.ecran { container-type: size; }
-/* Comment ça se passe : la frise des trois étapes. */
-.ecran-etapes { background: var(--fond); color: var(--encre); padding: 58px 18px 18px; padding: 28cqw 9cqw 9cqw; }
-.et-haut { text-align: center; font: 500 9px/1 var(--sans); font-size: 4cqw; letter-spacing: .16em; text-transform: uppercase; color: var(--gris); }
-.et-frise { margin-top: 44px; margin-top: 20cqw; padding-left: 30px; padding-left: 14cqw; }
-.et-frise li { position: relative; padding-bottom: 36px; padding-bottom: 17cqw; }
-.et-frise li:last-child { padding-bottom: 0; }
-.et-frise li::before { content: ''; position: absolute; left: -24px; left: -11.4cqw; top: 3px; top: 1.4cqw; width: 12px; width: 5.4cqw; height: 12px; height: 5.4cqw;
-  border-radius: 50%; border: 2px solid var(--rouge); border-width: .9cqw; background: var(--fond); box-sizing: border-box; }
-.et-frise li::after { content: ''; position: absolute; left: -19px; left: -9.15cqw; top: 17px; top: 7.8cqw; bottom: 3px; width: 2px; width: .9cqw; background: var(--ligne); }
-.et-frise li:last-child::after { display: none; }
-.et-frise .et-fin::before { background: var(--rouge); }
-.et-frise b { display: block; font: 300 18px/1.1 var(--serif); font-size: 8.4cqw; letter-spacing: -.01em; }
-.et-frise small { display: block; margin-top: 4px; margin-top: 1.8cqw; font: 400 10px/1.3 var(--sans); font-size: 4.6cqw; color: var(--gris); }
-.ligne-prix { margin-top: 12px; font-size: 13px; color: var(--gris-texte); }
-/* Les deux actions de la démo, côte à côte, même hauteur (56 px) : « Explorer le site → » (secondaire, contour encre)
-   et « Prendre rendez-vous » (principal, rouge plein). Carrés ; la ligne téléphone garde une cible de 44 px, soulignée sur son <span>. */
-.rdv-actions { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px; }
-.bouton-rdv { display: flex; align-items: center; justify-content: center; min-height: 56px; border: 0; border-radius: 0; background: var(--rouge); color: #fff; padding: 6px 4px; text-align: center; text-decoration: none;
-  font: 500 15px/1.2 var(--sans); -webkit-tap-highlight-color: transparent; transition: background-color var(--duree) var(--courbe); }
-.bouton-rdv:hover, .barre a:hover, .menu-cta:hover { background: #a82816; } /* rouge assombri : le principal survolé ne ressemble plus au secondaire .explorer survolé (encre plein) */
-.rdv-tel { display: inline-flex; align-items: center; min-height: 44px; margin-top: 2px; font-size: 14px; color: var(--encre); text-decoration: none; }
-.rdv-tel > span { border-bottom: 1px solid currentColor; padding-bottom: 1px; }
-.rdv .ligne-prix { margin-top: 2px; }
-
-/* Premier écran : le raccourci pour les pressés (l'introduction automatique remplace l'invitation à défiler) */
-/* Cible de 44 px sans déplacer la mise en page (margin négative) ; le soulignement reste sur le <span> interne (CAP §15, I5). */
-.raccourci { display: inline-flex; align-items: center; min-height: 44px; margin: 8px 0 -12px; font: 500 13px/1 var(--sans); letter-spacing: .03em; color: var(--encre); text-decoration: none; }
-.raccourci > span { border-bottom: 1px solid var(--encre); padding-bottom: 4px; }
-
-/* Chapitre 5 — LE BRAISÉ : le même site sur téléphone et sur ordinateur.
-   Base = version statique (texte, puis le portable CSS et un petit téléphone, les deux images) ; .anim = composition dans la scène,
-   placée par recit.js (mêmes tweens pour le portable 3D et ce portable CSS). Angles droits partout sauf les écrans. */
-.chapitre[data-chapitre="5"] .etiquette { margin-bottom: 16px; }
-.explorer { display: flex; align-items: center; justify-content: center; min-height: 56px; padding: 6px 4px; border: 1px solid var(--encre); border-radius: 0; text-align: center;
-  color: var(--encre); background: transparent; text-decoration: none; font: 500 15px/1.2 var(--sans);
-  transition: background-color var(--duree) var(--courbe), color var(--duree) var(--courbe); }
-.explorer:hover { background: var(--encre); color: #fff; }
-.demo-duo { position: relative; margin: 0 0 32px; padding-bottom: 8%; }
-.portable { position: relative; width: 84%; margin-left: auto; }
-.portable-ecran { position: relative; display: flex; align-items: center; aspect-ratio: 16 / 10.6; padding: 0 2.2%; background: #1c1b19; border-radius: 10px 10px 3px 3px; }
-.portable-encoche { position: absolute; left: 50%; top: 0; z-index: 1; width: 12%; height: 3.2%; transform: translateX(-50%); background: #1c1b19; border-radius: 0 0 4px 4px; }
-.portable-vitre { position: relative; width: 100%; aspect-ratio: 16 / 10; overflow: hidden; background: #0d0c0b; border-radius: 2px; }
-.portable-vitre img { width: 100%; height: 100%; object-fit: cover; object-position: top center; }
-.portable-base { position: relative; width: 112%; margin-left: -6%; padding-top: 2.4%; background: linear-gradient(#d9d6cf, #b8b4ac 45%, #8f8b83);
-  border-radius: 0 0 10px 10px; box-shadow: 0 26px 44px -26px rgba(20, 19, 17, .45); }
-.portable-cran { position: absolute; left: 50%; top: 0; width: 11%; height: 45%; transform: translateX(-50%); background: #a9a59d; border-radius: 0 0 6px 6px; }
-.demo-tel { position: absolute; left: 0; bottom: 0; width: 24%; aspect-ratio: 9 / 19.2; padding: 4px; background: #0b0b0b; border-radius: 20px;
-  box-shadow: inset 0 0 0 1.5px #3a3a3a, 0 30px 50px -26px rgba(20, 19, 17, .55); }
-.demo-tel-ecran { width: 100%; height: 100%; overflow: hidden; border-radius: 16px; background: #0d0c0b; }
-.demo-tel-ecran img { width: 100%; height: 100%; object-fit: cover; object-position: top center; }
-/* Le bouton de l'écran : transparent, la mention n'apparaît qu'au survol souris ou au focus clavier (l'action, elle, ne dépend jamais du survol). */
-.portable-clic { position: absolute; left: 16%; top: 0; width: 84%; aspect-ratio: 16 / 10.6; margin: 0; padding: 0; border: 0; border-radius: 0; background: transparent; cursor: pointer; -webkit-tap-highlight-color: transparent; }
-.portable-clic > span { position: absolute; right: 10px; bottom: 10px; display: inline-flex; align-items: center; min-height: 36px; padding: 0 12px; white-space: nowrap;
-  background: rgba(246, 244, 239, .94); border: 1px solid var(--encre); color: var(--encre); font: 500 13px/1 var(--sans); letter-spacing: .01em;
-  opacity: 0; transition: opacity var(--duree) var(--courbe); pointer-events: none; }
-.portable-clic:hover > span, .portable-clic:focus-visible > span { opacity: 1; }
-
-/* Mise en scène : les enfants de .demo-duo se placent dans .scene ; images chargées seulement quand html.demo-prete est posé (frise ≥ 47, entrée du chapitre 3). */
-.anim .demo-duo { display: contents; }
-.anim .demo-tel { display: none; }
-.anim .portable { position: absolute; left: 50%; top: 41%; z-index: 3; width: var(--portable-l, 480px); margin: 0; opacity: 0; will-change: transform; }
-.anim .ecran-braise img, .anim .portable img { display: none; }
-.anim.demo-prete .ecran-braise img, .anim.demo-prete .portable img { display: block; }
-.portable-3d .portable { visibility: hidden; } /* le portable 3D est chargé : le portable CSS s'efface (même principe que --tel-css / --tel-3d) */
-.anim .portable-clic { left: 0; top: 0; width: 0; height: 0; aspect-ratio: auto; z-index: 6; visibility: hidden; pointer-events: none; }
-.anim .portable-clic.actif { visibility: visible; pointer-events: auto; }
-.demo-clic .tel { cursor: pointer; }
-/* Tenue (96 → 112) : le téléphone flotte à peine, seulement 3D active et pointeur fin (le portable 3D flotte dans scene3d.js). */
-@media (hover: hover) and (pointer: fine) and (prefers-reduced-motion: no-preference) {
-  .trois.demo-tenue .tel-corps { animation: flotte 6s ease-in-out infinite; }
-}
-@keyframes flotte { 0%, 100% { transform: none; } 25% { transform: translate3d(0, -4px, 0) rotate(.6deg); } 75% { transform: translate3d(0, 4px, 0) rotate(-.6deg); } }
-
-/* La suite du récit : comment ça se passe, l'offre, qui vous parle + les questions, le final (décision du 13/09 : tout dans le récit).
-   Base = version statique (blocs à la suite dans la colonne de 560 px) ; .anim = chapitres de la scène collante, même colonne que le reste. */
-.chapitre[id] { scroll-margin-top: calc(var(--entete-h) + 16px); } /* version statique : les ancres s'arrêtent sous l'en-tête (en mise en scène, page.js passe par la frise) */
-.etapes p, .offre-liste li, .qui-texte, details p { font-size: 15px; line-height: 1.4; }
-/* Comment ça se passe : trois étapes numérotées, le titre de chaque étape en serif. */
-.etapes { border-top: 1px solid var(--ligne); }
-.etapes li { display: grid; grid-template-columns: 30px minmax(0, 1fr); gap: 8px; padding: 14px 0; border-bottom: 1px solid var(--ligne); }
-.etapes .num { font: 500 14px/1.9 var(--sans); color: var(--rouge); }
-.etapes p { color: #3a3833; }
-.etapes b { display: block; margin-bottom: 4px; font: 300 clamp(21px, 5.6vw, 28px)/1.12 var(--serif); letter-spacing: -.01em; color: var(--encre); font-variation-settings: 'opsz' 96; }
-/* L'offre : le prix en grand, la condition en gras, la liste à tirets rouges, le bouton rouge. */
-.offre-prix { margin: 10px 0 6px; font: 300 clamp(72px, 21vw, 120px)/.9 var(--serif); letter-spacing: -.045em; font-variation-settings: 'opsz' 144; }
-.offre-condition { font-size: 16px; font-weight: 500; line-height: 1.35; }
-.offre-liste { margin-top: 10px; }
-.offre-liste li { position: relative; padding: 4px 0 4px 22px; line-height: 1.3; }
-.offre-liste li::before { content: ''; position: absolute; left: 0; top: calc(4px + .6em); width: 12px; height: 2px; background: var(--rouge); } /* 2 px : à 1,5 px les tirets s'arrondissaient à 1 ou 2 px selon la ligne */
-.offre-lancement { margin-top: 6px; font-size: 14px; line-height: 1.35; color: var(--rouge); }
-.offre-lancement b { font-weight: 600; }
-.offre-ensuite { margin-top: 10px; font-size: 13px; line-height: 1.4; color: var(--gris-texte); }
-.offre-actions { margin-top: 16px; }
-.offre-actions .bouton-rdv { width: 100%; }
-/* Qui vous parle + les questions : UN seul écran (décision du 13/09). Base = les deux blocs à la suite ; la mise en scène les compose
-   en bande + questions (< 1024) ou en deux colonnes (≥ 1024). Portrait : initiales en attendant la vraie photo. */
-.qui { display: grid; grid-template-columns: 52px minmax(0, 1fr); gap: 14px; align-items: start; }
-.qui .etiquette { margin-bottom: 10px; }
-.portrait { display: grid; place-items: center; width: 52px; height: 52px; border-radius: 50%; overflow: hidden; background: #e6e1d6; color: var(--gris); font: 300 19px/1 var(--serif); letter-spacing: .02em; }
-.portrait img { width: 100%; height: 100%; object-fit: cover; }
-.qui-texte { margin-top: 12px; color: #3a3833; }
-.qui-court { display: none; } /* version courte de .qui-texte : seulement dans la mise en scène sous 1024 (plus bas) */
-.qui-accent { margin-top: 10px; font-size: 15px; font-weight: 500; line-height: 1.35; color: var(--rouge); }
-.faq { margin-top: 40px; }
-/* Les questions : accordéons natifs, une seule réponse ouverte (recit.js), réponses de deux lignes au plus. */
-.questions { border-top: 1px solid var(--ligne); }
-details { border-bottom: 1px solid var(--ligne); }
-summary { list-style: none; cursor: pointer; display: flex; justify-content: space-between; align-items: center; gap: 16px; min-height: 50px; padding: 10px 0;
-  font: 300 clamp(19px, 5vw, 24px)/1.15 var(--serif); letter-spacing: -.01em; -webkit-tap-highlight-color: transparent; }
-summary::-webkit-details-marker { display: none; }
-summary::after { content: '+'; flex: none; font: 400 22px/1 var(--sans); color: var(--rouge); }
-details[open] summary::after { content: '–'; }
-details p { max-width: 46ch; padding: 0 0 14px; color: #3a3833; }
-.anim details[open] p { animation: reponse .32s var(--courbe); }
-@keyframes reponse { from { opacity: 0; transform: translateY(-4px); } to { opacity: 1; transform: none; } }
-/* Mise en scène sous 1024 : « qui vous parle » en bande (portrait, une phrase, « à dix minutes de chez vous »), cinq questions dessous,
-   le tout dans la hauteur de l'écran sans défilement interne. La question sur le nom de domaine (déjà dite dans « ce que je paie ») n'y est pas. */
-@media (max-width: 1023.98px) {
-  .anim .qui { grid-template-columns: 48px minmax(0, 1fr); gap: 12px; padding-bottom: 12px; border-bottom: 1px solid var(--ligne); }
-  .anim .portrait { width: 48px; height: 48px; font-size: 17px; }
-  .anim .qui .etiquette { margin-bottom: 6px; }
-  .anim .qui-phrase { font-size: clamp(18px, 4.8vw, 26px); line-height: 1.15; }
-  .anim .qui-texte { display: none; }
-  .anim .qui-court { display: block; margin-top: 6px; font-size: 14px; line-height: 1.35; color: #3a3833; }
-  .anim .qui-accent { margin-top: 6px; font-size: 14px; }
-  .anim .faq { margin-top: 14px; }
-  .anim .faq .etiquette { margin-bottom: 8px; }
-  .anim .questions { border-top: 0; }
-  .anim .q-secondaire { display: none; }
-  .anim summary { min-height: 46px; padding-block: 8px; font-size: clamp(18px, 4.8vw, 22px); }
-  .anim details p { padding-bottom: 10px; }
-}
-
-/* Le final — prendre rendez-vous : l'écran le plus simple du site. Base = bloc lisible ; mise en scène = centré dans l'écran, sans objet. */
-.final-titre.avec-nom { font-size: clamp(36px, 10vw, 64px); line-height: 1; }
-.final-phrase { margin-top: 20px; font-size: 17px; line-height: 1.4; }
-.final-points { margin-top: 16px; }
-.final-points li { position: relative; padding: 3px 0 3px 22px; font-size: 15px; font-weight: 500; line-height: 1.3; }
-.final-points li::before { content: ''; position: absolute; left: 0; top: calc(3px + .6em); width: 12px; height: 2px; background: var(--rouge); }
-.final-actions { margin-top: 24px; }
-.bouton-final { width: 100%; min-height: 60px; font-size: 17px; }
-.anim .chapitre.chapitre-final { top: var(--entete-h); bottom: 0; left: 24px; right: 24px; width: auto; max-width: none; display: flex; flex-direction: column;
-  align-items: center; justify-content: center; text-align: center; padding-bottom: calc(24px + env(safe-area-inset-bottom)); }
-.anim .final-points { display: flex; flex-wrap: wrap; justify-content: center; gap: 2px 22px; }
-.anim .final-actions { display: flex; flex-direction: column; align-items: center; width: min(100%, 440px); }
-.anim .final-actions .rdv-tel { margin-top: 6px; }
-/* Écran bas (375×667) : l'offre tient au-dessus de la barre du bas (mesuré : 47 px avant). */
-@media (max-width: 759.98px) and (max-height: 699.98px) {
-  .anim .offre-prix { margin: 4px 0 2px; font-size: 60px; }
-  .anim .offre-condition { font-size: 15px; }
-  .anim .offre-liste { margin-top: 6px; }
-  .anim .offre-liste li { padding-block: 2px; line-height: 1.25; }
-  .anim .offre-liste li::before { top: calc(2px + .62em); }
-  .anim .offre-ensuite { margin-top: 6px; }
-  .anim .offre-actions { margin-top: 10px; }
-  .anim .bouton-rdv { min-height: 50px; }
-  html .barre { padding-block: 8px calc(8px + env(safe-area-inset-bottom)); }
-  html .barre a { padding: 13px; }
-  .anim summary { min-height: 44px; padding-block: 6px; font-size: 18px; }
-  .anim .faq { margin-top: 10px; }
-}
-/* Les grandes images typographiques (prix, portrait, point d'interrogation) : seulement dans la mise en scène, au-delà de 1024 px (voir plus bas). */
-.geant { display: none; }
-
-.pied { padding: 28px 24px calc(40px + env(safe-area-inset-bottom)); text-align: center; font-size: 13px; line-height: 1.5; color: var(--gris-texte); }
-.pied a { display: inline-flex; align-items: center; justify-content: center; min-width: 44px; min-height: 44px; margin-block: -12px; } /* « CGV » faisait 28 px de large */
-
-/* Prendre rendez-vous : le choix WhatsApp / appel / e-mail (<dialog> #choix-rdv, recit.js). Même identité : fond du site, rouge, angles droits.
-   Téléphone : panneau posé en bas de l'écran, sous le pouce ; à partir de 640 px : centré. Verrou sur <body> comme le menu (la scène collante ne saute pas). */
-.choix-ouvert body { overflow: hidden; }
-.choix { position: fixed; inset: auto 0 0; width: 100%; max-width: none; max-height: 100dvh; margin: 0; padding: 0; overflow-y: auto; overscroll-behavior: contain;
-  border: 0; background: var(--fond); color: var(--encre); box-shadow: 0 -12px 40px rgba(20, 19, 17, .18); }
-.choix::backdrop { background: rgba(20, 19, 17, .45); }
-.choix[open] { animation: choix-entree 320ms var(--courbe); }
-@keyframes choix-entree { from { opacity: 0; transform: translateY(24px); } to { opacity: 1; transform: none; } }
-.choix-panneau { position: relative; padding: 24px 20px calc(20px + env(safe-area-inset-bottom)); }
-.choix-fermer { position: absolute; top: 8px; right: 8px; width: 44px; height: 44px; border: 0; background: none; cursor: pointer; -webkit-tap-highlight-color: transparent; }
-.choix-fermer::before, .choix-fermer::after { content: ''; position: absolute; left: 13px; top: 21px; width: 18px; height: 1.5px; background: var(--encre); transform: rotate(45deg); }
-.choix-fermer::after { transform: rotate(-45deg); }
-.choix-etiquette { font-size: 11px; letter-spacing: .18em; text-transform: uppercase; color: var(--rouge); margin-bottom: 10px; }
-.choix-titre { padding-right: 36px; font: 300 clamp(26px, 7vw, 34px)/1.08 var(--serif); letter-spacing: -.012em; text-wrap: balance; }
-.choix-titre .insecable { white-space: nowrap; }
-.choix-sous { margin-top: 8px; font-size: 15px; line-height: 1.4; color: var(--gris-texte); }
-.choix-liste { display: grid; gap: 10px; margin-top: 18px; }
-.choix-ligne { display: grid; grid-template-columns: minmax(0, 1fr) auto; }
-.choix-option { display: flex; flex-direction: column; justify-content: center; min-height: 64px; padding: 10px 16px; border: 1px solid var(--encre); color: var(--encre);
-  text-decoration: none; -webkit-tap-highlight-color: transparent; transition: background-color var(--duree) var(--courbe), color var(--duree) var(--courbe); }
-.choix-option:hover { background: var(--encre); color: var(--fond); }
-.choix-principal, .choix-principal:hover { border-color: var(--rouge); background: var(--rouge); color: #fff; }
-.choix-principal:hover { border-color: #a82816; background: #a82816; }
-.choix-nom { font: 500 16px/1.2 var(--sans); }
-.choix-detail { margin-top: 3px; font-size: 14px; line-height: 1.3; opacity: .85; overflow-wrap: anywhere; }
-.choix-copier { min-width: 84px; padding: 0 12px; border: 1px solid var(--encre); border-left: 0; background: none; font-size: 14px; cursor: pointer;
-  transition: background-color var(--duree) var(--courbe), color var(--duree) var(--courbe); }
-.choix-copier:hover { background: var(--encre); color: var(--fond); }
-@media (min-width: 640px) {
-  .choix { inset: 0; width: min(460px, calc(100% - 40px)); height: fit-content; margin: auto; box-shadow: 0 24px 80px rgba(20, 19, 17, .25); }
-  .choix-panneau { padding: 32px 32px 28px; }
-}
-@media (prefers-reduced-motion: reduce) { .choix[open] { animation: none; } }
-
-/* Barre WhatsApp collée en bas : comment ça se passe, qui vous parle + questions (recit.js) ; jamais pendant la démo, l'offre, le final, la modale ou le menu. */
-.barre { position: fixed; left: 0; right: 0; bottom: 0; z-index: 30; padding: 10px 16px calc(10px + env(safe-area-inset-bottom));
-  background: rgba(246, 244, 239, .9); -webkit-backdrop-filter: blur(10px); backdrop-filter: blur(10px); border-top: 1px solid var(--ligne);
-  transform: translateY(110%); visibility: hidden; transition: transform .45s var(--courbe), visibility 0s linear .45s; }
-/* Cachée = aussi invisible pour le clavier (visibility, après la fin du glissement) : Tab ne s'arrête jamais sur un bouton hors écran. */
-.barre.visible { transform: none; visibility: visible; transition: transform .45s var(--courbe), visibility 0s; }
-.modale-ouverte .barre, .menu-ouvert .barre { transform: translateY(110%); visibility: hidden; }
-.barre a { display: block; text-align: center; background: var(--rouge); color: #fff; padding: 15px; text-decoration: none; font-weight: 500; font-size: 16px; }
-@media (max-width: 759.98px) { .barre { -webkit-backdrop-filter: blur(6px); backdrop-filter: blur(6px); } } /* moins de travail GPU sur téléphone (perf-010) */
-
-@media (min-width: 760px) {
-  .anim .chapitre, .anim .rdv { left: calc(50% - 280px); right: calc(50% - 280px); }
-  .explorer, .bouton-rdv { font-size: 16px; }
-  .titre { font-size: clamp(48px, 11vw, 88px); } /* « Il ne vous voit pas. » tient sur une ligne dans la colonne de 560 px (constat I2) */
-  .anim .tel { height: min(56svh, 520px); }
-  .carte { width: 150px; }
-  .carte-1 { left: calc(50% - 330px); }
-  .carte-2 { right: calc(50% - 330px); }
-  .carte-3 { left: calc(50% - 290px); }
-  .carte-vide { right: calc(50% - 300px); }
-}
-
-/* Ordinateur : le récit occupe toute la largeur, texte à gauche, téléphone au centre-droit ; les blocs passent en deux colonnes. */
-@media (min-width: 1024px) {
-  :root { --entete-h: 64px; }
-  /* Une seule ligne de 64 px : marque · promesse centrée (sur deux lignes serrées si la place manque, jamais coupée) · nav · WhatsApp.
-     Marque, nav et lien à la même taille (clamp(12px, .65vw, 16px) : 12 px jusqu'à 1846, 16 px à 2460) ; promesse clamp(13px, .85vw, 20px) (constat M6). */
-  .entete { flex-wrap: nowrap; gap: 24px; height: calc(64px + env(safe-area-inset-top)); padding: env(safe-area-inset-top) 4vw 0; font-size: clamp(12px, .65vw, 16px); }
-  .entete-marque, .nav, .entete-lien { flex: none; }
-  .promesse { flex: 1 1 auto; min-width: 0; order: 0; text-align: center; font-size: clamp(14px, 1vw, 20px); line-height: 1.25; text-wrap: balance; }
-  .nav { display: flex; gap: 2px; }
-  .nav a { padding: 0 10px; }
-  .entete-lien { margin: 0; padding: 0 18px; font-size: clamp(13px, .75vw, 17px); }
-  .entete-long { display: inline; }
-  .entete-court { display: none; }
-  .menu-bouton, .menu { display: none; }
-  .titre { font-size: clamp(56px, 8.4vw, 200px); }
-  .phrase { font-size: clamp(30px, 3.2vw, 64px); }
-  .anim .chapitre, .anim .chapitre[data-chapitre="4"] { left: 6vw; right: auto; width: min(38vw, 620px); max-width: none; top: 24vh; }
-  .raccourci { margin-top: 16px; font-size: 14px; }
-  .anim .tel { height: min(62svh, 640px); }
-  /* Les actions de la démo vivent dans la colonne de texte, sous le texte de leur chapitre :
-     recit.js (poserColonne) écrit leur top en pixels à chaque refresh ; 50 % n'est qu'un repli avant le premier calcul. */
-  .anim .rdv { left: 6vw; right: auto; top: 50%; bottom: auto; width: min(38vw, 520px); max-width: none; }
-  /* Cartes en pourcentages : elles suivent la largeur de l'écran au lieu de rester collées au centre. */
-  .carte { width: clamp(140px, 10.5vw, 260px); max-width: none; }
-  .carte-1 { left: 54%; right: auto; top: 14%; }
-  .carte-2 { left: 82%; right: auto; top: 32%; }
-  .carte-3 { left: 57%; right: auto; top: 60%; }
-  .carte-vide { left: 84%; right: auto; top: 58%; }
-
-  /* La suite du récit : la colonne de texte commence juste sous l'en-tête et reste au-dessus de la barre du bas ; tailles fluides. */
-  .anim .chapitre.chapitre-plein { top: calc(var(--entete-h) + 5.5vh); }
-  .etiquette { font-size: clamp(11px, .7vw, 13px); }
-  .etapes li { grid-template-columns: clamp(34px, 2.6vw, 56px) minmax(0, 1fr); padding: 2.2vh 0; }
-  .etapes .num { font-size: clamp(14px, .9vw, 18px); }
-  .etapes b { font-size: clamp(22px, 1.9vw, 40px); margin-bottom: .5vh; }
-  .etapes p, .offre-liste li, .qui-texte, details p { font-size: clamp(15px, 1vw, 20px); }
-  .offre-condition { margin-top: 1.4vh; font-size: clamp(16px, 1.1vw, 22px); }
-  .offre-liste li { padding-block: .45vh; }
-  .offre-ensuite { font-size: clamp(13px, .8vw, 16px); }
-  .offre-actions { display: flex; flex-wrap: wrap; align-items: center; gap: 4px 24px; margin-top: 2.6vh; }
-  .offre-actions .bouton-rdv { width: auto; padding: 0 clamp(28px, 2.2vw, 48px); }
-  summary { min-height: 48px; padding: 1.4vh 0; font-size: clamp(20px, 1.5vw, 34px); }
-  details p { max-width: 52ch; padding-bottom: 1.8vh; }
-  /* La grande typographie du prix, dans la zone droite. Décorative (aria-hidden) : sous 1024 le prix est dans le texte. */
-  .anim .geant { display: grid; place-items: center; align-content: center; position: absolute; top: var(--entete-h); bottom: 0; left: 46vw; right: 3vw; z-index: 2; margin: 0;
-    text-align: center; pointer-events: none; }
-  .geant-prix span { font: 300 clamp(150px, 16vw, 420px)/.85 var(--serif); letter-spacing: -.05em; font-variation-settings: 'opsz' 144; white-space: nowrap; }
-  .geant-prix small { display: block; margin-top: 3vh; font-size: clamp(11px, .75vw, 15px); letter-spacing: .18em; text-transform: uppercase; color: var(--rouge); }
-  .anim .offre-prix { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; margin: 0; }
-  /* Qui vous parle + questions : deux colonnes sur toute la largeur (le téléphone est hors cadre) ; qui vous parle à gauche, dans la colonne
-     du récit, les questions à droite. */
-  .anim .chapitre.chapitre-duo { left: 6vw; right: 5vw; width: auto; display: grid; grid-template-columns: minmax(0, 34fr) minmax(0, 52fr); gap: 7vw; align-items: start; }
-  .anim .qui { grid-template-columns: minmax(0, 1fr); gap: 3vh; }
-  .anim .portrait { width: clamp(88px, min(7vw, 13vh), 150px); height: auto; aspect-ratio: 1; font-size: clamp(30px, min(2.3vw, 4.4vh), 52px); }
-  .anim .qui-texte { margin-top: 2.2vh; }
-  .anim .qui-accent { margin-top: 1.8vh; font-size: clamp(15px, 1vw, 20px); }
-  .anim .faq { margin-top: 0; }
-  .final-phrase { font: 300 clamp(20px, 1.6vw, 36px)/1.25 var(--serif); letter-spacing: -.01em; }
-  .final-points li { font-size: clamp(15px, 1vw, 20px); }
-  .final-titre.avec-nom { font-size: clamp(48px, 5.4vw, 130px); }
-  .anim .final-actions { width: min(100%, clamp(360px, 26vw, 560px)); }
-  .pied { padding-inline: 4vw; }
-  /* Même largeur pour le bouton de la démo et celui de l'offre ; la barre du bas n'est plus un bandeau rouge sur toute la largeur (constat C11). */
-  .offre-actions .bouton-rdv { min-width: 240px; } /* le bouton de la démo, dans sa grille de deux colonnes, en mesure 240 à 1440 */
-  .barre { padding-right: 4vw; }
-  .barre a { max-width: 360px; margin-left: auto; transition: background-color var(--duree) var(--courbe); }
-}
-
-/* Grand écran : texte à gauche, objet à droite. Le formulaire descend dans la colonne de gauche,
-   le nom géant prend toute la zone droite : plus de bande vide à droite du récit (CAP §4.5, constat B1). */
-/* 1024–1279 : le libellé court du CTA de l'en-tête laisse la promesse sur deux lignes (mesuré à 1024 avec le long : trois lignes, 52 px sur 64). */
-@media (min-width: 1024px) and (max-width: 1279.98px) {
-  .entete-long { display: none; }
-  .entete-court { display: inline; }
-}
-
-@media (min-width: 1280px) {
-  .anim .chapitre, .anim .chapitre[data-chapitre="4"] { width: min(38vw, 720px); }
-  .anim .rdv { width: min(34vw, 520px); }
-}
-
-@media (min-width: 1440px) {
-  .anim .chapitre, .anim .chapitre[data-chapitre="4"] { width: min(36vw, 760px); }
-  .anim .tel { height: min(66svh, 720px); }
-}
-
-@media (min-width: 1920px) {
-  .entete { padding-inline: 5vw; }
-  .anim .chapitre, .anim .chapitre[data-chapitre="4"] { width: min(34vw, 820px); }
-  .explorer, .bouton-rdv { font-size: 17px; }
-  .portable-clic > span { min-height: 44px; padding: 0 16px; font-size: 15px; }
-  .anim .tel { height: min(66svh, 820px); }
-}
-
-/* Bandeau cookies (mesure.js) : affiché seulement quand la mesure Google Ads est active. Deux boutons de même poids (CNIL). */
-.cookies { position: fixed; left: 16px; right: 16px; bottom: calc(16px + env(safe-area-inset-bottom)); z-index: 55; max-width: 520px; padding: 16px;
-  background: var(--fond); color: var(--encre); border: 1px solid var(--encre); box-shadow: 0 8px 24px rgba(20, 19, 17, .18); font-size: 14px; line-height: 1.45; }
-.cookies p { margin: 0; }
-.cookies a { color: inherit; text-underline-offset: 3px; }
-.cookies-actions { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-top: 12px; }
-.cookies-actions button { min-height: 44px; border: 1px solid var(--encre); border-radius: 0; background: transparent; color: var(--encre); font: 500 15px/1.2 var(--sans); cursor: pointer; }
-.cookies-actions button:hover { background: var(--encre); color: var(--fond); }
-
-/* ---------- Version courte, téléphone (html.court, 14/09) ----------
-   Première page : titre, prix, puis l'exemple LE BRAISÉ tout de suite, puis les boutons. Histoire resserrée, sans le téléphone en double, apparitions douces. */
-.court .accueil { display: flex; flex-direction: column; align-items: center; gap: 0; padding-bottom: 6px; }
-.court .accueil-texte { display: contents; }
-.court .accueil-etiquette { order: 1; }
-.court .accueil-titre { order: 2; font-size: clamp(34px, 9.6vw, 48px); }
-.court .accueil-sous { order: 3; margin-top: 12px; font-size: 15px; }
-.court .accueil-ecrans { order: 4; margin-top: 22px; }
-.court .accueil-actions { order: 5; margin-top: 24px; }
-.court .accueil-lancement { order: 6; }
-.court .accueil-etapes { order: 7; }
-.court .accueil-suite { order: 8; margin-top: 12px; }
-.court .scene { padding-top: 24px; padding-bottom: 12px; }
-.court .chapitre { padding: 28px 0; }
-.court .chapitre[data-chapitre="1"] { padding-top: 12px; }
-.court .scene > .tel, .court .voir-anime { display: none; }
-.court .apparait { opacity: 0; transform: translate3d(0, 22px, 0); transition: opacity .7s cubic-bezier(.2, .7, .2, 1) var(--retard, 0ms), transform .7s cubic-bezier(.2, .7, .2, 1) var(--retard, 0ms); will-change: opacity, transform; }
-.court .apparait.vu { opacity: 1; transform: none; will-change: auto; }
-@media (prefers-reduced-motion: reduce) { .court .apparait { opacity: 1; transform: none; transition: none; } }
-
-/* ---------- Version courte, téléphone : le beau rendu (14/09, « rends-la plus belle ») ----------
-   Même charte (papier, encre, rouge, Fraunces, angles droits) ; des bandes de papier plus chaud rythment les parties,
-   les photos de restaurants et la carte « ? » reviennent sous « Le problème », étapes et prix deviennent des cartes. */
-.court { --entete-h: 60px; --papier-chaud: #EFE9DE; --carte-fond: #FFFDF9; }
-.court .promesse { display: none; }
-.court .scene { display: flex; flex-direction: column; padding-left: 20px; padding-right: 20px; }
-.court .chapitre[data-chapitre="1"] { order: 1; } .court .chapitre[data-chapitre="2"] { order: 2; }
-.court .scene > .cartes { order: 3; } .court .scene > .cartes-avant { order: 4; }
-.court .chapitre[data-chapitre="3"] { order: 5; } .court .chapitre[data-chapitre="4"] { order: 6; }
-.court #demos { order: 7; } .court .demo-duo { order: 8; } .court .rdv { order: 9; }
-.court #comment { order: 10; } .court #offre { order: 11; } .court .geant-prix { order: 12; }
-.court #questions { order: 13; } .court #final { order: 14; }
-
-/* 19 h 12 : un filet rouge pour ouvrir l'histoire */
-.court .chapitre[data-chapitre="1"]::before { content: ''; display: block; width: 36px; height: 2px; margin-bottom: 20px; background: var(--rouge); }
-/* Le problème : trois restaurants qui ont un site… et le vôtre, qui manque */
-.court .scene > .cartes { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 10px; margin: 2px 0 0; }
-.court .carte { position: relative; left: auto; right: auto; top: auto; width: auto; max-width: none; border-radius: 8px; box-shadow: 0 16px 30px -18px rgba(20, 19, 17, .5); }
-.court .carte-1 { transform: rotate(-3deg); } .court .carte-2 { transform: translateY(-10px); } .court .carte-3 { transform: rotate(3deg); }
-.court .scene > .cartes-avant { display: flex; justify-content: center; position: relative; z-index: 1; margin: -38px 0 6px; }
-.court .carte-vide { width: 36%; aspect-ratio: 3 / 4; font-size: 54px; background: var(--carte-fond); border: 1.5px dashed var(--rouge); box-shadow: 0 20px 36px -20px rgba(20, 19, 17, .45); }
-/* Pourtant : une bande chaude, comme la lumière d'une salle */
-.court .chapitre[data-chapitre="3"] { margin: 20px -20px 0; padding: 40px 20px; background: radial-gradient(110% 80% at 88% 0%, rgba(236, 162, 92, .30), transparent 62%), var(--papier-chaud); }
-/* La solution : « En 7 jours. » en rouge */
-.court .chapitre[data-chapitre="4"] .titre { color: var(--rouge); }
-/* Comment ça marche : trois cartes numérotées sur une bande chaude */
-.court #comment { margin: 16px -20px 0; padding: 40px 20px 34px; background: var(--papier-chaud); }
-.court .etapes { border-top: 0; display: grid; gap: 10px; margin-top: 4px; }
-.court .etapes li { grid-template-columns: 30px minmax(0, 1fr); gap: 12px; padding: 16px 16px 16px 14px; background: var(--carte-fond); border: 1px solid var(--ligne); }
-.court .etapes .num { display: grid; place-items: center; width: 28px; height: 28px; margin-top: 2px; border-radius: 50%; background: var(--rouge); color: #fff; font: 600 13px/1 var(--sans); }
-/* Le prix : une carte, filet rouge en haut */
-.court #offre { position: relative; margin-top: 34px; padding: 32px 20px 24px; background: var(--carte-fond); border: 1px solid var(--ligne); box-shadow: 0 34px 60px -42px rgba(20, 19, 17, .4); }
-.court #offre::before { content: ''; position: absolute; left: -1px; right: -1px; top: -1px; height: 4px; background: var(--rouge); }
-.court .offre-prix { font-size: clamp(84px, 27vw, 120px); }
-.court .offre-lancement { margin-top: 14px; padding: 10px 12px; background: #FBEDEA; }
-/* Qui vous parle + questions : bande chaude, portrait plus grand */
-.court #questions { margin: 36px -20px 0; padding: 40px 20px 30px; background: var(--papier-chaud); }
-.court .qui { grid-template-columns: 76px minmax(0, 1fr); gap: 16px; }
-.court .portrait { width: 76px; height: 76px; box-shadow: 0 0 0 3px var(--fond), 0 0 0 4px var(--ligne); }
-.court .faq { margin-top: 30px; padding-top: 26px; border-top: 1px solid rgba(20, 19, 17, .12); }
-/* Le final : grand bouton */
-.court #final { padding: 46px 0 30px; }
-.court .bouton-final { width: 100%; min-height: 60px; font-size: 17px; }
