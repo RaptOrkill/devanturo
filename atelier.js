@@ -8,8 +8,8 @@
   /* ---------- Les téléphones de la composition : sept, debout, éteints (les démos viendront plus tard) ---------- */
   // Les téléphones : trois sites de démonstration (bistrot, bar, burger) sur de vrais iPhone, argent et graphite en alternance
   const DEMOS = [   // les deux démos montrées sur le site (Baptiste, 22/09 : Kaori et Giulia ; LE BRAISÉ, Rivière et Solange restent dans demos/ ou en ligne pour plus tard)
-    { nom: 'Kaori, izakaya', fichier: 'izakaya', lien: 'demos/izakaya/?de=devanturo', vivant: 'demos/izakaya/index.html?embarque=1', clair: true },
-    { nom: 'Giulia, trattoria', fichier: 'trattoria', lien: 'demos/trattoria/?de=devanturo', vivant: 'demos/trattoria/index.html?embarque=1' },
+    { nom: 'Kaori, izakaya', fichier: 'izakaya', lien: 'demos/izakaya/?de=devanturo', vivant: 'demos/izakaya/index.html?embarque=1&v=60', clair: true },
+    { nom: 'Giulia, trattoria', fichier: 'trattoria', lien: 'demos/trattoria/?de=devanturo', vivant: 'demos/trattoria/index.html?embarque=1&v=60' },
   ];
   const N_TEL = 7;
   document.querySelectorAll('[data-demos]').forEach(ul => {

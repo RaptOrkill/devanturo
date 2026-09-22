@@ -20,6 +20,9 @@
   * { box-sizing: border-box; margin: 0; }
   html { scroll-behavior: smooth; }
   html.lenis { scroll-behavior: auto; }
+  html.embarque { scrollbar-width: none; }
+  html.embarque::-webkit-scrollbar { display: none; }
+  html.embarque body::after { display: none; }
   body { background: var(--crema); color: var(--inchiostro); font: 400 16px/1.65 var(--sans); overflow-x: hidden; -webkit-font-smoothing: antialiased; }
   body::after { content: ""; position: fixed; inset: 0; z-index: 90; opacity: .5; pointer-events: none; mix-blend-mode: multiply; background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 .4 0 0 0 0 .3 0 0 0 0 .2 0 0 0 .12 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E"); }
   h1, h2, h3 { font-family: var(--serif); font-weight: 400; line-height: .98; letter-spacing: -.01em; }
@@ -52,6 +55,7 @@
   .affiche { position: relative; min-height: 100svh; background: var(--arancio); color: var(--crema); overflow: hidden; display: grid; place-items: center; padding: 120px 20px max(150px, 32vh); isolation: isolate; }
   .motif { position: absolute; inset: -4%; z-index: -1; }
   .motif .t, .motif .s { position: absolute; will-change: transform; }
+  html.embarque .motif .t, html.embarque .motif .s { will-change: auto; }
   .motif .t { background: var(--tomate); border-radius: 48% 52% 55% 45% / 52% 44% 56% 48%; }
   .motif .s svg { width: 100%; height: 100%; overflow: visible; }
   .affiche-in { text-align: center; position: relative; }
@@ -324,6 +328,7 @@
   const html = document.documentElement;
   const embarque = /[?&]embarque=1/.test(location.search);
   if (embarque || /[?&](cadre=1|de=devanturo)/.test(location.search)) html.classList.add('cadre');
+  if (embarque) html.classList.add('embarque');
   if (/[?&]de=devanturo/.test(location.search)) { const a = document.createElement('a'); a.className = 'devanturo'; a.href = '../../index.html#exemple'; a.textContent = '← Devanturo · démonstration'; document.body.append(a); }
 
   /* Le motif : des tomates et des étoiles de basilic, posées à la main (pseudo-aléatoire, toujours le même dessin) */
@@ -366,10 +371,10 @@
     .from('.affiche .sur, .affiche .sous, .coin', { autoAlpha: 0, y: 16, duration: .9, stagger: .08 }, 1)
     .from('.assiette img', { autoAlpha: 0, y: 120, rotate: -140, scale: .7, duration: 1.8, ease: 'power3.out' }, .6);
   /* Le basilic tourne doucement, les tomates respirent */
-  document.querySelectorAll('.motif .s').forEach((s, i) => gsap.to(s, { rotate: (i % 2 ? -1 : 1) * 360, duration: 40 + (i % 5) * 8, ease: 'none', repeat: -1 }));
-  document.querySelectorAll('.motif .t').forEach((t, i) => gsap.to(t, { yPercent: 6, xPercent: (i % 3 - 1) * 3, duration: 3 + (i % 4), ease: 'sine.inOut', yoyo: true, repeat: -1, delay: (i % 7) * .3 }));
+  if (!embarque) document.querySelectorAll('.motif .s').forEach((s, i) => gsap.to(s, { rotate: (i % 2 ? -1 : 1) * 360, duration: 40 + (i % 5) * 8, ease: 'none', repeat: -1 }));
+  if (!embarque) document.querySelectorAll('.motif .t').forEach((t, i) => gsap.to(t, { yPercent: 6, xPercent: (i % 3 - 1) * 3, duration: 3 + (i % 4), ease: 'sine.inOut', yoyo: true, repeat: -1, delay: (i % 7) * .3 }));
   /* La souris : le motif glisse selon sa profondeur, l'assiette s'incline */
-  if (souris) {
+  if (souris && !embarque) {
     const couches = [...document.querySelectorAll('.affiche .motif i')].map(el => ({ x: gsap.quickTo(el, 'x', { duration: 1.2, ease: 'power2.out' }), y: gsap.quickTo(el, 'y', { duration: 1.2, ease: 'power2.out' }), z: +el.dataset.z }));
     const rx = gsap.quickTo('.assiette', 'rotationX', { duration: 1, ease: 'power2.out' }), ry = gsap.quickTo('.assiette', 'rotationY', { duration: 1, ease: 'power2.out' });
     addEventListener('pointermove', e => { const dx = e.clientX / innerWidth - .5, dy = e.clientY / innerHeight - .5; couches.forEach(c => { c.x(-dx * 40 * c.z); c.y(-dy * 30 * c.z); }); rx(-dy * 26); ry(dx * 30); }, { passive: true });
@@ -377,7 +382,7 @@
   /* En descendant : le nom s'éloigne, l'assiette tourne comme un disque */
   gsap.to('.affiche-in', { yPercent: -35, autoAlpha: .2, ease: 'none', scrollTrigger: { trigger: hero, start: 'top top', end: 'bottom top', scrub: true } });
   if (souris && !embarque) gsap.to('.assiette img', { rotate: 220, ease: 'none', scrollTrigger: { trigger: hero, start: 'top top', end: () => '+=' + innerHeight * 1.8, scrub: .6 } });
-  else gsap.to('.assiette img', { rotate: '+=360', duration: 24, ease: 'none', repeat: -1, delay: 2.4 });
+  else gsap.to('.assiette img', { rotate: '+=360', duration: 16, ease: 'none', repeat: -1, delay: 2.4 });
   gsap.to('.assiette', { y: () => -innerHeight * .12, scale: .84, ease: 'none', scrollTrigger: { trigger: '.citazione', start: 'top bottom', end: 'center top', scrub: true } });
   /* L'en-tête */
   /* Fellini : chaque mot prend la couleur au défilement */
@@ -417,12 +422,12 @@
   }
   /* Giulia : la carte postale se pose, le cachet tourne */
   gsap.fromTo('[data-carte]', { rotate: -14, y: 80 }, { rotate: -4, y: 0, ease: 'power2.out', scrollTrigger: { trigger: '.giulia', start: 'top 85%', end: 'top 25%', scrub: .8 } });
-  gsap.to('[data-cachet]', { rotate: 360, duration: 30, ease: 'none', repeat: -1 });
+  if (!embarque) gsap.to('[data-cachet]', { rotate: 360, duration: 30, ease: 'none', repeat: -1 });
   if (souris) { gsap.set('[data-carte]', { transformPerspective: 1100 }); const kx = gsap.quickTo('[data-carte]', 'rotationX', { duration: 1, ease: 'power2.out' }), ky = gsap.quickTo('[data-carte]', 'rotationY', { duration: 1, ease: 'power2.out' });
     document.querySelector('.giulia').addEventListener('pointermove', e => { kx(-(e.clientY / innerHeight - .5) * 16); ky((e.clientX / innerWidth - .5) * 18); }, { passive: true });
     document.querySelector('.giulia').addEventListener('pointerleave', () => { kx(0); ky(0); }); }
   /* Le bandeau défile, plus vite quand on descend vite */
-  const boucle = gsap.to(bande, { xPercent: -50, duration: 26, ease: 'none', repeat: -1 });
+  const boucle = gsap.to(bande, { xPercent: -50, duration: 26, ease: 'none', repeat: -1, paused: embarque });
   ScrollTrigger.create({ start: 0, end: 'max', onUpdate: s => gsap.to(boucle, { timeScale: 1 + Math.min(4, Math.abs(s.getVelocity()) / 400), duration: .2, overwrite: true, onComplete: () => gsap.to(boucle, { timeScale: 1, duration: 1 }) }) });
   /* Révélations, titres qui se relèvent, parallaxes */
   gsap.utils.toArray('.reveal').forEach(el => {

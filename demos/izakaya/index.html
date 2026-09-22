@@ -20,6 +20,9 @@
   * { box-sizing: border-box; margin: 0; }
   html { scroll-behavior: smooth; }
   html.lenis { scroll-behavior: auto; }
+  html.embarque { scrollbar-width: none; }
+  html.embarque::-webkit-scrollbar { display: none; }
+  html.embarque body::after { display: none; }
   body { background: var(--papier); color: var(--sumi); font: 400 16px/1.7 var(--sans); overflow-x: hidden; -webkit-font-smoothing: antialiased; }
   body::after { content: ""; position: fixed; inset: 0; z-index: 0; opacity: .35; pointer-events: none; mix-blend-mode: multiply; background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='220' height='220'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 .45 0 0 0 0 .43 0 0 0 0 .4 0 0 0 .14 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E"); }
   h1, h2, h3 { font-family: var(--serif); font-weight: 400; letter-spacing: 0; line-height: 1.06; }
@@ -415,6 +418,7 @@
   const html = document.documentElement;
   const embarque = /[?&]embarque=1/.test(location.search);
   if (embarque || /[?&](cadre=1|de=devanturo)/.test(location.search)) html.classList.add('cadre');
+  if (embarque) html.classList.add('embarque');
   if (/[?&]de=devanturo/.test(location.search)) { const a = document.createElement('a'); a.className = 'devanturo'; a.href = '../../index.html#exemple'; a.textContent = '← Devanturo · démonstration'; document.body.append(a); }
   /* Les voix, une à la fois */
   const VOIX = [

@@ -121,7 +121,7 @@ html.intro .hero-indice { animation: none; opacity: 0; transition: opacity 300ms
 .demo-tel img { position: absolute; inset: 0; width: 100%; height: 100%; display: block; filter: drop-shadow(-1em 1.4em 1.6em var(--ombre-tel)); }
 /* L'écran vivant : un cadre de 600 × 1351 (la taille du rendu) réduit à la boîte, et dedans la démo posée sur l'écran par la matrice */
 .demo-vivant { position: absolute; left: 0; top: 0; width: 600px; height: 1351px; transform: scale(var(--k, .2)); transform-origin: 0 0; pointer-events: none; }
-.ecran-pose { position: absolute; left: 0; top: 0; width: 390px; height: 844px; transform-origin: 0 0; border-radius: 54px; overflow: hidden; background: #000; }
+.ecran-pose { position: absolute; left: 0; top: 0; width: 390px; height: 844px; transform-origin: 0 0; border-radius: 54px; overflow: hidden; background: #000; contain: strict; }
 .ecran-pose iframe { display: block; width: 390px; height: 844px; border: 0; background: #000; }
 .ecran-pose.decale iframe { position: absolute; top: 54px; height: 790px; }
 .ecran-pose.clair .statut { color: #000; }
