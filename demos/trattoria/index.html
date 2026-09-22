@@ -57,11 +57,7 @@
   .affiche-in { text-align: center; position: relative; }
   .affiche .sur { display: block; margin-bottom: clamp(22px, 3.4vw, 44px); }
   .affiche h1 { font-size: clamp(96px, 23vw, 380px); line-height: .82; text-transform: uppercase; letter-spacing: -.02em; color: var(--crema); text-shadow: 0 2px 0 rgba(0,0,0,.04); }
-  .affiche .sous { display: block; margin-top: 22px; font: 400 clamp(18px, 2vw, 26px)/1.3 var(--serif); text-align: left; padding-left: .06em; }
-  /* La fourchette fait le I : les pâtes enroulées au milieu des capitales (épaisseur d'un fût de lettre), les dents au-dessus, le manche sous la ligne */
-  .forchetta { display: inline-block; position: relative; width: .34em; height: .82em; vertical-align: baseline; margin: 0 .02em; }
-  .forchetta img { position: absolute; left: 50%; bottom: -.86em; height: 1.5em; width: auto; max-width: none; transform: translateX(-50%); transform-origin: 50% 70%; filter: drop-shadow(0 .05em .06em rgba(60,20,0,.35)); will-change: transform; }
-  @media (max-width: 759px) { .affiche h1 { padding-bottom: .5em; } }
+  .affiche .sous { display: block; margin-top: 22px; font: 400 clamp(18px, 2vw, 26px)/1.3 var(--serif); }
   .coin { position: absolute; bottom: 30px; font: 500 11.5px/1.6 var(--sans); letter-spacing: .16em; text-transform: uppercase; color: var(--crema); }
   .coin.g { left: 28px; } .coin.d { right: 28px; text-align: right; }
   @media (max-width: 759px) { .coin { display: none; } .affiche { min-height: 78svh; padding: 110px 16px 36vw; } }
@@ -206,7 +202,7 @@
   <div class="motif" data-motif aria-hidden="true"></div>
   <div class="affiche-in">
     <span class="sur petit">Trattoria · Pasta fatta a mano · Lille</span>
-    <h1 data-lettres>Giul<span class="forchetta"><img src="assets/forchetta.webp" alt="I" width="420" height="1024"></span>a</h1>
+    <h1 data-lettres>Giulia</h1>
     <span class="sous">Les pâtes de Naples, faites ce matin.</span>
   </div>
   <div class="coin g">Mardi → dimanche<br>12 h – 14 h 30 · 19 h – 22 h 30</div>
@@ -367,7 +363,6 @@
     .from(hero.querySelectorAll('.motif .t'), { scale: 0, duration: 1.1, ease: 'back.out(1.6)', stagger: { each: .025, from: 'center' } }, 0)
     .from(hero.querySelectorAll('.motif .s'), { scale: 0, rotate: -120, duration: 1, ease: 'back.out(2)', stagger: { each: .03, from: 'random' } }, .3)
     .from('.affiche h1 .mot > span', { yPercent: 105, duration: 1.2, stagger: .06 }, .5)
-    .from('.forchetta img', { yPercent: -70, rotate: -28, autoAlpha: 0, duration: 1.5, ease: 'elastic.out(1, .55)' }, 1.15)
     .from('.affiche .sur, .affiche .sous, .coin', { autoAlpha: 0, y: 16, duration: .9, stagger: .08 }, 1)
     .from('.assiette img', { autoAlpha: 0, y: 120, rotate: -140, scale: .7, duration: 1.8, ease: 'power3.out' }, .6);
   /* Le basilic tourne doucement, les tomates respirent */
@@ -376,13 +371,13 @@
   /* La souris : le motif glisse selon sa profondeur, l'assiette s'incline */
   if (souris) {
     const couches = [...document.querySelectorAll('.affiche .motif i')].map(el => ({ x: gsap.quickTo(el, 'x', { duration: 1.2, ease: 'power2.out' }), y: gsap.quickTo(el, 'y', { duration: 1.2, ease: 'power2.out' }), z: +el.dataset.z }));
-    const rx = gsap.quickTo('.assiette', 'rotationX', { duration: 1, ease: 'power2.out' }), ry = gsap.quickTo('.assiette', 'rotationY', { duration: 1, ease: 'power2.out' }), rf = gsap.quickTo('.forchetta img', 'rotate', { duration: 1.2, ease: 'power2.out' });
-    addEventListener('pointermove', e => { const dx = e.clientX / innerWidth - .5, dy = e.clientY / innerHeight - .5; couches.forEach(c => { c.x(-dx * 40 * c.z); c.y(-dy * 30 * c.z); }); rx(-dy * 26); ry(dx * 30); rf(dx * 14); }, { passive: true });
+    const rx = gsap.quickTo('.assiette', 'rotationX', { duration: 1, ease: 'power2.out' }), ry = gsap.quickTo('.assiette', 'rotationY', { duration: 1, ease: 'power2.out' });
+    addEventListener('pointermove', e => { const dx = e.clientX / innerWidth - .5, dy = e.clientY / innerHeight - .5; couches.forEach(c => { c.x(-dx * 40 * c.z); c.y(-dy * 30 * c.z); }); rx(-dy * 26); ry(dx * 30); }, { passive: true });
   }
   /* En descendant : le nom s'éloigne, l'assiette tourne comme un disque */
   gsap.to('.affiche-in', { yPercent: -35, autoAlpha: .2, ease: 'none', scrollTrigger: { trigger: hero, start: 'top top', end: 'bottom top', scrub: true } });
-  gsap.to('.forchetta img', { yPercent: -45, rotate: 10, ease: 'none', scrollTrigger: { trigger: hero, start: 'top top', end: 'bottom top', scrub: true } });
-  gsap.to('.assiette img', { rotate: 220, ease: 'none', scrollTrigger: { trigger: hero, start: 'top top', end: () => '+=' + innerHeight * 1.8, scrub: .6 } });
+  if (souris && !embarque) gsap.to('.assiette img', { rotate: 220, ease: 'none', scrollTrigger: { trigger: hero, start: 'top top', end: () => '+=' + innerHeight * 1.8, scrub: .6 } });
+  else gsap.to('.assiette img', { rotate: '+=360', duration: 24, ease: 'none', repeat: -1, delay: 2.4 });
   gsap.to('.assiette', { y: () => -innerHeight * .12, scale: .84, ease: 'none', scrollTrigger: { trigger: '.citazione', start: 'top bottom', end: 'center top', scrub: true } });
   /* L'en-tête */
   /* Fellini : chaque mot prend la couleur au défilement */
