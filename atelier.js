@@ -11,10 +11,10 @@
   /* ---------- Les téléphones de la composition : sept, debout, éteints (les démos viendront plus tard) ---------- */
   // Les téléphones : trois sites de démonstration (bistrot, bar, burger) sur de vrais iPhone, argent et graphite en alternance
   const DEMOS = [   // les deux démos montrées sur le site (Baptiste, 22/09 : Kaori et Giulia ; LE BRAISÉ, Rivière et Solange restent dans demos/ ou en ligne pour plus tard)
-    { nom: 'Kaori, izakaya', fichier: 'izakaya', lien: 'demos/izakaya/?de=devanturo', vivant: 'demos/izakaya/index.html?embarque=1&v=63', clair: true,
+    { nom: 'Kaori, izakaya', fichier: 'izakaya', lien: 'demos/izakaya/?de=devanturo', vivant: 'demos/izakaya/index.html?embarque=1&v=65', clair: true,
       // le bol de l'affiche qui flotte et l'ensō qui tourne, comme dans la démo (mesurés sur la démo en 390 × 844) ; le « fond » efface le bol figé du rendu
       calque: '<span class="calque-fond" style="left:50px;top:130px;width:340px;height:390px"></span><span class="calque-bol"><svg class="calque-enso" viewBox="0 0 200 200" style="left:42.1px;top:154.9px;width:332.3px;height:332.3px"><path d="M62 24C104 6 158 28 166 78c8 52-32 92-80 92C42 170 12 132 22 84 28 52 44 32 62 24" stroke-width="4" opacity=".45" transform="translate(3 4)"/><path d="M60 22C102 4 156 26 164 76c8 52-32 92-80 92C40 168 10 130 20 82 26 50 42 30 60 22" stroke-width="9" opacity=".9"/></svg><img class="calque-flotte" src="demos/izakaya/assets/ramen.webp" alt="" width="1020" height="1024" decoding="async" style="left:59.9px;top:172.7px;width:296.7px;height:296.7px"></span>' },
-    { nom: 'Giulia, trattoria', fichier: 'trattoria', lien: 'demos/trattoria/?de=devanturo', vivant: 'demos/trattoria/index.html?embarque=1&v=63',
+    { nom: 'Giulia, trattoria', fichier: 'trattoria', lien: 'demos/trattoria/?de=devanturo', vivant: 'demos/trattoria/index.html?embarque=1&v=65',
       // l'assiette de l'affiche, en pixels de l'écran 390 × 844 (mesurée sur la démo) ; la barre du bas (dès 774 px) la recouvre
       calque: '<img class="calque-plat" src="demos/trattoria/assets/tagliatelle.webp" alt="" width="300" height="300" decoding="async" style="left:46.8px;top:510.1px;width:296.4px;height:296px">' },
   ];
@@ -56,7 +56,9 @@
     cadre.append(w); vivants.set(cadre, w);
   }
   let attente = 0;
-  function veiller() { cadresHero.forEach(c => animer(c, DEMOS[c.dataset.demo])); }
+  // Fluidité : pas de calque dans le seuil (téléphones de 64 px, l'animation ne s'y voit pas) ; au téléphone, seulement les deux de devant
+  const aAnimer = c => c.dataset.couche === '0' && (!matchMedia('(orientation: portrait)').matches || parseInt(c.closest('.demo').style.getPropertyValue('--i')) >= N_TEL - 2);
+  function veiller() { cadresHero.filter(aAnimer).forEach(c => animer(c, DEMOS[c.dataset.demo])); }
   const poserEchelles = () => { cadresHero.forEach(echelleCadre); document.querySelectorAll('[data-vivant]').forEach(echelleCadre); };
   poserEchelles(); addEventListener('resize', () => { poserEchelles(); veiller(); });
   addEventListener('scroll', () => { if (!attente) attente = setTimeout(() => { attente = 0; veiller(); }, 200); }, { passive: true });
