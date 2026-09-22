@@ -8,8 +8,8 @@
   /* ---------- Les téléphones de la composition : sept, debout, éteints (les démos viendront plus tard) ---------- */
   // Les téléphones : trois sites de démonstration (bistrot, bar, burger) sur de vrais iPhone, argent et graphite en alternance
   const DEMOS = [   // les deux démos montrées sur le site (Baptiste, 22/09 : Kaori et Giulia ; LE BRAISÉ, Rivière et Solange restent dans demos/ ou en ligne pour plus tard)
-    { nom: 'Kaori, izakaya', fichier: 'izakaya', lien: 'demos/izakaya/?de=devanturo', vivant: 'demos/izakaya/index.html?embarque=1&v=60', clair: true },
-    { nom: 'Giulia, trattoria', fichier: 'trattoria', lien: 'demos/trattoria/?de=devanturo', vivant: 'demos/trattoria/index.html?embarque=1&v=60' },
+    { nom: 'Kaori, izakaya', fichier: 'izakaya', lien: 'demos/izakaya/?de=devanturo', vivant: 'demos/izakaya/index.html?embarque=1&v=61', clair: true },
+    { nom: 'Giulia, trattoria', fichier: 'trattoria', lien: 'demos/trattoria/?de=devanturo', vivant: 'demos/trattoria/index.html?embarque=1&v=61' },
   ];
   const N_TEL = 7;
   document.querySelectorAll('[data-demos]').forEach(ul => {
@@ -265,9 +265,45 @@
     n.textContent.split(/(\s+)/).forEach(m => { if (!m) return; if (/^\s+$/.test(m)) frag.append(m); else { const s = document.createElement('span'); s.className = 'mot'; s.textContent = m; frag.append(s); } });
     n.replaceWith(frag);
   });
-  gsap.from('.hero-titre .mot', { y: 24, autoAlpha: 0, duration: .8, stagger: .05, ease: 'power3.out' });
-  gsap.from('.hero-sous, .hero-indice', { autoAlpha: 0, y: 12, duration: .8, delay: .5 });
-  const fonduScene = gsap.from('.hero .scene', { autoAlpha: 0, duration: 1.2, delay: .2, ease: 'power2.out' });   // jamais de transform ici : poser() écrit le sien
+  // L'entrée attend la fin du chargement : les trois fondus sont posés tout de suite (invisibles sous l'écran de chargement) et partent ensemble
+  const entree = [
+    gsap.from('.hero-titre .mot', { y: 24, autoAlpha: 0, duration: .8, stagger: .05, ease: 'power3.out', paused: true }),
+    gsap.from('.hero-sous, .hero-indice', { autoAlpha: 0, y: 12, duration: .8, delay: .5, paused: true }),
+  ];
+  const fonduScene = gsap.from('.hero .scene', { autoAlpha: 0, duration: 1.2, delay: .2, ease: 'power2.out', paused: true });   // jamais de transform ici : poser() écrit le sien
+  entree.push(fonduScene);
+
+  /* ---------- L'écran de chargement ----------
+     Il attend les polices, les sept téléphones et, en avance, les deux démos qui s'allumeront dans les écrans (mises en cache :
+     au zoom, elles s'ouvrent sans à-coup). Jamais moins de 0,7 s (pas de clignotement), jamais plus de 5 s (le site ne reste pas bloqué). */
+  const chargement = html.classList.contains('chargement');
+  const lancerEntree = () => entree.forEach(t => t.play());
+  if (!chargement) lancerEntree();
+  else {
+    const barre = document.querySelector('[data-chargement-barre]'), pc = document.querySelector('[data-chargement-pc]'), voile = document.querySelector('.ecran-chargement');
+    const images = [...document.querySelectorAll('.hero .scene .demo img')];
+    const avance = [...new Set(DEMOS.map(d => d.vivant))].concat(['demos/izakaya/assets/ramen.webp', 'demos/trattoria/assets/tagliatelle.webp']);
+    const taches = [document.fonts ? document.fonts.ready : Promise.resolve()]
+      .concat(images.map(im => im.complete ? Promise.resolve() : new Promise(r => { im.addEventListener('load', r, { once: true }); im.addEventListener('error', r, { once: true }); })))
+      .concat(avance.map(u => fetch(u, { credentials: 'same-origin' }).then(r => r.blob()).catch(() => {})));
+    let faites = 0;
+    const montrer = v => { barre.style.transform = 'scaleX(' + (v / 100) + ')'; pc.textContent = Math.round(v); };
+    taches.forEach(t => t.then(() => { faites++; montrer(faites / taches.length * 100); }));
+    const debut = performance.now();
+    let fini = false;
+    // Sortie sans GSAP (minuteurs + transitions CSS) : même si les animations sont ralenties, l'écran part toujours
+    const finir = () => {
+      if (fini) return; fini = true; montrer(100);
+      setTimeout(() => {
+        voile.classList.add('sortie'); html.classList.remove('chargement');
+        requestAnimationFrame(() => voile.classList.add('partie'));
+        lancerEntree(); ScrollTrigger.refresh();
+        setTimeout(() => voile.remove(), 1000);
+      }, 280);
+    };
+    Promise.all(taches).then(() => setTimeout(finir, Math.max(0, 700 - (performance.now() - debut))));
+    setTimeout(finir, 5000);
+  }
 
   let introJouee = window.scrollY > innerHeight * .5, introEnCours = false;   // l'introduction automatique (plus bas)
   const tl = gsap.timeline({
@@ -315,19 +351,20 @@
       onComplete: () => { introEnCours = false; introJouee = true; html.classList.remove('intro'); } });
   }
   const enHaut = () => !introJouee && window.scrollY < innerHeight * .5;
+  const charge = () => html.classList.contains('chargement');
   addEventListener('wheel', e => {
-    if (introEnCours) { e.preventDefault(); return; }
+    if (introEnCours || charge()) { e.preventDefault(); return; }
     if (enHaut() && e.deltaY > 0) { e.preventDefault(); jouerIntro(); }
   }, { passive: false });
   let doigtY = null;
   addEventListener('touchstart', e => { doigtY = e.touches[0].clientY; }, { passive: true });
   addEventListener('touchmove', e => {
-    if (introEnCours) { e.preventDefault(); return; }
+    if (introEnCours || charge()) { e.preventDefault(); return; }
     if (enHaut() && doigtY != null && doigtY - e.touches[0].clientY > 6) { e.preventDefault(); jouerIntro(); }
   }, { passive: false });
   addEventListener('keydown', e => {
     const defile = ['ArrowDown', 'PageDown', ' ', 'Spacebar', 'ArrowUp', 'PageUp', 'End', 'Home'].includes(e.key);
-    if (introEnCours) { if (defile) e.preventDefault(); return; }
+    if (introEnCours || charge()) { if (defile) e.preventDefault(); return; }
     const champ = /INPUT|TEXTAREA|SELECT/.test(document.activeElement.tagName);
     if (enHaut() && !champ && ['ArrowDown', 'PageDown', ' ', 'Spacebar'].includes(e.key)) { e.preventDefault(); jouerIntro(); }
   });

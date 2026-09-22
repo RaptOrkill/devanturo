@@ -371,3 +371,20 @@ a:focus-visible, button:focus-visible, summary:focus-visible { outline: 2px soli
   .seuil { inset: auto 0 auto 0; top: var(--seuil-haut); height: calc(100vw * .625); }
   .seuil .compo-nom { top: 15%; }
 }
+
+/* ---------- L'écran de chargement (v61) : tant que polices, téléphones et démos ne sont pas là, la page ne bouge pas ---------- */
+.ecran-chargement { display: none; }
+html.chargement { overflow: hidden; }
+html.chargement .ecran-chargement, .ecran-chargement.sortie { display: grid; }
+.ecran-chargement { position: fixed; inset: 0; z-index: 500; place-items: center; background: var(--bg); color: var(--texte); }
+.chargement-int { display: grid; justify-items: center; gap: 18px; }
+.chargement-int .marque-icone { width: 44px; height: 44px; margin: 0; animation: chargement-souffle 1.6s ease-in-out infinite; }
+.chargement-int b { font: 600 clamp(28px, 4vw, 40px)/1 "Inter Tight", var(--sans, system-ui), sans-serif; letter-spacing: -.02em; }
+.chargement-barre { width: min(220px, 60vw); height: 2px; border-radius: 2px; background: rgba(var(--t), .14); overflow: hidden; }
+.chargement-barre i { display: block; height: 100%; width: 100%; background: var(--texte); transform: scaleX(0); transform-origin: 0 50%; transition: transform .35s cubic-bezier(.2,.7,.2,1); }
+.ecran-chargement { clip-path: inset(0 0 0 0); transition: clip-path .8s cubic-bezier(.7,0,.2,1); }
+.ecran-chargement.partie { clip-path: inset(0 0 100% 0); }
+.chargement-pc { font: 500 12px/1 var(--sans, system-ui), sans-serif; letter-spacing: .2em; color: rgba(var(--t), .55); font-variant-numeric: tabular-nums; }
+.chargement-pc::after { content: " %"; }
+@keyframes chargement-souffle { 50% { opacity: .45; transform: scale(.92); } }
+@media (prefers-reduced-motion: reduce) { .chargement-int .marque-icone { animation: none; } }
