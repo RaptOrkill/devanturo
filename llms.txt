@@ -1,0 +1,37 @@
+# Devanturo
+
+> Devanturo crée le site internet et la fiche Google des restaurants, bars et cafés. Un rendez-vous gratuit de 30 minutes sur place dans la métropole lilloise (en visio ailleurs en France) : photos, carte, horaires et devis. Le site est en ligne 7 jours après. Le prix est fixé après la visite, écrit sur le devis, et payé à la livraison, sans acompte, seulement si le site plaît.
+
+Devanturo est une entreprise individuelle fondée par Baptiste Ruin, 2 rue Vauban, 59100 Roubaix (SIRET 108 488 131 00013). Téléphone et WhatsApp : 06 14 97 96 04. E-mail : contact@devanturo.fr. Réservation d'un créneau en ligne sur https://devanturo.fr/#devis-debut.
+
+Ce que comprend un site Devanturo : un site à votre nom pensé pour le téléphone (accueil, carte, horaires, itinéraire, bouton d'appel, WhatsApp, réservation ou commande si besoin), les photos de la salle, de la façade et des plats, la création ou la remise à neuf de la fiche Google, le nom de domaine et l'hébergement à votre nom, et les changements de carte sur simple message WhatsApp.
+
+Zone : Roubaix, Lille, Tourcoing, Villeneuve-d'Ascq, Marcq-en-Barœul, Wasquehal, Croix, Wattrelos, Mouvaux et toute la métropole lilloise ; partout en France en visio.
+
+## Pages principales
+
+- [Accueil, réservation d'un rendez-vous et démos](https://devanturo.fr/): l'offre, les démos Kaori et Giulia, les questions fréquentes
+- [Démo Kaori, izakaya](https://devanturo.fr/demos/izakaya/): exemple de site réalisé par Devanturo pour un restaurant imaginaire (pas un client)
+- [Démo Giulia, trattoria](https://devanturo.fr/demos/trattoria/): exemple de site réalisé par Devanturo pour un restaurant imaginaire (pas un client)
+- [Mentions légales et données personnelles](https://devanturo.fr/mentions.html)
+
+## Création de site internet pour restaurant, par ville
+
+- [Roubaix](https://devanturo.fr/site-internet-restaurant-roubaix.html)
+- [Lille](https://devanturo.fr/site-internet-restaurant-lille.html)
+- [Tourcoing](https://devanturo.fr/site-internet-restaurant-tourcoing.html)
+- [Villeneuve-d'Ascq](https://devanturo.fr/site-internet-restaurant-villeneuve-d-ascq.html)
+- [Marcq-en-Barœul](https://devanturo.fr/site-internet-restaurant-marcq-en-baroeul.html)
+- [Wasquehal](https://devanturo.fr/site-internet-restaurant-wasquehal.html)
+- [Croix](https://devanturo.fr/site-internet-restaurant-croix.html)
+- [Wattrelos](https://devanturo.fr/site-internet-restaurant-wattrelos.html)
+
+## Conseils pour restaurateurs
+
+- [Tous les conseils](https://devanturo.fr/conseils.html)
+- [Prix d'un site internet pour restaurant](https://devanturo.fr/prix-site-internet-restaurant.html)
+- [Fiche Google de votre restaurant](https://devanturo.fr/fiche-google-restaurant.html)
+- [Site internet ou page Facebook](https://devanturo.fr/site-internet-ou-facebook-restaurant.html)
+- [Que mettre sur le site d'un restaurant](https://devanturo.fr/que-mettre-sur-site-restaurant.html)
+- [Photographier ses plats au téléphone](https://devanturo.fr/photos-plats-restaurant-telephone.html)
+- [Mettre sa carte en ligne](https://devanturo.fr/carte-restaurant-en-ligne.html)

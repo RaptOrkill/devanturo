@@ -410,3 +410,24 @@ html.chargement .ecran-chargement, .ecran-chargement.sortie { display: grid; }
 .ecran-pose:not(.calque) > * { opacity: 0; transition: opacity .6s ease; }
 .ecran-pose.charge > * { opacity: 1; }
 .ecran-pose.charge { background: #000; transition: background 0s .6s; }
+
+/* ---------- Pages de contenu (v66) : villes et conseils ---------- */
+.locale .chapo { font-size: clamp(17px, 1.3vw, 20px); line-height: 1.55; color: rgba(var(--t),.85); max-width: 62ch; margin: 0 0 8px; }
+.locale section { margin-top: 52px; padding-top: 8px; }
+.locale section > p, .locale section li p { max-width: 66ch; color: rgba(var(--t),.78); margin: 0 0 14px; }
+.locale section h2 { margin-top: 0; }
+.locale section h2 a { text-decoration: none; }
+.locale a { text-underline-offset: 3px; text-decoration-thickness: 1px; }
+.locale .rassure { font-size: 14px; color: rgba(var(--t),.6); margin: 6px 0 0; }
+.locale section ul:not(.locale-points):not(.a-lire), .locale section ol:not(.etapes-locales) { margin: 0 0 16px; padding-left: 1.2em; color: rgba(var(--t),.78); }
+.locale section ul li, .locale section ol li { margin-bottom: 6px; }
+.etapes-locales { list-style: none; padding: 0; margin: 0 0 18px; display: grid; gap: 8px; counter-reset: e; }
+.etapes-locales li { counter-increment: e; display: grid; grid-template-columns: 42px 1fr; align-items: baseline; padding: 14px 18px; border-radius: var(--rond-petit); background: var(--verre); border: 1px solid var(--verre-bord); color: rgba(var(--t),.85); }
+.etapes-locales li::before { content: counter(e); font: 600 22px/1 var(--serif); }
+.a-lire { list-style: none; padding: 0; margin: 0 0 16px; display: grid; gap: 10px; }
+.a-lire li { color: rgba(var(--t),.6); }
+.a-lire a { font-weight: 600; color: var(--texte); margin-right: 6px; }
+.locale .faq { margin-top: 8px; }
+.locale .villes { display: flex; flex-wrap: wrap; gap: 6px 18px; font-size: 14px; }
+.article h1 { font-size: clamp(32px, 4.6vw, 60px); }
+.article .etiquette a { text-decoration: none; }
