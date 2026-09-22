@@ -11,8 +11,10 @@
   /* ---------- Les téléphones de la composition : sept, debout, éteints (les démos viendront plus tard) ---------- */
   // Les téléphones : trois sites de démonstration (bistrot, bar, burger) sur de vrais iPhone, argent et graphite en alternance
   const DEMOS = [   // les deux démos montrées sur le site (Baptiste, 22/09 : Kaori et Giulia ; LE BRAISÉ, Rivière et Solange restent dans demos/ ou en ligne pour plus tard)
-    { nom: 'Kaori, izakaya', fichier: 'izakaya', lien: 'demos/izakaya/?de=devanturo', vivant: 'demos/izakaya/index.html?embarque=1&v=62', clair: true },
-    { nom: 'Giulia, trattoria', fichier: 'trattoria', lien: 'demos/trattoria/?de=devanturo', vivant: 'demos/trattoria/index.html?embarque=1&v=62',
+    { nom: 'Kaori, izakaya', fichier: 'izakaya', lien: 'demos/izakaya/?de=devanturo', vivant: 'demos/izakaya/index.html?embarque=1&v=63', clair: true,
+      // le bol de l'affiche qui flotte et l'ensō qui tourne, comme dans la démo (mesurés sur la démo en 390 × 844) ; le « fond » efface le bol figé du rendu
+      calque: '<span class="calque-fond" style="left:50px;top:130px;width:340px;height:390px"></span><span class="calque-bol"><svg class="calque-enso" viewBox="0 0 200 200" style="left:42.1px;top:154.9px;width:332.3px;height:332.3px"><path d="M62 24C104 6 158 28 166 78c8 52-32 92-80 92C42 170 12 132 22 84 28 52 44 32 62 24" stroke-width="4" opacity=".45" transform="translate(3 4)"/><path d="M60 22C102 4 156 26 164 76c8 52-32 92-80 92C40 168 10 130 20 82 26 50 42 30 60 22" stroke-width="9" opacity=".9"/></svg><img class="calque-flotte" src="demos/izakaya/assets/ramen.webp" alt="" width="1020" height="1024" decoding="async" style="left:59.9px;top:172.7px;width:296.7px;height:296.7px"></span>' },
+    { nom: 'Giulia, trattoria', fichier: 'trattoria', lien: 'demos/trattoria/?de=devanturo', vivant: 'demos/trattoria/index.html?embarque=1&v=63',
       // l'assiette de l'affiche, en pixels de l'écran 390 × 844 (mesurée sur la démo) ; la barre du bas (dès 774 px) la recouvre
       calque: '<img class="calque-plat" src="demos/trattoria/assets/tagliatelle.webp" alt="" width="300" height="300" decoding="async" style="left:46.8px;top:510.1px;width:296.4px;height:296px">' },
   ];
@@ -39,15 +41,17 @@
     const w = document.createElement('div'); w.className = 'demo-vivant';
     // Par-dessus la démo : la barre d'état d'iOS, l'îlot (l'encoche), et un reflet de verre, comme sur le rendu
     w.innerHTML = '<div class="ecran-pose' + (d.decale ? ' decale' : '') + (d.clair ? ' clair' : '') + '"><iframe title="' + d.nom + '" src="' + d.vivant + '" loading="lazy" tabindex="-1" aria-hidden="true"></iframe><span class="statut"><b>9:41</b><i></i></span><span class="ilot"></span><span class="reflet"></span></div>';
-    w.querySelector('.ecran-pose').style.transform = ECRAN.matrice;
+    const pose = w.querySelector('.ecran-pose'); pose.style.transform = ECRAN.matrice;
+    w.querySelector('iframe').addEventListener('load', () => setTimeout(() => pose.classList.add('charge'), 350), { once: true });
     cadre.append(w); vivants.set(cadre, w);
   }
   const echelleCadre = cadre => cadre.style.setProperty('--k', (cadre.offsetWidth / ECRAN.l).toFixed(4));
   const cadresHero = [...document.querySelectorAll('.hero .demo-tel')];   // les deux couches (le portable et le seuil)
   function animer(cadre, d) {
-    if (vivants.has(cadre) || !d.calque) return;
+    if (vivants.has(cadre)) return;
     const w = document.createElement('div'); w.className = 'demo-vivant calque';
-    w.innerHTML = '<div class="ecran-pose calque"><div class="calque-zone">' + d.calque + '</div></div>';
+    // L'îlot noir par-dessus tous les rendus : celui du modèle 3D se mélange à l'écran allumé (rayures)
+    w.innerHTML = '<div class="ecran-pose calque">' + (d.calque ? '<div class="calque-zone">' + d.calque + '</div>' : '') + '<span class="ilot"></span></div>';
     w.querySelector('.ecran-pose').style.transform = ECRAN.matrice;
     cadre.append(w); vivants.set(cadre, w);
   }

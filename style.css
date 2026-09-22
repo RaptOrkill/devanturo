@@ -395,3 +395,18 @@ html.chargement .ecran-chargement, .ecran-chargement.sortie { display: grid; }
 .calque-plat { position: absolute; max-width: none; animation: calque-tourne 16s linear infinite; will-change: transform; }
 @keyframes calque-tourne { to { transform: rotate(360deg); } }
 @media (prefers-reduced-motion: reduce) { .calque-plat { animation: none; } }
+/* L'îlot du rendu 3D est rayé (il se mélange à l'écran allumé) : un îlot noir un peu plus large le recouvre */
+.ecran-pose.calque .ilot { top: 9px; width: 138px; height: 40px; box-shadow: none; }
+/* Kaori : un fond couleur d'écran (tel que rendu) efface le bol figé, puis le bol flotte et l'ensō tourne, comme dans la démo */
+.calque-fond { position: absolute; background: radial-gradient(closest-side, #e5e5e5 88%, rgba(229,229,229,0)); }
+.calque-bol { position: absolute; inset: 0; filter: brightness(.93) saturate(.9); }
+.calque-enso { position: absolute; fill: none; stroke: #141412; stroke-linecap: round; animation: calque-tourne 90s linear infinite; }
+.calque-flotte { position: absolute; max-width: none; object-fit: contain; filter: drop-shadow(0 40px 44px rgba(20,20,18,.32)); animation: calque-flotte 3.2s ease-in-out infinite alternate; will-change: transform; }
+@keyframes calque-flotte { from { transform: none; } to { transform: translateY(-16px) rotate(2deg); } }
+@media (prefers-reduced-motion: reduce) { .calque-enso, .calque-flotte { animation: none; } }
+
+/* Démo vivante : invisible tant qu'elle charge (l'image rendue du téléphone reste), puis fondu (v63) */
+.ecran-pose:not(.calque) { background: transparent; }
+.ecran-pose:not(.calque) > * { opacity: 0; transition: opacity .6s ease; }
+.ecran-pose.charge > * { opacity: 1; }
+.ecran-pose.charge { background: #000; transition: background 0s .6s; }
