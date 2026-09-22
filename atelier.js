@@ -4,12 +4,17 @@
   'use strict';
   const html = document.documentElement;
   const anim = html.classList.contains('anim') && window.gsap && window.ScrollTrigger;
+  // Recharger la page ramène en haut, sur le portable fermé (le navigateur ne restaure plus l'ancienne position)
+  if ('scrollRestoration' in history) history.scrollRestoration = 'manual';
+  if (!location.hash && !/[?&](aller|defile)=/.test(location.search)) window.scrollTo(0, 0);
 
   /* ---------- Les téléphones de la composition : sept, debout, éteints (les démos viendront plus tard) ---------- */
   // Les téléphones : trois sites de démonstration (bistrot, bar, burger) sur de vrais iPhone, argent et graphite en alternance
   const DEMOS = [   // les deux démos montrées sur le site (Baptiste, 22/09 : Kaori et Giulia ; LE BRAISÉ, Rivière et Solange restent dans demos/ ou en ligne pour plus tard)
-    { nom: 'Kaori, izakaya', fichier: 'izakaya', lien: 'demos/izakaya/?de=devanturo', vivant: 'demos/izakaya/index.html?embarque=1&v=61', clair: true },
-    { nom: 'Giulia, trattoria', fichier: 'trattoria', lien: 'demos/trattoria/?de=devanturo', vivant: 'demos/trattoria/index.html?embarque=1&v=61' },
+    { nom: 'Kaori, izakaya', fichier: 'izakaya', lien: 'demos/izakaya/?de=devanturo', vivant: 'demos/izakaya/index.html?embarque=1&v=62', clair: true },
+    { nom: 'Giulia, trattoria', fichier: 'trattoria', lien: 'demos/trattoria/?de=devanturo', vivant: 'demos/trattoria/index.html?embarque=1&v=62',
+      // l'assiette de l'affiche, en pixels de l'écran 390 × 844 (mesurée sur la démo) ; la barre du bas (dès 774 px) la recouvre
+      calque: '<img class="calque-plat" src="demos/trattoria/assets/tagliatelle.webp" alt="" width="300" height="300" decoding="async" style="left:46.8px;top:510.1px;width:296.4px;height:296px">' },
   ];
   const N_TEL = 7;
   document.querySelectorAll('[data-demos]').forEach(ul => {
@@ -38,14 +43,16 @@
     cadre.append(w); vivants.set(cadre, w);
   }
   const echelleCadre = cadre => cadre.style.setProperty('--k', (cadre.offsetWidth / ECRAN.l).toFixed(4));
-  const cadresHero = [...document.querySelectorAll('.hero .scene .demo-tel[data-couche="0"]')];
-  let attente = 0;
-  function veiller() {
-    cadresHero.forEach((c, k) => {
-      if (vivants.has(c)) return;
-      if (c.getBoundingClientRect().width >= 120) setTimeout(() => vivifier(c, DEMOS[c.dataset.demo]), 250 * k);   // un par un, sans à-coup
-    });
+  const cadresHero = [...document.querySelectorAll('.hero .demo-tel')];   // les deux couches (le portable et le seuil)
+  function animer(cadre, d) {
+    if (vivants.has(cadre) || !d.calque) return;
+    const w = document.createElement('div'); w.className = 'demo-vivant calque';
+    w.innerHTML = '<div class="ecran-pose calque"><div class="calque-zone">' + d.calque + '</div></div>';
+    w.querySelector('.ecran-pose').style.transform = ECRAN.matrice;
+    cadre.append(w); vivants.set(cadre, w);
   }
+  let attente = 0;
+  function veiller() { cadresHero.forEach(c => animer(c, DEMOS[c.dataset.demo])); }
   const poserEchelles = () => { cadresHero.forEach(echelleCadre); document.querySelectorAll('[data-vivant]').forEach(echelleCadre); };
   poserEchelles(); addEventListener('resize', () => { poserEchelles(); veiller(); });
   addEventListener('scroll', () => { if (!attente) attente = setTimeout(() => { attente = 0; veiller(); }, 200); }, { passive: true });
@@ -377,6 +384,12 @@
   ScrollTrigger.create({ trigger: '.atelier', start: 'top 90%', onEnter: () => html.classList.add('dedans') });
 
   addEventListener('resize', () => ScrollTrigger.refresh());
+  // Net à l'arrêt, fluide en mouvement : pendant le défilement, le portable garde sa couche GPU (will-change) ; à l'arrêt on la rend,
+  // le navigateur redessine alors à la taille zoomée (sinon il agrandit l'image dessinée en petit : téléphones flous)
+  const couches3d = [scene, document.querySelector('.hero .couvercle')].filter(Boolean);
+  ScrollTrigger.addEventListener('scrollStart', () => couches3d.forEach(el => el.style.willChange = 'transform'));
+  ScrollTrigger.addEventListener('scrollEnd', () => couches3d.forEach(el => el.style.willChange = 'auto'));
+  setTimeout(() => couches3d.forEach(el => el.style.willChange = 'auto'), 1500);
   // ?aller=final : va directement à une section (captures de l'intérieur)
   const aller = new URLSearchParams(location.search).get('aller');
   if (aller && document.getElementById(aller)) setTimeout(() => document.getElementById(aller).scrollIntoView({ block: 'start' }), 400);

@@ -388,3 +388,10 @@ html.chargement .ecran-chargement, .ecran-chargement.sortie { display: grid; }
 .chargement-pc::after { content: " %"; }
 @keyframes chargement-souffle { 50% { opacity: .45; transform: scale(.92); } }
 @media (prefers-reduced-motion: reduce) { .chargement-int .marque-icone { animation: none; } }
+
+/* ---------- Les calques animés des téléphones de l'entrée (v62) : pas de page chargée, juste ce qui bouge ---------- */
+.ecran-pose.calque { background: transparent; }
+.calque-zone { position: absolute; inset: 0; clip-path: inset(0 0 70px 0); }
+.calque-plat { position: absolute; max-width: none; animation: calque-tourne 16s linear infinite; will-change: transform; }
+@keyframes calque-tourne { to { transform: rotate(360deg); } }
+@media (prefers-reduced-motion: reduce) { .calque-plat { animation: none; } }
