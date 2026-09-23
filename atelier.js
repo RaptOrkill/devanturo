@@ -21,13 +21,17 @@ console.log('%cDevanturo%c  code : RaptOrkill (Baptiste Ruin) · © 2026', 'font
       calque: '<img class="calque-plat" src="demos/trattoria/assets/tagliatelle.webp" alt="" width="300" height="300" decoding="async" style="left:46.8px;top:510.1px;width:296.4px;height:296px">' },
   ];
   const N_TEL = 7;
-  document.querySelectorAll('[data-demos]').forEach(ul => {
-    const n = ul.closest('.scene') ? 0 : 1;   // 0 = dans l'écran du portable (images tout de suite, écrans vivants), 1 = le seuil (images en attente, jamais vivant)
-    for (let i = 0; i < N_TEL; i++) {
-      const d = DEMOS[i % DEMOS.length], teinte = i % 2 ? 'graphite' : 'argent';
+  // Au téléphone (moins de 768 px), pas de portable : l'entrée montre directement les deux démos en grand (.hero-tels)
+  const TEL = matchMedia('(max-width: 767px)').matches;
+  document.querySelectorAll(TEL ? '[data-tels]' : '[data-demos]').forEach(ul => {
+    const deux = ul.hasAttribute('data-tels');
+    const n = deux ? 2 : ul.closest('.scene') ? 0 : 1;   // 2 = l'entrée du téléphone   // 0 = dans l'écran du portable (images tout de suite, écrans vivants), 1 = le seuil (images en attente, jamais vivant)
+    for (let i = 0; i < (deux ? DEMOS.length : N_TEL); i++) {
+      const d = DEMOS[i % DEMOS.length], teinte = deux ? (i ? 'graphite' : 'argent') : i % 2 ? 'graphite' : 'argent';
       const li = document.createElement('li'); li.className = 'demo'; li.style.setProperty('--i', i);
+      if (deux) li.dataset.legende = d.nom.replace(', ', ' · ');
       // La photo du téléphone, écran allumé, par-dessus le téléphone CSS ; dans l'écran du portable (n = 0) elle part tout de suite, dans le seuil elle attend.
-      li.innerHTML = '<a class="demo-tel" data-demo="' + (i % DEMOS.length) + '" data-couche="' + n + '" href="' + d.lien + '" target="_blank" rel="noopener" tabindex="-1" aria-label="Voir la démonstration : ' + d.nom + '"><span class="demo-ecran"></span><img src="assets/telephone-' + d.fichier + '-' + teinte + '.webp" srcset="assets/telephone-' + d.fichier + '-' + teinte + '.webp 600w, assets/telephone-' + d.fichier + '-' + teinte + '-2x.webp 1200w" sizes="(min-width: 760px) 340px, 80px" alt="" width="600" height="1351"' + (n ? ' loading="lazy"' : '') + ' decoding="async" onload="this.closest(\'.demo\').classList.add(\'photo\')" onerror="this.remove()"></a>';
+      li.innerHTML = '<a class="demo-tel" data-demo="' + (i % DEMOS.length) + '" data-couche="' + n + '" href="' + d.lien + '" target="_blank" rel="noopener" tabindex="-1" aria-label="Voir la démonstration : ' + d.nom + '"><span class="demo-ecran"></span><img src="assets/telephone-' + d.fichier + '-' + teinte + '.webp" srcset="assets/telephone-' + d.fichier + '-' + teinte + '.webp 600w, assets/telephone-' + d.fichier + '-' + teinte + '-2x.webp 1200w" sizes="' + (deux ? '52vw' : '(min-width: 760px) 340px, 80px') + '" alt="" width="600" height="1351"' + (n ? ' loading="lazy"' : '') + ' decoding="async" onload="this.closest(\'.demo\').classList.add(\'photo\')" onerror="this.remove()"></a>';
       ul.append(li);
     }
   });
@@ -59,10 +63,11 @@ console.log('%cDevanturo%c  code : RaptOrkill (Baptiste Ruin) · © 2026', 'font
   }
   let attente = 0;
   // Fluidité : pas de calque dans le seuil (téléphones de 64 px, l'animation ne s'y voit pas) ; au téléphone, seulement les deux de devant
-  const aAnimer = c => c.dataset.couche === '0' && (!matchMedia('(orientation: portrait)').matches || parseInt(c.closest('.demo').style.getPropertyValue('--i')) >= N_TEL - 2);
+  const aAnimer = c => c.dataset.couche === '2' || c.dataset.couche === '0' && (!matchMedia('(orientation: portrait)').matches || parseInt(c.closest('.demo').style.getPropertyValue('--i')) >= N_TEL - 2);
   function veiller() { cadresHero.filter(aAnimer).forEach(c => animer(c, DEMOS[c.dataset.demo])); }
   const poserEchelles = () => { cadresHero.forEach(echelleCadre); document.querySelectorAll('[data-vivant]').forEach(echelleCadre); };
   poserEchelles(); addEventListener('resize', () => { poserEchelles(); veiller(); });
+  if (TEL) veiller();
   addEventListener('scroll', () => { if (!attente) attente = setTimeout(() => { attente = 0; veiller(); }, 200); }, { passive: true });
   veiller();
   // « Trois sites » : les trois écrans s'allument quand la section approche
@@ -283,8 +288,10 @@ console.log('%cDevanturo%c  code : RaptOrkill (Baptiste Ruin) · © 2026', 'font
   // L'entrée attend la fin du chargement : les trois fondus sont posés tout de suite (invisibles sous l'écran de chargement) et partent ensemble
   const entree = [
     gsap.from('.hero-titre .mot', { y: 24, autoAlpha: 0, duration: .8, stagger: .05, ease: 'power3.out', paused: true }),
-    gsap.from('.hero-sous, .hero-indice', { autoAlpha: 0, y: 12, duration: .8, delay: .5, paused: true }),
+    gsap.from('.hero-sous, .hero-indice, .hero-cta', { autoAlpha: 0, y: 12, duration: .8, delay: .5, paused: true }),
   ];
+  if (TEL) entree.push(gsap.from('.hero-tels .demo', { yPercent: 18, autoAlpha: 0, rotation: 0, duration: 1.3, delay: .35, stagger: .15, ease: 'power3.out', paused: true }),
+    gsap.from('.hero-tels-nom', { autoAlpha: 0, scale: .92, duration: 1.6, delay: .2, ease: 'power2.out', paused: true }));
   const fonduScene = gsap.from('.hero .scene', { autoAlpha: 0, duration: 1.2, delay: .2, ease: 'power2.out', paused: true });   // jamais de transform ici : poser() écrit le sien
   entree.push(fonduScene);
 
@@ -296,7 +303,7 @@ console.log('%cDevanturo%c  code : RaptOrkill (Baptiste Ruin) · © 2026', 'font
   if (!chargement) lancerEntree();
   else {
     const barre = document.querySelector('[data-chargement-barre]'), pc = document.querySelector('[data-chargement-pc]'), voile = document.querySelector('.ecran-chargement');
-    const images = [...document.querySelectorAll('.hero .scene .demo img')];
+    const images = [...document.querySelectorAll(TEL ? '.hero-tels .demo img' : '.hero .scene .demo img')];
     const avance = [...new Set(DEMOS.map(d => d.vivant))].concat(['demos/izakaya/assets/ramen.webp', 'demos/trattoria/assets/tagliatelle.webp']);
     const taches = [document.fonts ? document.fonts.ready : Promise.resolve()]
       .concat(images.map(im => im.complete ? Promise.resolve() : new Promise(r => { im.addEventListener('load', r, { once: true }); im.addEventListener('error', r, { once: true }); })))
@@ -320,8 +327,15 @@ console.log('%cDevanturo%c  code : RaptOrkill (Baptiste Ruin) · © 2026', 'font
     setTimeout(finir, 5000);
   }
 
+  let tl;   // la frise du portable (pas au téléphone)
+  if (TEL) {
+    // Au téléphone : l'en-tête est là tout de suite, le mot glisse et les deux téléphones montent un peu pendant qu'on descend
+    html.classList.add('dedans');
+    gsap.to('.hero-tels-nom', { xPercent: -18, ease: 'none', scrollTrigger: { trigger: '.hero-tels', start: 'top 80%', end: 'bottom top', scrub: true } });
+    gsap.to('.hero-tels-liste', { y: -60, ease: 'none', scrollTrigger: { trigger: '.hero-tels', start: 'top 60%', end: 'bottom top', scrub: true } });
+  } else {
   let introJouee = window.scrollY > innerHeight * .5, introEnCours = false;   // l'introduction automatique (plus bas)
-  const tl = gsap.timeline({
+  tl = gsap.timeline({
     scrollTrigger: { trigger: '.hero', start: 'top top', end: '+=260%', pin: true, scrub: .7, anticipatePin: 1, invalidateOnRefresh: true,
       onUpdate: self => { html.classList.toggle('dedans', self.progress > .76); if (self.progress > .2 && fonduScene.isActive()) fonduScene.progress(1).kill(); if (self.progress >= 1) introJouee = true; if (self.progress > .5 && !attente) attente = setTimeout(() => { attente = 0; veiller(); }, 200); } }
   });
@@ -384,6 +398,8 @@ console.log('%cDevanturo%c  code : RaptOrkill (Baptiste Ruin) · © 2026', 'font
     if (enHaut() && !champ && ['ArrowDown', 'PageDown', ' ', 'Spacebar'].includes(e.key)) { e.preventDefault(); jouerIntro(); }
   });
 
+  }
+
   // L'intérieur : chaque bloc entre une fois
   gsap.utils.toArray('.bloc').forEach(b => {
     gsap.to(b, { autoAlpha: 1, y: 0, duration: .9, ease: 'power3.out', scrollTrigger: { trigger: b, start: 'top 82%', once: true }, startAt: { y: 40 } });
@@ -403,5 +419,5 @@ console.log('%cDevanturo%c  code : RaptOrkill (Baptiste Ruin) · © 2026', 'font
   if (aller && document.getElementById(aller)) setTimeout(() => document.getElementById(aller).scrollIntoView({ block: 'start' }), 400);
   // ?frise=0.75 fige l'entrée aux trois quarts (sans défiler) : pour vérifier chaque état en capture.
   const frise = parseFloat(new URLSearchParams(location.search).get('frise'));
-  if (frise >= 0) setTimeout(() => { tl.scrollTrigger.disable(false); tl.progress(frise); html.classList.toggle('dedans', frise > .9); }, 300);
+  if (frise >= 0 && !TEL) setTimeout(() => { tl.scrollTrigger.disable(false); tl.progress(frise); html.classList.toggle('dedans', frise > .9); }, 300);
 })();
