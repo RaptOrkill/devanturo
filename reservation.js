@@ -19,6 +19,20 @@ window.Reservations = (function () {
   async function lireErreur(rep, defaut) { try { const j = await rep.json(); return j.erreur || j.message || defaut; } catch (e) { return defaut; } }
   const erreur = (message, code) => { const e = new Error(message); e.code = code; return e; };
 
+  // Sans serveur (GitHub Pages) : la demande part par e-mail via FormSubmit (config.formulaire = l'adresse, ou l'alias donné par
+  // FormSubmit après activation). Renvoie true seulement si FormSubmit confirme l'envoi ; sinon on repasse par WhatsApp.
+  async function envoyerMail(sujet, champs) {
+    if (!cfg.formulaire) return false;
+    try {
+      const rep = await fetch('https://formsubmit.co/ajax/' + encodeURIComponent(cfg.formulaire), {
+        method: 'POST', headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
+        body: JSON.stringify({ _subject: sujet, _template: 'table', _captcha: 'false', ...champs })
+      });
+      const j = await rep.json().catch(() => ({}));
+      return rep.ok && String(j.success) === 'true';
+    } catch (e) { return false; }
+  }
+
   // Une réservation : { quand (ISO UTC), libelle, etab, prenom, tel, metier }
   async function enregistrer(r) {
     if (mode === 'demo') { const l = lireLocal(); if (l.some(x => x.statut !== 'annule' && x.quand === r.quand)) throw erreur('Ce créneau vient d\'être pris.', 409); const ligne = { id: uuid(), cree_le: new Date().toISOString(), statut: 'a_confirmer', ...r }; l.push(ligne); ecrireLocal(l); return ligne; }
@@ -91,5 +105,5 @@ window.Reservations = (function () {
       'DESCRIPTION:Photos, carte, horaires, et le devis. Devanturo, 06 14 97 96 04.', 'LOCATION:' + (r.etab || 'Chez vous'), 'END:VEVENT', 'END:VCALENDAR'].join('\r\n');
     return URL.createObjectURL(new Blob([texte], { type: 'text/calendar' }));
   }
-  return { mode, actif, enregistrer, modifier, supprimer, lister, creneauxPris, connecter, ics };
+  return { mode, actif, envoyerMail, enregistrer, modifier, supprimer, lister, creneauxPris, connecter, ics };
 })();

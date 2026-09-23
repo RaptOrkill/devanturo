@@ -10,6 +10,19 @@ console.log('%cDevanturo%c  code : RaptOrkill (Baptiste Ruin) · © 2026', 'font
   if ('scrollRestoration' in history) history.scrollRestoration = 'manual';
   if (!location.hash && !/[?&](aller|defile)=/.test(location.search)) window.scrollTo(0, 0);
 
+  /* ---------- La mesure (GoatCounter, sans cookie) : seulement si config.goatcounter est rempli ---------- */
+  const GC = window.DEVANTURO && window.DEVANTURO.goatcounter;
+  if (GC && /^[a-z0-9-]+$/.test(GC)) {
+    const s = document.createElement('script'); s.async = true; s.src = 'https://gc.zgo.at/count.js';
+    s.dataset.goatcounter = 'https://' + GC + '.goatcounter.com/count'; document.head.append(s);
+  }
+  // Un événement (réservation, audit, WhatsApp, appel) : compté comme une page « /evenement/… » dans GoatCounter
+  const mesurer = nom => { try { if (window.goatcounter && window.goatcounter.count) window.goatcounter.count({ path: '/evenement/' + nom, title: nom, event: true }); } catch (e) {} };
+  document.addEventListener('click', e => {
+    const a = e.target.closest('a'); if (!a) return;
+    if (/^tel:/.test(a.href)) mesurer('appel'); else if (/wa\.me/.test(a.href)) mesurer('whatsapp'); else if (a.hash === '#devis-debut') mesurer('clic-reserver');
+  });
+
   /* ---------- Les téléphones de la composition : sept, debout, éteints (les démos viendront plus tard) ---------- */
   // Les téléphones : trois sites de démonstration (bistrot, bar, burger) sur de vrais iPhone, argent et graphite en alternance
   const DEMOS = [   // les deux démos montrées sur le site (Baptiste, 22/09 : Kaori et Giulia ; LE BRAISÉ, Rivière et Solange restent dans demos/ ou en ligne pour plus tard)
@@ -189,8 +202,8 @@ console.log('%cDevanturo%c  code : RaptOrkill (Baptiste Ruin) · © 2026', 'font
       assistant.querySelector('[data-confirmation]').textContent = etat.creneau.libelle.replace(/^./, x => x.toUpperCase()) + ' · ' + etat.etab;
       assistant.querySelector('[data-ics]').href = R.ics({ id: etat.reservation.id, quand: etat.creneau.quand, etab: etat.etab });
     }
-    // Sans serveur : rien n'est parti tout seul, la dernière étape est l'envoi du créneau sur WhatsApp (le message est prêt)
-    if (!R.actif) {
+    // Sans serveur : la demande part par e-mail (FormSubmit). Si l'e-mail n'a pas pu partir, la dernière étape devient l'envoi du créneau sur WhatsApp (le message est prêt)
+    function modeWhatsApp() {
       const titre = assistant.querySelector('[data-confirmation-titre]'), puceFin = assistant.querySelector('[data-puce-fin]'), suite1 = assistant.querySelector('[data-suite-1]');
       const ics = assistant.querySelector('[data-ics]'), wa = assistant.querySelector('[data-envoi="rdv"]');
       if (titre) titre.textContent = 'Il reste un clic.';
@@ -208,18 +221,48 @@ console.log('%cDevanturo%c  code : RaptOrkill (Baptiste Ruin) · © 2026', 'font
       try {
         if (etat.reservation && etat.reservation.id) { await R.modifier(etat.reservation.id, r); etat.reservation = { ...etat.reservation, ...r }; }
         else { const l = await R.enregistrer(r); etat.reservation = { id: l.id, ...r }; }
+        if (!R.actif) {
+          etat.reservation.recu = await R.envoyerMail('Visite gratuite : ' + r.etab + ', ' + r.libelle, {
+            'Établissement': r.etab, 'Prénom': r.prenom, 'Téléphone': r.tel, 'Créneau': r.libelle, 'Type': r.metier || 'non précisé',
+            'Changement': etat.reservation.cree ? 'oui, créneau déplacé' : 'non' });
+          etat.reservation.cree = true;
+          if (!etat.reservation.recu) modeWhatsApp();
+        }
+        mesurer('reservation');
         confirmer(); rendre(); aller(2, true);
       } catch (err) {
         if (err.code === 409) { pris.add(cleHeure(etat.creneau.quand)); etat.creneau = null; cal.heure = null; dessinerCalendrier(); rendre(); montrerErreur('Quelqu\'un vient de prendre ce créneau. Revenez au calendrier pour en choisir un autre.'); }
         else montrerErreur(err.message + ' Écrivez-nous sur WhatsApp, on le note à la main.');
       }
-      reserver.disabled = false; reserver.textContent = 'Réserver';
+      reserver.disabled = false; reserver.textContent = 'Réserver ma visite';
     });
     assistant.querySelector('[data-modifier]').addEventListener('click', () => aller(0, true));
-    if (etat.reservation && etat.creneau) { confirmer(); aller(2, false); } else aller(0, false);
+    if (etat.reservation && etat.creneau) { if (!R.actif && !etat.reservation.recu) modeWhatsApp(); confirmer(); aller(2, false); } else aller(0, false);
     const etapeParam = parseInt(new URLSearchParams(location.search).get('etape'));   // ?etape=2 (débogage, captures)
     if (etapeParam >= 1 && etapeParam <= etapes.length) setTimeout(() => aller(etapeParam - 1, false), 0);
   }
+
+  // L'option légère : l'audit gratuit de la fiche Google (le nom, la ville, un téléphone), envoyé par e-mail, sinon par WhatsApp
+  const audit = document.querySelector('[data-audit]');
+  if (audit) audit.addEventListener('submit', async e => {
+    e.preventDefault();
+    const f = new FormData(audit), etab = String(f.get('etab') || '').trim().slice(0, 120), tel = String(f.get('tel') || '').trim().slice(0, 30);
+    const msg = audit.querySelector('[data-audit-message]'), bouton = audit.querySelector('button');
+    const dire = (t, ok) => { msg.textContent = t; msg.hidden = false; msg.classList.toggle('ok', !!ok); };
+    if (etab.length < 3) return dire('Le nom de votre établissement et sa ville, pour qu\'on retrouve votre fiche.');
+    if (tel.replace(/\D/g, '').length < 9) return dire('Un numéro de téléphone, pour vous envoyer l\'audit.');
+    bouton.disabled = true; bouton.textContent = 'Un instant…';
+    const recu = await R.envoyerMail('Audit fiche Google : ' + etab, { 'Établissement et ville': etab, 'Téléphone': tel, 'Demande': 'Audit gratuit de la fiche Google, sous 24 h' });
+    mesurer('audit');
+    bouton.disabled = false; bouton.textContent = 'Recevoir mon audit gratuit';
+    if (recu) { audit.reset(); dire('C\'est noté. Votre audit arrive sous 24 h, sur WhatsApp ou par SMS.', true); }
+    else {
+      const url = 'https://wa.me/' + ((window.DEVANTURO && window.DEVANTURO.telephone) || '33614979604') + '?text=' + encodeURIComponent('Bonjour, je voudrais l\'audit gratuit de ma fiche Google : ' + etab + '. Mon numéro : ' + tel + '.');
+      dire('Dernière étape, le message est prêt : ', true);
+      const a = document.createElement('a'); a.href = url; a.target = '_blank'; a.rel = 'noopener'; a.textContent = 'l\'envoyer sur WhatsApp'; msg.append(a, '.');
+      window.open(url, '_blank', 'noopener');
+    }
+  });
 
   // ?coche=bar (débogage, captures) : coche un choix au chargement
   const coche = new URLSearchParams(location.search).get('coche');
@@ -245,11 +288,12 @@ console.log('%cDevanturo%c  code : RaptOrkill (Baptiste Ruin) · © 2026', 'font
     appliquerTheme(t); try { localStorage.setItem('devanturo-theme', t); } catch (e) {}
   });
 
-  // Les ancres glissent (le défilement natif est en « auto » pendant la mise en scène)
+  // Les ancres glissent (le défilement natif est en « auto » pendant la mise en scène) ; un clic sur « Réserver » arrête l'introduction automatique
+  let arreterIntro = null;
   document.querySelectorAll('a[href^="#"]').forEach(a => a.addEventListener('click', e => {
     const cible = document.querySelector(a.getAttribute('href'));
     if (!cible) return;
-    e.preventDefault(); cible.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    e.preventDefault(); if (arreterIntro) arreterIntro(); cible.scrollIntoView({ behavior: 'smooth', block: 'start' });
   }));
 
   if (!anim) return;
@@ -288,7 +332,7 @@ console.log('%cDevanturo%c  code : RaptOrkill (Baptiste Ruin) · © 2026', 'font
   // L'entrée attend la fin du chargement : les trois fondus sont posés tout de suite (invisibles sous l'écran de chargement) et partent ensemble
   const entree = [
     gsap.from('.hero-titre .mot', { y: 24, autoAlpha: 0, duration: .8, stagger: .05, ease: 'power3.out', paused: true }),
-    gsap.from('.hero-sous, .hero-indice, .hero-cta', { autoAlpha: 0, y: 12, duration: .8, delay: .5, paused: true }),
+    gsap.from('.hero-sous, .hero-indice, .hero-actions', { autoAlpha: 0, y: 12, duration: .8, delay: .5, paused: true }),
   ];
   if (TEL) entree.push(gsap.from('.hero-tels .demo', { yPercent: 18, autoAlpha: 0, rotation: 0, duration: 1.3, delay: .35, stagger: .15, ease: 'power3.out', paused: true }),
     gsap.from('.hero-tels-nom', { autoAlpha: 0, scale: .92, duration: 1.6, delay: .2, ease: 'power2.out', paused: true }));
@@ -297,7 +341,7 @@ console.log('%cDevanturo%c  code : RaptOrkill (Baptiste Ruin) · © 2026', 'font
 
   /* ---------- L'écran de chargement ----------
      Il attend les polices, les sept téléphones et, en avance, les deux démos qui s'allumeront dans les écrans (mises en cache :
-     au zoom, elles s'ouvrent sans à-coup). Jamais moins de 0,7 s (pas de clignotement), jamais plus de 5 s (le site ne reste pas bloqué). */
+     au zoom, elles s'ouvrent sans à-coup). Jamais moins de 0,7 s (pas de clignotement), jamais plus de 2,5 s (le site ne reste pas bloqué). */
   const chargement = html.classList.contains('chargement');
   const lancerEntree = () => entree.forEach(t => t.play());
   if (!chargement) lancerEntree();
@@ -324,7 +368,7 @@ console.log('%cDevanturo%c  code : RaptOrkill (Baptiste Ruin) · © 2026', 'font
       }, 280);
     };
     Promise.all(taches).then(() => setTimeout(finir, Math.max(0, 700 - (performance.now() - debut))));
-    setTimeout(finir, 5000);
+    setTimeout(finir, 2500);   // jamais plus de 2,5 s : le visiteur pressé ne doit pas attendre
   }
 
   let tl;   // la frise du portable (pas au téléphone)
@@ -375,9 +419,9 @@ console.log('%cDevanturo%c  code : RaptOrkill (Baptiste Ruin) · © 2026', 'font
     if (introJouee || introEnCours) return;
     introEnCours = true; html.classList.add('intro');
     const o = { y: window.scrollY };
-    gsap.to(o, { y: () => tl.scrollTrigger.end, duration: 3.4, ease: 'power2.inOut',
-      onUpdate: () => window.scrollTo(0, o.y),
-      onComplete: () => { introEnCours = false; introJouee = true; html.classList.remove('intro'); } });
+    const fin = () => { introEnCours = false; introJouee = true; html.classList.remove('intro'); arreterIntro = null; };
+    const t = gsap.to(o, { y: () => tl.scrollTrigger.end, duration: 2.4, ease: 'power2.inOut', onUpdate: () => window.scrollTo(0, o.y), onComplete: fin });
+    arreterIntro = () => { t.kill(); fin(); };
   }
   const enHaut = () => !introJouee && window.scrollY < innerHeight * .5;
   const charge = () => html.classList.contains('chargement');

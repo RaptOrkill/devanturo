@@ -8,6 +8,8 @@ window.DEVANTURO = {
   apiUrl: '',             // ex. https://agence.devanturo.fr, si le site et l'API ne sont pas servis par le même serveur
   supabaseUrl: '',        // solution de secours sans VPS : voir README
   supabaseKey: '',
+  formulaire: 'contact@devanturo.fr',   // sans serveur : réservations et demandes d'audit envoyées par e-mail (FormSubmit, à activer une fois par le lien reçu)
+  goatcounter: '',        // mesure d'audience sans cookie : le code GoatCounter (ex. 'devanturo' pour devanturo.goatcounter.com), vide = aucune mesure
   motDePasseDemo: 'devanturo',   // mode démonstration seulement : ce n'est pas une vraie protection
   telephone: '33614979604'
 };

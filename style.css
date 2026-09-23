@@ -67,7 +67,7 @@ ul, ol { list-style: none; margin: 0; padding: 0; }
 .entete .theme { margin-left: auto; }
 .nav a { text-decoration: none; opacity: .8; }
 .nav a:hover { opacity: 1; }
-.entete-cta { margin-left: auto; padding: 11px 18px; border-radius: 999px; background: var(--texte); color: var(--bg); font: 500 13px/1 var(--sans); text-decoration: none; transition: transform var(--duree) var(--courbe); }
+.entete-cta { margin-left: 0; padding: 11px 18px; border-radius: 999px; background: var(--texte); color: var(--bg); font: 500 13px/1 var(--sans); text-decoration: none; transition: transform var(--duree) var(--courbe); }
 .entete-cta:hover { transform: scale(1.04); }
 @media (min-width: 1024px) { .nav { display: flex; } .entete .theme, .entete-cta { margin-left: 0; } }
 @media (max-width: 480px) { .marque span { display: none; } .entete { gap: 12px; padding-left: 16px; } }
@@ -350,8 +350,6 @@ html.intro .hero-indice { animation: none; opacity: 0; transition: opacity 300ms
 .mentions a { color: inherit; }
 
 /* ---------- Mise en scène (html.anim) ---------- */
-html.anim .entete { opacity: 0; transition: opacity 400ms; }
-html.anim.dedans .entete { opacity: 1; }
 html.anim .bloc { opacity: 0; }
 html:not(.anim) .hero-colle { min-height: 0; padding-bottom: 8vh; }
 html:not(.anim) .scene { min-height: calc(var(--ecran-h) * 2.1); }
@@ -434,14 +432,36 @@ html.chargement .ecran-chargement, .ecran-chargement.sortie { display: grid; }
 .article .etiquette a { text-decoration: none; }
 
 /* ---------- Au téléphone (v69) : pas de portable ni de zoom. Le titre, un bouton, puis les deux démos en grand, un peu penchées ---------- */
-.hero-tels, .hero-cta { display: none; }
+.hero-tels { display: none; }
+/* Conversion (23/09) : le bouton de réservation est là dès l'arrivée, sur ordinateur aussi, avec l'option légère (l'audit) en lien */
+.hero-actions { display: flex; flex-wrap: wrap; align-items: center; justify-content: center; gap: 10px 22px; margin-top: 24px; }
+.hero-cta { min-height: 54px; padding: 0 28px; font-size: 16px; }
+.hero-lien { font-size: 15px; color: rgba(var(--t),.75); text-decoration: underline; text-underline-offset: 4px; text-decoration-color: rgba(var(--t),.35); }
+.hero-lien:hover { color: var(--texte); }
+html.intro .hero-actions { opacity: 0; transition: opacity 300ms; }
+/* L'appel en un geste, dans la capsule : l'icône au téléphone, le numéro sur grand écran */
+.entete-tel { display: inline-flex; align-items: center; gap: 8px; height: 38px; min-width: 38px; justify-content: center; border-radius: 999px; border: 1px solid var(--verre-bord); background: var(--verre); box-shadow: var(--verre-reflet); color: var(--texte); text-decoration: none; font: 500 13px/1 var(--sans); }
+.entete-tel svg { width: 16px; height: 16px; fill: currentColor; }
+.entete-tel span { display: none; }
+@media (min-width: 1024px) { .entete-tel { padding: 0 14px 0 12px; } .entete-tel span { display: inline; } }
+/* L'audit de la fiche Google : le texte à gauche, trois champs à droite */
+.audit { display: grid; gap: 24px 48px; align-items: start; }
+@media (min-width: 900px) { .audit { grid-template-columns: 1.1fr 1fr; } }
+.audit-form { display: grid; gap: 12px; padding: 22px; border-radius: var(--rond); background: var(--verre); border: 1px solid var(--verre-bord); box-shadow: var(--verre-reflet); }
+.audit-form label { display: grid; gap: 6px; font-size: 13px; color: rgba(var(--t),.7); }
+.audit-form input { font: inherit; font-size: 16px; color: var(--texte); padding: 14px 16px; border-radius: var(--rond-petit); border: 1px solid var(--verre-bord-fort); background: rgba(var(--t),.04); }
+.audit-form input:focus-visible { outline: 2px solid var(--texte); outline-offset: 2px; }
+.audit-form .bouton { width: 100%; margin-top: 4px; }
+.audit-message { margin: 0; font-size: 14px; color: #ff8a7a; }
+.audit-message.ok { color: var(--texte); }
+.audit-message a { color: inherit; font-weight: 600; }
 @media (max-width: 767px) {
   .hero, .hero-colle, html:not(.anim) .hero-colle { min-height: 0; }
   .hero-colle { display: block; padding: 108px var(--gout) 0; overflow: hidden; }
   .hero .scene, .hero .seuil, .hero-indice { display: none !important; }
   .hero-titre { font-size: clamp(33px, 9.4vw, 46px); line-height: 1; }
   .hero-sous { margin-top: 16px; font-size: 16px; }
-  .hero-cta { display: inline-flex; margin-top: 24px; min-height: 54px; padding: 0 28px; font-size: 16px; }
+  .hero-actions { flex-direction: column; }
   .hero-tels { display: block; position: relative; height: calc(44vw * 1351 / 600 + 26vw); margin: 30px calc(var(--gout) * -1) 0; }
   .hero-tels-nom { display: none; }
   .hero-tels-liste { position: absolute; inset: 0; }
