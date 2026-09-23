@@ -24,7 +24,7 @@
   html.embarque { scrollbar-width: none; }
   html.embarque::-webkit-scrollbar { display: none; }
   html.embarque body::after { display: none; }
-  body { background: var(--papier); color: var(--sumi); font: 400 16px/1.7 var(--sans); overflow-x: hidden; -webkit-font-smoothing: antialiased; }
+  body { background: var(--papier); color: var(--sumi); font: 400 16px/1.7 var(--sans); overflow-x: clip; -webkit-font-smoothing: antialiased; }
   body::after { content: ""; position: fixed; inset: 0; z-index: 0; opacity: .35; pointer-events: none; mix-blend-mode: multiply; background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='220' height='220'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 .45 0 0 0 0 .43 0 0 0 0 .4 0 0 0 .14 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E"); }
   h1, h2, h3 { font-family: var(--serif); font-weight: 400; letter-spacing: 0; line-height: 1.06; }
   em { font-style: normal; color: var(--rouge); }

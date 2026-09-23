@@ -24,7 +24,7 @@
   html.embarque { scrollbar-width: none; }
   html.embarque::-webkit-scrollbar { display: none; }
   html.embarque body::after { display: none; }
-  body { background: var(--crema); color: var(--inchiostro); font: 400 16px/1.65 var(--sans); overflow-x: hidden; -webkit-font-smoothing: antialiased; }
+  body { background: var(--crema); color: var(--inchiostro); font: 400 16px/1.65 var(--sans); overflow-x: clip; -webkit-font-smoothing: antialiased; }
   body::after { content: ""; position: fixed; inset: 0; z-index: 90; opacity: .5; pointer-events: none; mix-blend-mode: multiply; background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 .4 0 0 0 0 .3 0 0 0 0 .2 0 0 0 .12 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E"); }
   h1, h2, h3 { font-family: var(--serif); font-weight: 400; line-height: .98; letter-spacing: -.01em; }
   img { display: block; max-width: 100%; }
@@ -419,6 +419,7 @@
   } else {
     apercu.classList.add('colle');
     plats.forEach(p => ScrollTrigger.create({ trigger: p, start: 'top 58%', end: 'bottom 58%', onToggle: s => { if (s.isActive) { poser(p.dataset.img); gsap.to(apercu, { autoAlpha: 1, duration: .3 }); } } }));
+    plats.forEach(p => p.addEventListener('click', () => { poser(p.dataset.img); gsap.to(apercu, { autoAlpha: 1, duration: .3 }); }));
     ScrollTrigger.create({ trigger: plats[0], start: 'top 58%', endTrigger: '.menu .note', end: 'top 58%', onToggle: s => { if (!s.isActive) { gsap.to(apercu, { autoAlpha: 0, duration: .3 }); actuel = ''; } } });
   }
   /* Giulia : la carte postale se pose, le cachet tourne */
