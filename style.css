@@ -567,3 +567,13 @@ h1, h2, h3 { text-wrap: balance; }
 .entete .theme, .entete-tel { flex-shrink: 0; }
 @media (max-width: 374px) { .entete { gap: 8px; padding-left: 14px; } .entete-cta { padding: 11px 14px; } .barre-appel { padding: 0 14px; } .barre-tel a { font-size: 14px; } }
 @media (max-width: 359px) { .entete .theme { display: none; } .entete-tel { margin-left: auto; } }
+
+/* Référencement (v75) : les mots-clés au-dessus du titre, et les conseils à la une */
+.hero-etiquette { margin-bottom: 18px; }
+@media (max-width: 767px) { .hero-etiquette { font-size: 10.5px; line-height: 1.5; letter-spacing: .14em; } }
+.conseils-liste { list-style: none; margin: 26px 0 0; padding: 0; display: grid; gap: 10px; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); }
+.conseils-liste a { display: grid; gap: 6px; height: 100%; padding: 18px 20px; border-radius: var(--rond-petit); background: var(--verre); border: 1px solid var(--verre-bord); box-shadow: var(--verre-reflet); text-decoration: none; transition: background var(--duree), transform var(--duree) var(--courbe); }
+.conseils-liste a:hover { background: var(--verre-fort); transform: translateY(-2px); }
+.conseils-liste b { font: 600 18px/1.2 var(--serif); letter-spacing: -.02em; color: var(--texte); }
+.conseils-liste span { font-size: 14px; color: rgba(var(--t),.65); }
+@media (min-width: 1100px) { .conseils-liste { grid-template-columns: repeat(3, 1fr); } }

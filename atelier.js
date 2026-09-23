@@ -344,7 +344,7 @@ console.log('%cDevanturo%c  code : RaptOrkill (Baptiste Ruin) · © 2026', 'font
   // L'entrée attend la fin du chargement : les trois fondus sont posés tout de suite (invisibles sous l'écran de chargement) et partent ensemble
   const entree = [
     gsap.from('.hero-titre .mot', { y: 24, autoAlpha: 0, duration: .8, stagger: .05, ease: 'power3.out', paused: true }),
-    gsap.from('.hero-sous, .hero-indice, .hero-actions', { autoAlpha: 0, y: 12, duration: .8, delay: .5, paused: true }),
+    gsap.from('.hero-etiquette, .hero-sous, .hero-indice, .hero-actions', { autoAlpha: 0, y: 12, duration: .8, delay: .5, paused: true }),
   ];
   if (TEL) entree.push(gsap.from('.hero-tels .demo', { yPercent: 18, autoAlpha: 0, rotation: 0, duration: 1.3, delay: .35, stagger: .15, ease: 'power3.out', paused: true }),
     gsap.from('.hero-tels-nom', { autoAlpha: 0, scale: .92, duration: 1.6, delay: .2, ease: 'power2.out', paused: true }));

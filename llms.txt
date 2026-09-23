@@ -6,7 +6,7 @@ Devanturo est une entreprise individuelle fondée par Baptiste Ruin, 2 rue Vauba
 
 Ce que comprend un site Devanturo : un site à votre nom pensé pour le téléphone (accueil, carte, horaires, itinéraire, bouton d'appel, WhatsApp, réservation ou commande si besoin), les photos de la salle, de la façade et des plats, la création ou la remise à neuf de la fiche Google, le nom de domaine et l'hébergement à votre nom, et les changements de carte sur simple message WhatsApp.
 
-Zone : Roubaix, Lille, Tourcoing, Villeneuve-d'Ascq, Marcq-en-Barœul, Wasquehal, Croix, Wattrelos, Mouvaux et toute la métropole lilloise ; partout en France en visio.
+Zone : Roubaix, Lille, Tourcoing, Villeneuve-d'Ascq, Marcq-en-Barœul, Wasquehal, Croix, Wattrelos, Mouvaux, La Madeleine, Lambersart, Hem et toute la métropole lilloise ; partout en France en visio.
 
 ## Pages principales
 
@@ -25,6 +25,16 @@ Zone : Roubaix, Lille, Tourcoing, Villeneuve-d'Ascq, Marcq-en-Barœul, Wasquehal
 - [Wasquehal](https://devanturo.fr/site-internet-restaurant-wasquehal.html)
 - [Croix](https://devanturo.fr/site-internet-restaurant-croix.html)
 - [Wattrelos](https://devanturo.fr/site-internet-restaurant-wattrelos.html)
+- [La Madeleine](https://devanturo.fr/site-internet-restaurant-la-madeleine.html)
+- [Lambersart](https://devanturo.fr/site-internet-restaurant-lambersart.html)
+- [Mouvaux](https://devanturo.fr/site-internet-restaurant-mouvaux.html)
+- [Hem](https://devanturo.fr/site-internet-restaurant-hem.html)
+
+## Par métier
+
+- [Site internet pour bar](https://devanturo.fr/site-internet-bar.html)
+- [Site internet pour café et brasserie](https://devanturo.fr/site-internet-cafe-brasserie.html)
+- [Agence web pour restaurants](https://devanturo.fr/agence-web-restaurant-lille.html)
 
 ## Conseils pour restaurateurs
 
