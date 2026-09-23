@@ -13,6 +13,7 @@ Zone : Roubaix, Lille, Tourcoing, Villeneuve-d'Ascq, Marcq-en-Barœul, Wasquehal
 - [Accueil, réservation d'un rendez-vous et démos](https://devanturo.fr/): l'offre, les démos Kaori et Giulia, les questions fréquentes
 - [Démo Kaori, izakaya](https://devanturo.fr/demos/izakaya/): exemple de site réalisé par Devanturo pour un restaurant imaginaire (pas un client)
 - [Démo Giulia, trattoria](https://devanturo.fr/demos/trattoria/): exemple de site réalisé par Devanturo pour un restaurant imaginaire (pas un client)
+- [Démo Fresco, cuisine marine](https://devanturo.fr/demos/fresco/): exemple de site réalisé par Devanturo pour un restaurant imaginaire (pas un client)
 - [Mentions légales et données personnelles](https://devanturo.fr/mentions.html)
 
 ## Création de site internet pour restaurant, par ville

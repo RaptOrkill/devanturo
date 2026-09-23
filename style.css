@@ -274,7 +274,7 @@ html.intro .hero-indice { animation: none; opacity: 0; transition: opacity 300ms
 
 /* Les démonstrations : trois vrais iPhone, écrans allumés (la démo y vit), en ligne sur grand écran, en file qui glisse sur téléphone */
 .exemples .corps { max-width: 62ch; margin-bottom: 30px; }
-.exemples-liste { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(2, 1fr); gap: 40px; max-width: 720px; }
+.exemples-liste { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(3, 1fr); gap: 40px; max-width: 1080px; }
 .exemples-liste li { display: grid; gap: 4px; justify-items: center; text-align: center; }
 .exemples-liste b { font-weight: 500; margin-top: 12px; }
 .exemples-liste li > span { font-size: 14px; color: rgba(var(--t),.6); }
