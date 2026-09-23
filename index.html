@@ -30,7 +30,7 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Inter+Tight:wght@500;600;700&display=swap" rel="stylesheet">
 <link rel="preload" as="image" href="assets/telephone-izakaya-graphite.webp">
-<link rel="stylesheet" href="style.css?v=70">
+<link rel="stylesheet" href="style.css?v=72">
 <script>
 /* html.anim : mise en scène au défilement. Jamais en mouvement réduit ; ?anim=0 pour lire la page à plat. */
 (function(){var h=document.documentElement;try{if(!location.hash)history.scrollRestoration='manual'}catch(e){}var t=(location.search.match(/[?&]theme=(clair|sombre)/)||[])[1];try{t=t||localStorage.getItem('devanturo-theme')}catch(e){}if(!t)t=matchMedia('(prefers-color-scheme: light)').matches?'clair':'sombre';if(t==='clair')h.setAttribute('data-theme','clair');
@@ -117,9 +117,14 @@ if(/[?&]anim=0/.test(location.search)||/bot|crawl|spider|slurp|facebookexternalh
 
       <section class="bloc reservation" id="devis-debut">
         <div class="reservation-tete">
-          <p class="etiquette">Gratuit et sans engagement · réservé en trente secondes</p>
+          <p class="etiquette">Gratuit, sans engagement</p>
           <h2>Choisissez un créneau. On s'occupe du reste.</h2>
           <p class="corps">On vient chez vous (ou en visio) prendre les photos, la carte, les horaires, et on vous fait un devis précis. Aucun formulaire, aucun engagement : un jour, une heure, votre nom.</p>
+          <ul class="reservation-plus">
+            <li><b>0&nbsp;€</b><span>La visite est gratuite, et vous ne payez rien avant la mise en ligne.</span></li>
+            <li><b>30&nbsp;min</b><span>Chez vous dans la métropole lilloise, ou en visio partout ailleurs.</span></li>
+            <li><b>7&nbsp;jours</b><span>Entre la visite et votre site en ligne, avec votre fiche Google.</span></li>
+          </ul>
         </div>
 
         <div class="assistant" data-assistant>
@@ -197,6 +202,7 @@ if(/[?&]anim=0/.test(location.search)||/bot|crawl|spider|slurp|facebookexternalh
         <p class="etiquette">Ce qu'on fait, en vrai</p>
         <h2>Deux sites, deux ambiances.</h2>
         <p class="corps">Un izakaya blanc et net, une trattoria orange et gourmande : deux sites de démonstration, faits comme pour un vrai client, chacun dans son style. Ils vivent dans les téléphones, touchez-en un pour l'ouvrir en grand.</p>
+        <a class="bouton principal exemples-cta" href="#devis-debut">Le vôtre, en ligne dans sept jours</a>
         <ul class="exemples-liste">
           <li><a class="exemple-tel" href="demos/izakaya/?de=devanturo" target="_blank" rel="noopener" aria-label="Ouvrir la démonstration Kaori"><span class="exemple-cadre" data-vivant="demos/izakaya/index.html?embarque=1&amp;v=67" data-nom="Kaori" data-clair><img src="assets/telephone-izakaya-graphite.webp" srcset="assets/telephone-izakaya-graphite.webp 600w, assets/telephone-izakaya-graphite-2x.webp 1200w" sizes="300px" alt="" width="600" height="1351" loading="lazy" decoding="async"></span></a><b>Kaori</b><span>Izakaya · ramen, gyoza, comptoir, sakés</span></li>
           <li><a class="exemple-tel" href="demos/trattoria/?de=devanturo" target="_blank" rel="noopener" aria-label="Ouvrir la démonstration Giulia"><span class="exemple-cadre" data-vivant="demos/trattoria/index.html?embarque=1&amp;v=67" data-nom="Giulia"><img src="assets/telephone-trattoria-argent.webp" srcset="assets/telephone-trattoria-argent.webp 600w, assets/telephone-trattoria-argent-2x.webp 1200w" sizes="300px" alt="" width="600" height="1351" loading="lazy" decoding="async"></span></a><b>Giulia</b><span>Trattoria · pâtes fraîches, menu, réservation</span></li>
