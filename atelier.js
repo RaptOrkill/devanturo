@@ -264,6 +264,18 @@ console.log('%cDevanturo%c  code : RaptOrkill (Baptiste Ruin) · © 2026', 'font
     }
   });
 
+  // Au téléphone : la barre d'action apparaît une fois l'entrée passée, et se cache quand la réservation, l'audit ou la fin sont à l'écran,
+  // ou quand le clavier est ouvert (un champ a le focus)
+  const barre = document.querySelector('[data-barre-tel]');
+  if (barre && 'IntersectionObserver' in window) {
+    const caches = new Set(); let passe = false;
+    const maj = () => barre.classList.toggle('visible', passe && !caches.size && !/INPUT|TEXTAREA|SELECT/.test((document.activeElement || {}).tagName || ''));
+    const obs = new IntersectionObserver(es => { es.forEach(e => e.isIntersecting ? caches.add(e.target) : caches.delete(e.target)); maj(); }, { rootMargin: '-15% 0px -15% 0px' });
+    ['#devis-debut', '#audit', '#final'].forEach(sel => { const el = document.querySelector(sel); if (el) obs.observe(el); });
+    addEventListener('scroll', () => { const p = scrollY > innerHeight * .9; if (p !== passe) { passe = p; maj(); } }, { passive: true });
+    document.addEventListener('focusin', maj); document.addEventListener('focusout', () => setTimeout(maj, 50));
+  }
+
   // ?coche=bar (débogage, captures) : coche un choix au chargement
   const coche = new URLSearchParams(location.search).get('coche');
   if (coche) coche.split(',').forEach(v => { const i = document.querySelector('input[value="' + v + '"]'); if (i && !i.disabled) { i.checked = true; i.dispatchEvent(new Event('change', { bubbles: true })); } });

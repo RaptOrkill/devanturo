@@ -524,3 +524,41 @@ html.intro .hero-actions { opacity: 0; transition: opacity 300ms; }
 h1, h2, h3 { text-wrap: balance; }
 .exemples-cta { justify-self: start; margin-top: 4px; }
 @media (max-width: 1099px) { .exemples-cta { margin: 26px 0 0; } }
+
+/* ---------- Téléphone (v73) : barre d'action sous le pouce, sections plus courtes ---------- */
+.barre-tel { display: none; }
+@media (max-width: 767px) {
+  .barre-tel { display: flex; gap: 8px; position: fixed; left: 12px; right: 12px; bottom: calc(12px + env(safe-area-inset-bottom)); z-index: 60; padding: 6px; border-radius: 999px;
+    background: rgba(12,12,12,.72); border: 1px solid rgba(255,255,255,.14); box-shadow: 0 18px 40px rgba(0,0,0,.45); -webkit-backdrop-filter: blur(18px) saturate(1.4); backdrop-filter: blur(18px) saturate(1.4);
+    transform: translateY(calc(100% + 30px)); opacity: 0; transition: transform 450ms var(--courbe), opacity 300ms; pointer-events: none; }
+  html[data-theme=clair] .barre-tel { background: rgba(246,244,239,.8); border-color: rgba(0,0,0,.1); box-shadow: 0 18px 40px rgba(0,0,0,.16); }
+  .barre-tel.visible { transform: none; opacity: 1; pointer-events: auto; }
+  .barre-tel a { display: inline-flex; align-items: center; justify-content: center; gap: 8px; min-height: 50px; border-radius: 999px; text-decoration: none; font: 500 15px/1 var(--sans); }
+  .barre-appel { padding: 0 18px; color: var(--texte); border: 1px solid var(--verre-bord-fort); }
+  .barre-appel svg { width: 16px; height: 16px; fill: currentColor; }
+  .barre-reserver { flex: 1; background: var(--texte); color: var(--bg); }
+  .pied { padding-bottom: calc(96px + env(safe-area-inset-bottom)); }
+  /* Plus court : moins de vide entre les sections */
+  .bloc { padding: 9vh 0; }
+  .final { min-height: 0; padding: 88px var(--gout); }
+  /* Les quatre services glissent au doigt, comme les exemples */
+  .atelier .services { display: flex; gap: 12px; overflow-x: auto; scroll-snap-type: x mandatory; margin: 26px calc(-1 * var(--gout)) 0; padding: 4px var(--gout) 12px; scrollbar-width: none; }
+  .atelier .services::-webkit-scrollbar { display: none; }
+  .atelier .services li, .atelier .services li:first-child { flex: 0 0 80%; scroll-snap-align: center; grid-template-columns: 1fr; align-content: start; gap: 10px; padding: 22px 20px 24px; border: 1px solid var(--verre-bord); border-radius: var(--rond); background: var(--verre); box-shadow: var(--verre-reflet); }
+  .atelier .services .num { grid-row: auto; font-size: 54px; }
+  .atelier .services h3 { font-size: 24px; }
+  .atelier .services p { font-size: 15px; }
+  .glisser { display: block; margin-top: 4px; font-size: 12px; letter-spacing: .14em; text-transform: uppercase; color: rgba(var(--t),.45); }
+  /* La méthode en frise serrée, les garanties en 2 × 2 */
+  .atelier .frise { gap: 0; }
+  .atelier .frise li { grid-template-columns: 52px 1fr; padding: 12px 0; border-top: 1px solid rgba(var(--t),.12); }
+  .atelier .frise li:first-child { border-top: 0; }
+  .atelier .frise b { font-size: 26px; }
+  .atelier .garanties { grid-template-columns: 1fr 1fr; gap: 8px; }
+  .atelier .garanties li { padding: 14px; font-size: 14px; line-height: 1.4; }
+  .atelier .garanties b { display: block; margin-bottom: 4px; font-size: 15px; }
+  .reservation-plus li { grid-template-columns: 70px 1fr; padding: 10px 0; }
+  .reservation-plus b { font-size: 20px; }
+}
+.glisser { display: none; }
+@media (max-width: 767px) { .glisser { display: block; } }
