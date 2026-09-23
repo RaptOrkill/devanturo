@@ -562,3 +562,8 @@ h1, h2, h3 { text-wrap: balance; }
 }
 .glisser { display: none; }
 @media (max-width: 767px) { .glisser { display: block; } }
+/* Petits téléphones (320–374 px) : la capsule tient sur une ligne ; le bouton clair/sombre cède la place en dessous de 360 px */
+.entete-cta { white-space: nowrap; }
+.entete .theme, .entete-tel { flex-shrink: 0; }
+@media (max-width: 374px) { .entete { gap: 8px; padding-left: 14px; } .entete-cta { padding: 11px 14px; } .barre-appel { padding: 0 14px; } .barre-tel a { font-size: 14px; } }
+@media (max-width: 359px) { .entete .theme { display: none; } .entete-tel { margin-left: auto; } }
