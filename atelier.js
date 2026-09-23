@@ -1,5 +1,7 @@
+/* Code : RaptOrkill (Baptiste Ruin) · © 2026 */
 /* Devanturo (site de l'agence) — l'entrée (le portable qui s'ouvre, on zoome dans l'écran : c'est la page), la demande de devis qui se remplit, l'envoi.
    GSAP + ScrollTrigger pilotent l'entrée ; tout le reste marche sans animation (html sans .anim : page à plat). */
+console.log('%cDevanturo%c  code : RaptOrkill (Baptiste Ruin) · © 2026', 'font:700 14px Inter,sans-serif', 'color:#888');
 (function () {
   'use strict';
   const html = document.documentElement;

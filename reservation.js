@@ -1,3 +1,4 @@
+/* Code : RaptOrkill (Baptiste Ruin) · © 2026 */
 /* Devanturo — les réservations : où elles sont rangées et comment on les lit. Trois modes, choisis par config.js :
    - « vps »      : le serveur du VPS (serveur/index.js), même origine ou apiUrl ; c'est lui qui sert le site en production.
    - « supabase » : une table Supabase (voir README).

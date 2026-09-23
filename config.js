@@ -1,3 +1,4 @@
+/* Code : RaptOrkill (Baptiste Ruin) · © 2026 */
 /* Devanturo — réglages du site, pour le poste de travail et les aperçus.
    EN PRODUCTION, CE FICHIER N'EST PAS UTILISÉ : le serveur du VPS (serveur/index.js) sert son propre config.js, en mode « vps ».
    Ici, tant que rien n'est rempli, le site tourne en mode démonstration : les réservations restent dans le navigateur (localStorage),
