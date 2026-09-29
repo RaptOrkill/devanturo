@@ -651,7 +651,7 @@ h1, h2, h3 { text-wrap: balance; }
 .hero-metiers-tous a { border-color: var(--verre-bord-fort); color: var(--texte); }
 html.intro .hero-metiers { opacity: 0; transition: opacity 300ms; }
 @media (max-width: 767px) { .hero-metiers { gap: 6px; margin-top: 16px; } .hero-metiers a { padding: 7px 11px; font-size: 13px; } }
-.compo-sous { position: absolute; left: 0; right: 0; top: 12%; text-align: center; font: 500 1.45em/1 var(--sans); letter-spacing: .24em; text-transform: uppercase; color: rgba(var(--t),.62); white-space: nowrap; }
+.compo-sous { position: absolute; left: 0; right: 0; top: 14.5%; text-align: center; font: 500 1.3em/1 var(--sans);   /* sous la barre de menu dessinée (fin à 9 %), au-dessus du mot géant (lettres dès 19 %) */ letter-spacing: .24em; text-transform: uppercase; color: rgba(var(--t),.62); white-space: nowrap; }
 .nav a { white-space: nowrap; }
 @media (min-width: 1024px) and (max-width: 1279px) {
   .entete { gap: 16px; } .nav { gap: 16px; }
