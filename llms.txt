@@ -13,6 +13,7 @@ Zone : Roubaix, Lille, Tourcoing, Villeneuve-d'Ascq, Marcq-en-Barœul, Wasquehal
 - [Accueil, réservation d'un rendez-vous et démos](https://devanturo.fr/): l'offre, les démos Kaori et Giulia, les questions fréquentes
 - [Démo Kaori, izakaya](https://devanturo.fr/demos/izakaya/): exemple de site réalisé par Devanturo pour un restaurant imaginaire (pas un client)
 - [Démo Giulia, trattoria](https://devanturo.fr/demos/trattoria/): exemple de site réalisé par Devanturo pour un restaurant imaginaire (pas un client)
+- [Démo Fresco, cuisine marine](https://devanturo.fr/demos/fresco/): exemple de site réalisé par Devanturo pour un restaurant imaginaire (pas un client)
 - [Mentions légales et données personnelles](https://devanturo.fr/mentions.html)
 
 ## Création de site internet pour restaurant, par ville
@@ -32,6 +33,9 @@ Zone : Roubaix, Lille, Tourcoing, Villeneuve-d'Ascq, Marcq-en-Barœul, Wasquehal
 
 ## Par métier
 
+- [Site internet pour artisan](https://devanturo.fr/site-internet-artisan.html): plombiers, électriciens, peintres, menuisiers, couvreurs
+- [Site internet pour garage](https://devanturo.fr/site-internet-garage.html): garages, carrosseries, pneus
+- [Site internet pour commerce, coiffeur ou cabinet](https://devanturo.fr/site-internet-commerce.html): boutiques, coiffeurs, instituts, cabinets, agences, auto-écoles
 - [Site internet pour bar](https://devanturo.fr/site-internet-bar.html)
 - [Site internet pour café et brasserie](https://devanturo.fr/site-internet-cafe-brasserie.html)
 - [Agence web pour restaurants](https://devanturo.fr/agence-web-restaurant-lille.html)

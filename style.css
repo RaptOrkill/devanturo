@@ -274,7 +274,7 @@ html.intro .hero-indice { animation: none; opacity: 0; transition: opacity 300ms
 
 /* Les démonstrations : trois vrais iPhone, écrans allumés (la démo y vit), en ligne sur grand écran, en file qui glisse sur téléphone */
 .exemples .corps { max-width: 62ch; margin-bottom: 30px; }
-.exemples-liste { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(2, 1fr); gap: 40px; max-width: 720px; }
+.exemples-liste { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(3, 1fr); gap: 40px; max-width: 1080px; }
 .exemples-liste li { display: grid; gap: 4px; justify-items: center; text-align: center; }
 .exemples-liste b { font-weight: 500; margin-top: 12px; }
 .exemples-liste li > span { font-size: 14px; color: rgba(var(--t),.6); }
@@ -632,3 +632,14 @@ h1, h2, h3 { text-wrap: balance; }
   .metiers b { font-size: 15px; margin-bottom: 3px; }
   .metiers span { font-size: 12.5px; }
 }
+
+/* ---------- Tous les sites (v78) : les cartes « Pour qui » mènent aux pages métiers, le bandeau « Pas un restaurant ? » ---------- */
+.metiers li:has(> a) { padding: 0; }
+.metiers li > a { display: block; height: 100%; padding: 16px 18px; border-radius: inherit; color: inherit; text-decoration: none; transition: background var(--duree), transform var(--duree) var(--courbe); }
+.metiers li > a:hover { background: var(--verre-fort); transform: translateY(-2px); }
+.metiers li:not(.metiers-tous) > a b::after { content: " →"; font-weight: 400; opacity: .45; }
+.metiers li.metiers-tous > a:hover { background: transparent; }
+.pas-que-resto { display: block; margin: 22px 0 0; padding: 16px 18px; border-radius: var(--rond-petit); background: var(--verre-fort); border: 1px solid var(--verre-bord-fort); font-size: 15px; line-height: 1.55; color: rgba(var(--t),.85); }
+.pas-que-resto b { color: var(--texte); font-weight: 600; }
+.pas-que-resto a { color: var(--texte); text-underline-offset: 3px; }
+@media (max-width: 767px) { .metiers li > a { padding: 12px 13px; } }

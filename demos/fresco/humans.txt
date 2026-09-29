@@ -1,0 +1,12 @@
+/* TEAM */
+Design & développement : Vahan Pinachyan
+Localisation : France
+
+/* SITE */
+Projet : Fresco, restaurant de cuisine marine, Nice
+Empreinte : FRSC-VP-7Q3K-2026-A91D
+Technologies : Next.js, React, TypeScript, Tailwind CSS, Framer Motion
+Illustrations gravées : FMIB, domaine public (Wikimedia Commons)
+Photographies : Unsplash
+
+© 2026 Vahan Pinachyan. Tous droits réservés.
