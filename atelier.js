@@ -350,7 +350,7 @@ console.log('%cDevanturo%c  code : RaptOrkill (Baptiste Ruin) · © 2026', 'font
   // L'entrée attend la fin du chargement : les trois fondus sont posés tout de suite (invisibles sous l'écran de chargement) et partent ensemble
   const entree = [
     gsap.from('.hero-titre .mot', { y: 24, autoAlpha: 0, duration: .8, stagger: .05, ease: 'power3.out', paused: true }),
-    gsap.from('.hero-etiquette, .hero-sous, .hero-indice, .hero-actions', { autoAlpha: 0, y: 12, duration: .8, delay: .5, paused: true }),
+    gsap.from('.hero-etiquette, .hero-sous, .hero-metiers, .hero-indice, .hero-actions', { autoAlpha: 0, y: 12, duration: .8, delay: .5, paused: true }),
   ];
   if (TEL) entree.push(gsap.from('.hero-tels .demo', { yPercent: 18, autoAlpha: 0, rotation: 0, duration: 1.3, delay: .35, stagger: .15, ease: 'power3.out', paused: true }),
     gsap.from('.hero-tels-nom', { autoAlpha: 0, scale: .92, duration: 1.6, delay: .2, ease: 'power2.out', paused: true }));
@@ -438,7 +438,9 @@ console.log('%cDevanturo%c  code : RaptOrkill (Baptiste Ruin) · © 2026', 'font
     introEnCours = true; html.classList.add('intro');
     const o = { y: window.scrollY };
     const fin = () => { introEnCours = false; introJouee = true; html.classList.remove('intro'); arreterIntro = null; };
-    const t = gsap.to(o, { y: () => tl.scrollTrigger.end, duration: 2.4, ease: 'power2.inOut', onUpdate: () => window.scrollTo(0, o.y), onComplete: fin });
+    // Jusqu'à la fin du zoom (1 - RELAIS) : l'écran remplit la fenêtre, « Devanturo » et les téléphones en entier. Jusqu'au bout de
+    // l'épinglage, le relais avait déjà remonté l'écran : on atterrissait sur des téléphones coupés et un grand vide (audit du 29/09).
+    const t = gsap.to(o, { y: () => tl.scrollTrigger.start + (tl.scrollTrigger.end - tl.scrollTrigger.start) * (1 - RELAIS), duration: 2.4, ease: 'power2.inOut', onUpdate: () => window.scrollTo(0, o.y), onComplete: fin });
     arreterIntro = () => { t.kill(); fin(); };
   }
   const enHaut = () => !introJouee && window.scrollY < innerHeight * .5;

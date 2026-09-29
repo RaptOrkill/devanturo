@@ -643,3 +643,24 @@ h1, h2, h3 { text-wrap: balance; }
 .pas-que-resto b { color: var(--texte); font-weight: 600; }
 .pas-que-resto a { color: var(--texte); text-underline-offset: 3px; }
 @media (max-width: 767px) { .metiers li > a { padding: 12px 13px; } }
+
+/* ---------- v79 : les métiers dès l'arrivée, l'écran zoomé qui dit « pour tous », l'en-tête de 1024 à 1279 px, les pages de villes ---------- */
+.hero-metiers { list-style: none; display: flex; flex-wrap: wrap; justify-content: center; gap: 8px; margin: 18px auto 0; padding: 0; max-width: 760px; }
+.hero-metiers a { display: inline-block; padding: 8px 14px; border-radius: 999px; border: 1px solid var(--verre-bord); background: var(--verre); box-shadow: var(--verre-reflet); font: 500 14px/1 var(--sans); color: rgba(var(--t),.85); text-decoration: none; transition: background var(--duree), color var(--duree), transform var(--duree) var(--courbe); }
+.hero-metiers a:hover { background: var(--verre-fort); color: var(--texte); transform: translateY(-1px); }
+.hero-metiers-tous a { border-color: var(--verre-bord-fort); color: var(--texte); }
+html.intro .hero-metiers { opacity: 0; transition: opacity 300ms; }
+@media (max-width: 767px) { .hero-metiers { gap: 6px; margin-top: 16px; } .hero-metiers a { padding: 7px 11px; font-size: 13px; } }
+.compo-sous { position: absolute; left: 0; right: 0; top: 12%; text-align: center; font: 500 1.45em/1 var(--sans); letter-spacing: .24em; text-transform: uppercase; color: rgba(var(--t),.62); white-space: nowrap; }
+.nav a { white-space: nowrap; }
+@media (min-width: 1024px) and (max-width: 1279px) {
+  .entete { gap: 16px; } .nav { gap: 16px; }
+  .marque span { display: none; }
+  .entete-tel { padding: 0; width: 38px; } .entete-tel span { display: none; }
+}
+.metiers-liens { list-style: none; padding: 0; margin: 18px 0 0; display: grid; gap: 10px; grid-template-columns: repeat(auto-fit, minmax(230px, 1fr)); }
+.metiers-liens a { display: block; height: 100%; padding: 14px 16px; border-radius: var(--rond-petit); background: var(--verre); border: 1px solid var(--verre-bord); box-shadow: var(--verre-reflet); text-decoration: none; transition: background var(--duree), transform var(--duree) var(--courbe); }
+.metiers-liens a:hover { background: var(--verre-fort); transform: translateY(-2px); }
+.metiers-liens b { display: block; font: 600 17px/1.2 var(--serif); letter-spacing: -.02em; color: var(--texte); margin-bottom: 4px; }
+.metiers-liens b::after { content: " →"; font-weight: 400; opacity: .45; }
+.metiers-liens span { font-size: 14px; color: rgba(var(--t),.7); }

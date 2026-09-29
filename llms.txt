@@ -16,7 +16,7 @@ Zone : Roubaix, Lille, Tourcoing, Villeneuve-d'Ascq, Marcq-en-Barœul, Wasquehal
 - [Démo Fresco, cuisine marine](https://devanturo.fr/demos/fresco/): exemple de site réalisé par Devanturo pour un restaurant imaginaire (pas un client)
 - [Mentions légales et données personnelles](https://devanturo.fr/mentions.html)
 
-## Création de site internet pour restaurant, par ville
+## Création de site internet par ville (commerces, artisans, restaurants)
 
 - [Roubaix](https://devanturo.fr/site-internet-restaurant-roubaix.html)
 - [Lille](https://devanturo.fr/site-internet-restaurant-lille.html)
