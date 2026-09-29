@@ -612,3 +612,23 @@ h1, h2, h3 { text-wrap: balance; }
   .audit-form .bouton { font-size: 15px; padding: 0 16px; }
   .hero-cta { font-size: 15px; padding: 0 22px; }
 }
+
+/* ---------- Pour qui (v77) : la liste des métiers, pour qu'on comprenne qu'on fait tous les sites ---------- */
+.metiers { display: grid; gap: 10px; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); }
+.metiers li { padding: 16px 18px; border-radius: var(--rond-petit); background: var(--verre); border: 1px solid var(--verre-bord); box-shadow: var(--verre-reflet); }
+.metiers b { display: block; font: 600 18px/1.2 var(--serif); letter-spacing: -.02em; margin-bottom: 5px; }
+.metiers span { font-size: 14px; line-height: 1.4; color: rgba(var(--t),.7); }
+.metiers li.metiers-tous { grid-column: 1 / -1; background: var(--texte); color: var(--bg); border-color: var(--texte); }   /* plus fort que .metiers li, sinon fond verre + texte noir */
+.metiers li.metiers-tous span { color: inherit; opacity: .75; }
+@media (min-width: 1100px) {
+  #pour-qui { display: grid; grid-template-columns: minmax(0, .8fr) minmax(0, 1.2fr); grid-template-rows: auto 1fr; column-gap: 72px; align-items: start; }
+  #pour-qui > .etiquette { grid-column: 1; grid-row: 1; }
+  #pour-qui > h2 { grid-column: 1; grid-row: 2; position: sticky; top: 110px; }
+  #pour-qui > .metiers { grid-column: 2; grid-row: 1 / span 2; grid-template-columns: 1fr 1fr; gap: 14px; }
+}
+@media (max-width: 767px) {
+  .metiers { grid-template-columns: 1fr 1fr; gap: 8px; margin-top: 4px; }
+  .metiers li { padding: 12px 13px; }
+  .metiers b { font-size: 15px; margin-bottom: 3px; }
+  .metiers span { font-size: 12.5px; }
+}

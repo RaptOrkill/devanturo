@@ -31,7 +31,7 @@
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Inter+Tight:wght@500;600;700&display=swap" rel="stylesheet">
 <link rel="preload" as="image" href="assets/telephone-izakaya-argent.webp" imagesrcset="assets/telephone-izakaya-argent.webp 600w, assets/telephone-izakaya-argent-2x.webp 1200w" imagesizes="(max-width: 767px) 52vw, 340px">
 <link rel="preload" as="image" href="assets/telephone-trattoria-graphite.webp" imagesrcset="assets/telephone-trattoria-graphite.webp 600w, assets/telephone-trattoria-graphite-2x.webp 1200w" imagesizes="(max-width: 767px) 52vw, 340px">
-<link rel="stylesheet" href="style.css?v=76">
+<link rel="stylesheet" href="style.css?v=77">
 <script>
 /* html.anim : mise en scène au défilement. Jamais en mouvement réduit ; ?anim=0 pour lire la page à plat. */
 (function(){var h=document.documentElement;try{if(!location.hash)history.scrollRestoration='manual'}catch(e){}var t=(location.search.match(/[?&]theme=(clair|sombre)/)||[])[1];try{t=t||localStorage.getItem('devanturo-theme')}catch(e){}if(!t)t=matchMedia('(prefers-color-scheme: light)').matches?'clair':'sombre';if(t==='clair')h.setAttribute('data-theme','clair');
@@ -46,6 +46,7 @@ if(/[?&]anim=0/.test(location.search)||/bot|crawl|spider|slurp|facebookexternalh
   <a class="marque" href="#hero"><span class="marque-icone" aria-hidden="true"></span>Devanturo <span>— Roubaix</span></a>
   <nav class="nav" aria-label="Sections">
     <a href="#devis-debut">Visite gratuite</a>
+    <a href="#pour-qui">Pour qui</a>
     <a href="#audit">Audit de votre fiche</a>
     <a href="#questions">Questions</a>
   </nav>
@@ -116,6 +117,22 @@ if(/[?&]anim=0/.test(location.search)||/bot|crawl|spider|slurp|facebookexternalh
 <main class="atelier" id="atelier">
   <div class="atelier-int">
     <div class="colonne">
+
+      <section class="bloc pour-qui" id="pour-qui">
+        <p class="etiquette">Pour qui&nbsp;?</p>
+        <h2>Toutes les petites entreprises, pas seulement les restaurants.</h2>
+        <ul class="metiers">
+          <li><b>Garages, carrossiers</b><span>Devis, horaires, avis Google, itinéraire.</span></li>
+          <li><b>Coiffeurs, barbiers, instituts</b><span>Prise de rendez-vous, tarifs, photos.</span></li>
+          <li><b>Artisans</b><span>Plombiers, électriciens, peintres, maçons : demande de devis, chantiers, zone d'intervention.</span></li>
+          <li><b>Cabinets</b><span>Kiné, ostéo, avocat, comptable : rendez-vous, prestations, plan d'accès.</span></li>
+          <li><b>Boutiques, fleuristes</b><span>Horaires, produits, commande à retirer.</span></li>
+          <li><b>Restaurants, bars, cafés</b><span>Carte, réservation, commande.</span></li>
+          <li><b>Auto-écoles, salles de sport</b><span>Formules, inscriptions, contact.</span></li>
+          <li><b>Agences, services</b><span>Immobilier, assurance, nettoyage : offres, contact, avis.</span></li>
+          <li class="metiers-tous"><b>Votre métier n'est pas dans la liste&nbsp;?</b><span>Il l'est quand même : on fait tous les sites. Même visite, même délai, mêmes conditions.</span></li>
+        </ul>
+      </section>
 
       <section class="bloc reservation" id="devis-debut">
         <div class="reservation-tete">
@@ -202,8 +219,8 @@ if(/[?&]anim=0/.test(location.search)||/bot|crawl|spider|slurp|facebookexternalh
 
       <section class="bloc exemples" id="exemple">
         <p class="etiquette">Ce qu'on fait, en vrai</p>
-        <h2>Deux sites, deux ambiances.</h2>
-        <p class="corps">Un izakaya blanc et net, une trattoria orange et gourmande : deux sites de démonstration, faits comme pour un vrai client, chacun dans son style. Garage, cabinet, boutique ou atelier : même soin, un style à vous. Ils vivent dans les téléphones, touchez-en un pour l'ouvrir en grand.</p>
+        <h2>Deux exemples, et bientôt le vôtre.</h2>
+        <p class="corps">Un izakaya et une trattoria, deux sites de démonstration faits comme pour de vrais clients. On les montre pour le niveau de finition : un garage, un cabinet ou une boutique reçoit le même soin, dans son propre style. Ils vivent dans les téléphones, touchez-en un pour l'ouvrir en grand.</p>
         <a class="bouton principal exemples-cta" href="#devis-debut">Le vôtre, en ligne dans sept jours</a>
         <ul class="exemples-liste">
           <li><a class="exemple-tel" href="demos/izakaya/?de=devanturo" target="_blank" rel="noopener" aria-label="Ouvrir la démonstration Kaori"><span class="exemple-cadre" data-vivant="demos/izakaya/index.html?embarque=1&amp;v=67" data-nom="Kaori" data-clair><img src="assets/telephone-izakaya-graphite.webp" srcset="assets/telephone-izakaya-graphite.webp 600w, assets/telephone-izakaya-graphite-2x.webp 1200w" sizes="300px" alt="Démonstration Kaori : site d'un izakaya sur iPhone" width="600" height="1351" loading="lazy" decoding="async"></span></a><b>Kaori</b><span>Izakaya · ramen, gyoza, comptoir, sakés</span></li>
