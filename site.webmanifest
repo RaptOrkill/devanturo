@@ -1,7 +1,7 @@
 {
   "name": "Devanturo",
   "short_name": "Devanturo",
-  "description": "Des sites et des fiches Google pour les PME, commerces, artisans et restaurants.",
+  "description": "Des sites et des fiches Google pour toutes les entreprises : PME, commerces, artisans, restaurants.",
   "lang": "fr-FR",
   "start_url": "/",
   "scope": "/",

@@ -45,7 +45,7 @@ console.log('%cDevanturo%c  code : RaptOrkill (Baptiste Ruin) · © 2026', 'font
       const li = document.createElement('li'); li.className = 'demo'; li.style.setProperty('--i', i);
       if (deux) li.dataset.legende = d.nom.replace(', ', ' · ');
       // La photo du téléphone, écran allumé, par-dessus le téléphone CSS ; dans l'écran du portable (n = 0) elle part tout de suite, dans le seuil elle attend.
-      li.innerHTML = '<a class="demo-tel" data-demo="' + (i % DEMOS.length) + '" data-couche="' + n + '" href="' + d.lien + '" target="_blank" rel="noopener" tabindex="-1" aria-label="Voir la démonstration : ' + d.nom + '"><span class="demo-ecran"></span><img src="assets/telephone-' + d.fichier + '-' + teinte + '.webp" srcset="assets/telephone-' + d.fichier + '-' + teinte + '.webp 600w, assets/telephone-' + d.fichier + '-' + teinte + '-2x.webp 1200w" sizes="' + (deux ? '52vw' : '(min-width: 760px) 340px, 80px') + '" alt="" width="600" height="1351"' + (n ? ' loading="lazy"' : '') + ' decoding="async" onload="this.closest(\'.demo\').classList.add(\'photo\')" onerror="this.remove()"></a>';
+      li.innerHTML = '<a class="demo-tel" data-demo="' + (i % DEMOS.length) + '" data-couche="' + n + '" href="' + d.lien + '" target="_blank" rel="noopener" tabindex="-1" aria-label="Voir la démonstration : ' + d.nom + '"><span class="demo-ecran"></span><img src="assets/telephone-' + d.fichier + '-' + teinte + '.webp" srcset="assets/telephone-' + d.fichier + '-' + teinte + '.webp 600w, assets/telephone-' + d.fichier + '-' + teinte + '-2x.webp 1200w" sizes="' + (deux ? '52vw' : '(min-width: 760px) 340px, 80px') + '" alt="" width="600" height="1351"' + (n ? ' loading="lazy"' : '') + ' decoding="async" onload="this.closest(\'.demo\').classList.add(\'photo\')" onerror="this.closest(\'.demo\').classList.add(\'sans-photo\');this.remove()"></a>';   // le téléphone dessiné ne sort que si l'image est introuvable
       ul.append(li);
     }
   });
@@ -419,7 +419,7 @@ console.log('%cDevanturo%c  code : RaptOrkill (Baptiste Ruin) · © 2026', 'font
     .to('.hero .ombre', { autoAlpha: 0, duration: .08 }, .5)
     .to(pose, { s: echelle, ty: centrer, duration: .3, ease: 'power1.inOut', onUpdate: poser }, .52)   // le zoom : .52 → .82
     .to(['.hero .base', '.hero .couvercle-dos'], { autoAlpha: 0, duration: .12 }, .64)
-    .to('.hero .ecran', { boxShadow: '0 0 0 0 #000', ...(portrait ? { backgroundColor: 'rgba(0,0,0,0)', borderColor: 'rgba(0,0,0,0)' } : {}), duration: .1 }, .64)
+    .to('.hero .ecran', { boxShadow: '0 0 0 0 #000', backgroundColor: 'rgba(0,0,0,0)', borderColor: 'rgba(0,0,0,0)', duration: .1 }, .64)   // le cadre noir s'efface aussi en paysage : sinon une barre noire au bas de l'écran pendant le relais (thème clair)
     .to('.hero .scene .compo-nav', { autoAlpha: 0, duration: .04 }, .74);   // dedans, l'en-tête réel prend le relais de la nav dessinée
   if (portrait) tl.to('.seuil', { autoAlpha: 1, duration: .05 }, .79).to('.hero .scene', { autoAlpha: 0, duration: .05 }, .82);   // le seuil reste en place, l'histoire vient le recouvrir
   else tl.to(pose, { ty: () => centrer() - relais(), duration: RELAIS, ease: 'none', onUpdate: poser }, 1 - RELAIS);

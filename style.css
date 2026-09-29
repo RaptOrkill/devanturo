@@ -637,7 +637,7 @@ h1, h2, h3 { text-wrap: balance; }
 .metiers li:has(> a) { padding: 0; }
 .metiers li > a { display: block; height: 100%; padding: 16px 18px; border-radius: inherit; color: inherit; text-decoration: none; transition: background var(--duree), transform var(--duree) var(--courbe); }
 .metiers li > a:hover { background: var(--verre-fort); transform: translateY(-2px); }
-.metiers li:not(.metiers-tous) > a b::after { content: " →"; font-weight: 400; opacity: .45; }
+.metiers li:not(.metiers-tous) > a b::after { content: "\00a0→"; font-weight: 400; opacity: .45; }   /* espace insécable : la flèche reste avec le dernier mot */
 .metiers li.metiers-tous > a:hover { background: transparent; }
 .pas-que-resto { display: block; margin: 22px 0 0; padding: 16px 18px; border-radius: var(--rond-petit); background: var(--verre-fort); border: 1px solid var(--verre-bord-fort); font-size: 15px; line-height: 1.55; color: rgba(var(--t),.85); }
 .pas-que-resto b { color: var(--texte); font-weight: 600; }
@@ -662,5 +662,23 @@ html.intro .hero-metiers { opacity: 0; transition: opacity 300ms; }
 .metiers-liens a { display: block; height: 100%; padding: 14px 16px; border-radius: var(--rond-petit); background: var(--verre); border: 1px solid var(--verre-bord); box-shadow: var(--verre-reflet); text-decoration: none; transition: background var(--duree), transform var(--duree) var(--courbe); }
 .metiers-liens a:hover { background: var(--verre-fort); transform: translateY(-2px); }
 .metiers-liens b { display: block; font: 600 17px/1.2 var(--serif); letter-spacing: -.02em; color: var(--texte); margin-bottom: 4px; }
-.metiers-liens b::after { content: " →"; font-weight: 400; opacity: .45; }
+.metiers-liens b::after { content: "\00a0→"; font-weight: 400; opacity: .45; }
 .metiers-liens span { font-size: 14px; color: rgba(var(--t),.7); }
+
+/* ---------- v81 (29/09/2026) : les ombres des téléphones, l'histoire retirée ----------
+   Avant : filter: drop-shadow sur chaque image de téléphone. Safari le coupe net sur les calques animés ou en 3D (bords droits),
+   il salit les téléphones qui se chevauchent en thème clair, et il coûte cher pendant le zoom. Pendant le chargement, le téléphone
+   dessiné de secours s'affichait avec une grosse ombre noire (des taches sombres en thème clair).
+   Maintenant : une ombre de contact douce sous chaque téléphone (un dégradé, pas de filtre), et le téléphone dessiné ne sort que si
+   l'image est introuvable. */
+.demo-tel img, .exemple-cadre > img { filter: none; }
+.demo-tel, .exemple-cadre { isolation: isolate; }
+.demo-tel::after, .exemple-cadre::after { content: ""; position: absolute; z-index: -1; left: 14%; right: 10%; bottom: -2.2%; height: 5.5%; border-radius: 50%; background: radial-gradient(closest-side, var(--ombre-tel), transparent); pointer-events: none; }
+html[data-theme="clair"] .demo-tel::after, html[data-theme="clair"] .exemple-cadre::after { background: radial-gradient(closest-side, rgba(20,19,17,.22), transparent); }
+.demo-ecran { display: none; box-shadow: inset 0 0 0 1px rgba(255,255,255,.28); }
+.demo.sans-photo .demo-ecran { display: block; }
+.demo-tel img { opacity: 0; transition: opacity .35s ease; }
+.demo.photo .demo-tel img, html:not(.anim) .demo-tel img { opacity: 1; }
+/* La bande des métiers, seule, colle directement à « Pour qui ? » */
+.histoire { padding-bottom: 0; }
+@media (max-width: 767px) { .histoire { padding-bottom: 0; } }
