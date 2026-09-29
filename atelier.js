@@ -86,12 +86,13 @@ console.log('%cDevanturo%c  code : RaptOrkill (Baptiste Ruin) · © 2026', 'font
   // « Trois sites » : les trois écrans s'allument quand la section approche
   const cadresExemples = [...document.querySelectorAll('[data-vivant]')];
   if (cadresExemples.length && 'IntersectionObserver' in window) {
-    const io = new IntersectionObserver(es => es.forEach(e => { if (e.isIntersecting) { vivifier(e.target, { nom: e.target.dataset.nom, vivant: e.target.dataset.vivant, decale: e.target.hasAttribute('data-decale'), clair: e.target.hasAttribute('data-clair') }); io.unobserve(e.target); } }), { rootMargin: '300px 0px' });
+    const demoDe = c => DEMOS.find(d => d.nom.split(',')[0] === c.dataset.nom);
+    const io = new IntersectionObserver(es => es.forEach(e => { if (e.isIntersecting) { if (TEL && demoDe(e.target)) animer(e.target, demoDe(e.target)); else vivifier(e.target, { nom: e.target.dataset.nom, vivant: e.target.dataset.vivant, decale: e.target.hasAttribute('data-decale'), clair: e.target.hasAttribute('data-clair') }); io.unobserve(e.target); } }), { rootMargin: '300px 0px' });
     cadresExemples.forEach(c => io.observe(c));
   } else cadresExemples.forEach(c => vivifier(c, { nom: c.dataset.nom, vivant: c.dataset.vivant, decale: c.hasAttribute('data-decale'), clair: c.hasAttribute('data-clair') }));
 
   /* ---------- La réservation : un créneau, trois champs, c'est réservé ---------- */
-  const METIERS = { restaurant: 'un restaurant', bar: 'un bar', cafe: 'un café', autre: 'votre établissement' };
+  const METIERS = { commerce: 'un commerce', artisan: 'un artisan ou un service', restaurant: 'un restaurant ou un bar', autre: 'votre entreprise' };
   const etat = { metier: null, creneau: null, prenom: '', etab: '', tel: '', reservation: null };
   const CLE = 'devanturo-ma-reservation';
   const R = window.Reservations;
@@ -113,12 +114,16 @@ console.log('%cDevanturo%c  code : RaptOrkill (Baptiste Ruin) · © 2026', 'font
     try { (await R.creneauxPris(new Date(m.getFullYear(), m.getMonth(), 1), new Date(m.getFullYear(), m.getMonth() + 1, 1))).forEach(q => pris.add(cleHeure(q))); } catch (e) {}
     if (cal.mois.getTime() === m.getTime()) dessinerCalendrier();
   }
-  const cal = { mois: new Date(aujourdhui.getFullYear(), aujourdhui.getMonth(), 1), jour: null, heure: null };
   const HEURES = []; for (let h = 8; h <= 22; h++) HEURES.push(h);
+  // Un mois se montre s'il lui reste au moins un jour prenable (48 h au plus tôt) : en fin de mois, on ouvre directement sur le suivant
+  const moisPrenable = m => { const n = new Date(m.getFullYear(), m.getMonth() + 1, 0).getDate(); for (let d = 1; d <= n; d++) if (disponible(new Date(m.getFullYear(), m.getMonth(), d), 22)) return true; return false; };
+  let MOIS_MIN = new Date(aujourdhui.getFullYear(), aujourdhui.getMonth(), 1);
+  for (let k = 0; k < 12 && !moisPrenable(MOIS_MIN); k++) MOIS_MIN = new Date(MOIS_MIN.getFullYear(), MOIS_MIN.getMonth() + 1, 1);
+  const cal = { mois: new Date(MOIS_MIN), jour: null, heure: null };
   function dessinerCalendrier() {
     chargerPris(cal.mois);
     const m = cal.mois, debut = (m.getDay() + 6) % 7, nbJours = new Date(m.getFullYear(), m.getMonth() + 1, 0).getDate();
-    const peutReculer = m > new Date(aujourdhui.getFullYear(), aujourdhui.getMonth(), 1);
+    const peutReculer = m > MOIS_MIN;
     let html = '<div class="cal-tete"><button type="button" class="cal-nav" data-cal="-1" aria-label="Mois précédent"' + (peutReculer ? '' : ' disabled') + '>‹</button><b>' + fmtMois.format(m) + '</b><button type="button" class="cal-nav" data-cal="1" aria-label="Mois suivant">›</button></div>';
     html += '<div class="cal-grille">' + ['L', 'M', 'M', 'J', 'V', 'S', 'D'].map(l => '<span class="cal-jour-nom">' + l + '</span>').join('');
     for (let i = 0; i < debut; i++) html += '<span></span>';
@@ -154,7 +159,7 @@ console.log('%cDevanturo%c  code : RaptOrkill (Baptiste Ruin) · © 2026', 'font
     const qui = [etat.etab, etat.prenom].filter(Boolean).join(' — ');
     if (type === 'rdv' && !R.actif) return 'Bonjour, je réserve ' + (etat.creneau ? etat.creneau.libelle : 'un créneau') + (qui ? ' pour ' + qui : '') + (etat.tel ? '. Mon numéro : ' + etat.tel : '') + '.';
     if (type === 'rdv') return 'Bonjour, j\'ai réservé ' + (etat.creneau ? etat.creneau.libelle : 'un créneau') + (qui ? ' pour ' + qui : '') + '.';
-    return 'Bonjour, j\'ai une question pour le site de mon établissement' + (etat.etab ? ' (' + etat.etab + ')' : '') + '.';
+    return 'Bonjour, j\'ai une question pour le site de mon entreprise' + (etat.etab ? ' (' + etat.etab + ')' : '') + '.';
   };
   function rendre() {
     const rappel = document.querySelector('[data-creneau-rappel]');
@@ -214,7 +219,7 @@ console.log('%cDevanturo%c  code : RaptOrkill (Baptiste Ruin) · © 2026', 'font
     }
     reserver.addEventListener('click', async () => {
       if (!etat.creneau) return aller(0, true);
-      if (!etat.etab || !etat.prenom) return montrerErreur('Il nous faut le nom de votre établissement et votre prénom.');
+      if (!etat.etab || !etat.prenom) return montrerErreur('Il nous faut le nom de votre entreprise et votre prénom.');
       if (etat.tel.replace(/\D/g, '').length < 9) return montrerErreur('Un numéro de téléphone, pour vous confirmer le rendez-vous.');
       reserver.disabled = true; reserver.textContent = 'Un instant…';
       const r = { quand: etat.creneau.quand, libelle: etat.creneau.libelle, etab: etat.etab, prenom: etat.prenom, tel: etat.tel, metier: etat.metier ? METIERS[etat.metier] : null };
@@ -223,7 +228,7 @@ console.log('%cDevanturo%c  code : RaptOrkill (Baptiste Ruin) · © 2026', 'font
         else { const l = await R.enregistrer(r); etat.reservation = { id: l.id, ...r }; }
         if (!R.actif) {
           etat.reservation.recu = await R.envoyerMail('Visite gratuite : ' + r.etab + ', ' + r.libelle, {
-            'Établissement': r.etab, 'Prénom': r.prenom, 'Téléphone': r.tel, 'Créneau': r.libelle, 'Type': r.metier || 'non précisé',
+            'Entreprise': r.etab, 'Prénom': r.prenom, 'Téléphone': r.tel, 'Créneau': r.libelle, 'Type': r.metier || 'non précisé',
             'Changement': etat.reservation.cree ? 'oui, créneau déplacé' : 'non' });
           etat.reservation.cree = true;
           if (!etat.reservation.recu) modeWhatsApp();
@@ -249,10 +254,10 @@ console.log('%cDevanturo%c  code : RaptOrkill (Baptiste Ruin) · © 2026', 'font
     const f = new FormData(audit), etab = String(f.get('etab') || '').trim().slice(0, 120), tel = String(f.get('tel') || '').trim().slice(0, 30);
     const msg = audit.querySelector('[data-audit-message]'), bouton = audit.querySelector('button');
     const dire = (t, ok) => { msg.textContent = t; msg.hidden = false; msg.classList.toggle('ok', !!ok); };
-    if (etab.length < 3) return dire('Le nom de votre établissement et sa ville, pour qu\'on retrouve votre fiche.');
+    if (etab.length < 3) return dire('Le nom de votre entreprise et sa ville, pour qu\'on retrouve votre fiche.');
     if (tel.replace(/\D/g, '').length < 9) return dire('Un numéro de téléphone, pour vous envoyer l\'audit.');
     bouton.disabled = true; bouton.textContent = 'Un instant…';
-    const recu = await R.envoyerMail('Audit fiche Google : ' + etab, { 'Établissement et ville': etab, 'Téléphone': tel, 'Demande': 'Audit gratuit de la fiche Google, sous 24 h' });
+    const recu = await R.envoyerMail('Audit fiche Google : ' + etab, { 'Entreprise et ville': etab, 'Téléphone': tel, 'Demande': 'Audit gratuit de la fiche Google, sous 24 h' });
     mesurer('audit');
     bouton.disabled = false; bouton.textContent = 'Recevoir mon audit gratuit';
     if (recu) { audit.reset(); dire('C\'est noté. Votre audit arrive sous 24 h, sur WhatsApp ou par SMS.', true); }
@@ -360,7 +365,7 @@ console.log('%cDevanturo%c  code : RaptOrkill (Baptiste Ruin) · © 2026', 'font
   else {
     const barre = document.querySelector('[data-chargement-barre]'), pc = document.querySelector('[data-chargement-pc]'), voile = document.querySelector('.ecran-chargement');
     const images = [...document.querySelectorAll(TEL ? '.hero-tels .demo img' : '.hero .scene .demo img')];
-    const avance = [...new Set(DEMOS.map(d => d.vivant))].concat(['demos/izakaya/assets/ramen.webp', 'demos/trattoria/assets/tagliatelle.webp']);
+    const avance = (TEL ? [] : [...new Set(DEMOS.map(d => d.vivant))]).concat(['demos/izakaya/assets/ramen.webp', 'demos/trattoria/assets/tagliatelle.webp']);
     const taches = [document.fonts ? document.fonts.ready : Promise.resolve()]
       .concat(images.map(im => im.complete ? Promise.resolve() : new Promise(r => { im.addEventListener('load', r, { once: true }); im.addEventListener('error', r, { once: true }); })))
       .concat(avance.map(u => fetch(u, { credentials: 'same-origin' }).then(r => r.blob()).catch(() => {})));

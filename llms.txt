@@ -1,10 +1,10 @@
 # Devanturo
 
-> Devanturo crée le site internet et la fiche Google des restaurants, bars et cafés. Un rendez-vous gratuit de 30 minutes sur place dans la métropole lilloise (en visio ailleurs en France) : photos, carte, horaires et devis. Le site est en ligne 7 jours après. Le prix est fixé après la visite, écrit sur le devis, et payé à la livraison, sans acompte, seulement si le site plaît.
+> Devanturo crée le site internet et la fiche Google des petites entreprises : commerces, artisans, garages, cabinets, restaurants, bars, toutes les PME. Un rendez-vous gratuit de 30 minutes sur place dans la métropole lilloise (en visio ailleurs en France) : photos, carte, horaires et devis. Le site est en ligne 7 jours après. Le prix est fixé après la visite, écrit sur le devis, et payé à la livraison, sans acompte, seulement si le site plaît.
 
 Devanturo est une entreprise individuelle fondée par Baptiste Ruin, 2 rue Vauban, 59100 Roubaix (SIRET 108 488 131 00013). Téléphone et WhatsApp : 06 14 97 96 04. E-mail : contact@devanturo.fr. Réservation d'un créneau en ligne sur https://devanturo.fr/#devis-debut.
 
-Ce que comprend un site Devanturo : un site à votre nom pensé pour le téléphone (accueil, carte, horaires, itinéraire, bouton d'appel, WhatsApp, réservation ou commande si besoin), les photos de la salle, de la façade et des plats, la création ou la remise à neuf de la fiche Google, le nom de domaine et l'hébergement à votre nom, et les changements de carte sur simple message WhatsApp.
+Ce que comprend un site Devanturo : un site à votre nom pensé pour le téléphone (accueil, prestations ou carte, horaires, itinéraire, bouton d'appel, WhatsApp, devis, réservation ou commande si besoin), les photos de la boutique, de l'atelier ou de la salle, de la façade et des produits, la création ou la remise à neuf de la fiche Google, le nom de domaine et l'hébergement à votre nom, et les changements de tarifs ou de carte sur simple message WhatsApp.
 
 Zone : Roubaix, Lille, Tourcoing, Villeneuve-d'Ascq, Marcq-en-Barœul, Wasquehal, Croix, Wattrelos, Mouvaux, La Madeleine, Lambersart, Hem et toute la métropole lilloise ; partout en France en visio.
 
@@ -36,7 +36,7 @@ Zone : Roubaix, Lille, Tourcoing, Villeneuve-d'Ascq, Marcq-en-Barœul, Wasquehal
 - [Site internet pour café et brasserie](https://devanturo.fr/site-internet-cafe-brasserie.html)
 - [Agence web pour restaurants](https://devanturo.fr/agence-web-restaurant-lille.html)
 
-## Conseils pour restaurateurs
+## Conseils (écrits pour les restaurants, valables pour tous les commerces)
 
 - [Tous les conseils](https://devanturo.fr/conseils.html)
 - [Prix d'un site internet pour restaurant](https://devanturo.fr/prix-site-internet-restaurant.html)

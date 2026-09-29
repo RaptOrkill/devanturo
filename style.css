@@ -570,10 +570,45 @@ h1, h2, h3 { text-wrap: balance; }
 
 /* Référencement (v75) : les mots-clés au-dessus du titre, et les conseils à la une */
 .hero-etiquette { margin-bottom: 18px; }
-@media (max-width: 767px) { .hero-etiquette { font-size: 10.5px; line-height: 1.5; letter-spacing: .14em; } }
+@media (max-width: 767px) { .hero-etiquette { line-height: 1.5; } }
 .conseils-liste { list-style: none; margin: 26px 0 0; padding: 0; display: grid; gap: 10px; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); }
 .conseils-liste a { display: grid; gap: 6px; height: 100%; padding: 18px 20px; border-radius: var(--rond-petit); background: var(--verre); border: 1px solid var(--verre-bord); box-shadow: var(--verre-reflet); text-decoration: none; transition: background var(--duree), transform var(--duree) var(--courbe); }
 .conseils-liste a:hover { background: var(--verre-fort); transform: translateY(-2px); }
 .conseils-liste b { font: 600 18px/1.2 var(--serif); letter-spacing: -.02em; color: var(--texte); }
 .conseils-liste span { font-size: 14px; color: rgba(var(--t),.65); }
 @media (min-width: 1100px) { .conseils-liste { grid-template-columns: repeat(3, 1fr); } }
+
+/* ---------- Téléphone (v76) : audit du 29/09. Page plus courte, textes lisibles, barre qui tient sur une ligne, bouton sous les exemples ---------- */
+@media (max-width: 767px) {
+  /* La ligne de mots-clés : lisible (≥ 11,5 px), sur deux lignes au plus */
+  .hero-etiquette { font-size: 11.5px; letter-spacing: .12em; margin-bottom: 16px; }
+  /* Le problème en trois phrases : serré, sans les grands vides */
+  .histoire { padding-bottom: 4vh; }
+  .histoire-int { padding-top: 6vh; }
+  .histoire-ligne, .histoire-ligne:nth-child(2) { margin-bottom: 4vh; font-size: clamp(26px, 7.6vw, 36px); }
+  .histoire-ligne.bloc { padding: 3vh 0; }   /* les trois phrases sont des .bloc : sans ça, 9vh de vide au-dessus et en dessous de chacune */
+  /* Les exemples : les téléphones d'abord, le bouton dessous ; le second téléphone dépasse, on devine qu'on peut glisser */
+  .exemples { display: flex; flex-direction: column; }
+  .exemples > .etiquette { order: 1; } .exemples > h2 { order: 2; } .exemples > .corps { order: 3; margin-bottom: 18px; }
+  .exemples-liste { order: 4; }
+  .exemples-cta { order: 5; align-self: center; margin: 18px 0 0; }
+  .exemples-liste li { flex: 0 0 66%; }
+  /* Les conseils : des lignes courtes plutôt que six grandes cartes */
+  .conseils-liste { margin-top: 18px; gap: 8px; }
+  .conseils-liste a { padding: 14px 16px; gap: 3px; }
+  .conseils-liste b { font-size: 16px; }
+  .conseils-liste span { font-size: 13px; }
+  .conseils-liste li:nth-child(4), .conseils-liste li:nth-child(5) { display: none; }   /* bar, café-brasserie : sur le téléphone, les trois conseils généraux et « tous les conseils » suffisent */
+  /* Les questions : un peu plus serrées */
+  .faq summary { padding: 15px 0; }
+  .faq details { padding: 0 18px; }
+  /* La sortie et l'audit : moins de vide */
+  .final { padding: 72px var(--gout); }
+  .audit { gap: 18px; }
+}
+/* Petits téléphones : la barre d'action tient sur une ligne (« Réserver ma visite »), le bouton de l'audit aussi */
+@media (max-width: 374px) {
+  .barre-plus { display: none; }
+  .audit-form .bouton { font-size: 15px; padding: 0 16px; }
+  .hero-cta { font-size: 15px; padding: 0 22px; }
+}
